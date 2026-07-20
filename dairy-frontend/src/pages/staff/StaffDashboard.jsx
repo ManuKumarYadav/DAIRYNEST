@@ -1,39 +1,24 @@
-import React, {
-  useState,
-  useEffect,
-} from "react";
+import React, { useState, useEffect } from "react";
 
 const StaffDashboard = () => {
+  const token = localStorage.getItem("token");
 
-  const token =
-    localStorage.getItem("token");
+  const [products, setProducts] = useState([]);
 
-  const [products, setProducts] =
-    useState([]);
+  const [milk, setMilk] = useState("");
 
-  const [milk, setMilk] =
-    useState("");
+  const [milkList, setMilkList] = useState([]);
 
-  const [milkList, setMilkList] =
-    useState([]);
+  const [productionList, setProductionList] = useState([]);
 
-  const [
-    productionList,
-    setProductionList,
-  ] = useState([]);
-
-  const [form, setForm] =
-    useState({
-      productId: "",
-      quantity: "",
-      milkUsed: "",
-    });
+  const [form, setForm] = useState({
+    productId: "",
+    quantity: "",
+    milkUsed: "",
+  });
 
   const fetchProducts = async () => {
-
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/products`
-    );
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/products`);
 
     const data = await res.json();
 
@@ -41,16 +26,11 @@ const StaffDashboard = () => {
   };
 
   const fetchMilk = async () => {
-
-    const res = await fetch(
-      `${process.env.REACT_APP_API_URL}/api/staff/milk`,
-      {
-        headers: {
-          Authorization:
-            "Bearer " + token,
-        },
-      }
-    );
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/api/staff/milk`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
 
     const data = await res.json();
 
@@ -58,15 +38,13 @@ const StaffDashboard = () => {
   };
 
   const fetchProduction = async () => {
-
     const res = await fetch(
       `${process.env.REACT_APP_API_URL}/api/staff/production`,
       {
         headers: {
-          Authorization:
-            "Bearer " + token,
+          Authorization: "Bearer " + token,
         },
-      }
+      },
     );
 
     const data = await res.json();
@@ -75,287 +53,169 @@ const StaffDashboard = () => {
   };
 
   useEffect(() => {
-
     fetchProducts();
     fetchMilk();
     fetchProduction();
-
   }, []);
 
   const handleMilk = async (e) => {
-
     e.preventDefault();
 
-    await fetch(
-      `${process.env.REACT_APP_API_URL}/api/staff/milk`,
-      {
-        method: "POST",
+    await fetch(`${process.env.REACT_APP_API_URL}/api/staff/milk`, {
+      method: "POST",
 
-        headers: {
-          "Content-Type":
-            "application/json",
+      headers: {
+        "Content-Type": "application/json",
 
-          Authorization:
-            "Bearer " + token,
-        },
+        Authorization: "Bearer " + token,
+      },
 
-        body: JSON.stringify({
-          quantity: milk,
-        }),
-      }
-    );
+      body: JSON.stringify({
+        quantity: milk,
+      }),
+    });
 
     setMilk("");
 
     fetchMilk();
   };
 
-  const handleProduction =
-    async (e) => {
+  const handleProduction = async (e) => {
+    e.preventDefault();
 
-      e.preventDefault();
+    if (!form.productId) {
+      alert("Select product first");
 
-      if (!form.productId) {
+      return;
+    }
 
-        alert(
-          "Select product first"
-        );
+    await fetch(`${process.env.REACT_APP_API_URL}/api/staff/production`, {
+      method: "POST",
 
-        return;
-      }
+      headers: {
+        "Content-Type": "application/json",
 
-      await fetch(
-        `${process.env.REACT_APP_API_URL}/api/staff/production`,
-        {
-          method: "POST",
+        Authorization: "Bearer " + token,
+      },
 
-          headers: {
-            "Content-Type":
-              "application/json",
+      body: JSON.stringify({
+        productId: form.productId,
 
-            Authorization:
-              "Bearer " + token,
-          },
+        quantity: form.quantity,
 
-          body: JSON.stringify({
-            productId:
-              form.productId,
+        milkUsed: form.milkUsed,
+      }),
+    });
 
-            quantity:
-              form.quantity,
+    setForm({
+      productId: "",
+      quantity: "",
+      milkUsed: "",
+    });
 
-            milkUsed:
-              form.milkUsed,
-          }),
-        }
-      );
-
-      setForm({
-        productId: "",
-        quantity: "",
-        milkUsed: "",
-      });
-
-      fetchProduction();
-      fetchProducts();
-    };
+    fetchProduction();
+    fetchProducts();
+  };
 
   return (
-
     <div className="staff-page">
-
       <div className="bg one"></div>
       <div className="bg two"></div>
 
       <div className="staff-container">
-
         {/* HEADER */}
 
         <div className="header">
-
-          <span className="badge">
-            🧑‍🏭 DairyNest Staff Panel
-          </span>
+          <span className="badge">🧑‍🏭 DairyNest Staff Panel</span>
 
           <h1>
             Production
             <span> Dashboard</span>
           </h1>
 
-          <p>
-            Manage milk inventory and
-            production operations in
-            real-time.
-          </p>
-
+          <p>Manage milk inventory and production operations in real-time.</p>
         </div>
 
         <div className="stats-grid">
-
           <div className="stat-card glass">
+            <h2>{milkList.length}</h2>
 
-            <h2>
-              {milkList.length}
-            </h2>
-
-            <p>
-              Milk Entries
-            </p>
-
+            <p>Milk Entries</p>
           </div>
 
           <div className="stat-card glass">
+            <h2>{productionList.length}</h2>
 
-            <h2>
-              {productionList.length}
-            </h2>
-
-            <p>
-              Productions
-            </p>
-
+            <p>Productions</p>
           </div>
 
           <div className="stat-card glass">
+            <h2>{products.length}</h2>
 
-            <h2>
-              {products.length}
-            </h2>
-
-            <p>
-              Products
-            </p>
-
+            <p>Products</p>
           </div>
-
         </div>
 
         <div className="main-grid">
-
           <div className="glass panel">
-
             <div className="top">
-
-              <h2>
-               Add Milk
-              </h2>
-
+              <h2>Add Milk</h2>
             </div>
 
-            <form
-              onSubmit={handleMilk}
-            >
-
+            <form onSubmit={handleMilk}>
               <input
                 type="number"
                 placeholder="Milk in Liters"
                 value={milk}
-                onChange={(e) =>
-                  setMilk(
-                    e.target.value
-                  )
-                }
+                onChange={(e) => setMilk(e.target.value)}
                 className="input"
               />
 
-              <button
-                className="blue-btn"
-              >
-                Add Milk
-              </button>
-
+              <button className="blue-btn">Add Milk</button>
             </form>
 
             <div className="history">
+              <h3>Milk History</h3>
 
-              <h3>
-                Milk History
-              </h3>
+              {milkList.map((m) => (
+                <div key={m._id} className="history-card">
+                  <div>
+                    <h4>{m.quantity} Liters</h4>
 
-              {
-                milkList.map((m) => (
-
-                  <div
-                    key={m._id}
-                    className="history-card"
-                  >
-
-                    <div>
-
-                      <h4>
-                        {m.quantity}
-                        {" "}
-                        Liters
-                      </h4>
-
-                      <span>
-                        Fresh Milk Entry
-                      </span>
-
-                    </div>
-
-                    <small>
-                      {
-                        new Date(
-                          m.date
-                        ).toLocaleString()
-                      }
-                    </small>
-
+                    <span>Fresh Milk Entry</span>
                   </div>
-                ))
-              }
 
+                  <small>{new Date(m.date).toLocaleString()}</small>
+                </div>
+              ))}
             </div>
-
           </div>
 
           {/* PRODUCTION */}
 
           <div className="glass panel">
-
             <div className="top">
-
-              <h2>
-                🏭 Add Production
-              </h2>
-
+              <h2>🏭 Add Production</h2>
             </div>
 
-            <form
-              onSubmit={
-                handleProduction
-              }
-            >
-
+            <form onSubmit={handleProduction}>
               <select
                 className="input"
                 value={form.productId}
                 onChange={(e) =>
                   setForm({
                     ...form,
-                    productId:
-                      e.target.value,
+                    productId: e.target.value,
                   })
                 }
               >
+                <option value="">Select Product</option>
 
-                <option value="">
-                  Select Product
-                </option>
-
-                {
-                  products.map((p) => (
-
-                    <option
-                      key={p._id}
-                      value={p._id}
-                    >
-                      {p.name}
-                    </option>
-                  ))
-                }
-
+                {products.map((p) => (
+                  <option key={p._id} value={p._id}>
+                    {p.name}
+                  </option>
+                ))}
               </select>
 
               <input
@@ -366,8 +226,7 @@ const StaffDashboard = () => {
                 onChange={(e) =>
                   setForm({
                     ...form,
-                    quantity:
-                      e.target.value,
+                    quantity: e.target.value,
                   })
                 }
               />
@@ -380,74 +239,33 @@ const StaffDashboard = () => {
                 onChange={(e) =>
                   setForm({
                     ...form,
-                    milkUsed:
-                      e.target.value,
+                    milkUsed: e.target.value,
                   })
                 }
               />
 
-              <button
-                className="green-btn"
-              >
-                Add Production
-              </button>
-
+              <button className="green-btn">Add Production</button>
             </form>
 
             <div className="history">
+              <h3>Production History</h3>
 
-              <h3>
-                Production History
-              </h3>
+              {productionList.map((p) => (
+                <div key={p._id} className="history-card">
+                  <div>
+                    <h4>{p.productName}</h4>
 
-              {
-                productionList.map(
-                  (p) => (
+                    <span>
+                      Qty: {p.quantity} | Milk: {p.milkUsed}
+                    </span>
+                  </div>
 
-                    <div
-                      key={p._id}
-                      className="history-card"
-                    >
-
-                      <div>
-
-                        <h4>
-                          {p.productName}
-                        </h4>
-
-                        <span>
-                          Qty:
-                          {" "}
-                          {p.quantity}
-                          {" "}
-                          |
-                          {" "}
-                          Milk:
-                          {" "}
-                          {p.milkUsed}
-                        </span>
-
-                      </div>
-
-                      <small>
-                        {
-                          new Date(
-                            p.date
-                          ).toLocaleString()
-                        }
-                      </small>
-
-                    </div>
-                  )
-                )
-              }
-
+                  <small>{new Date(p.date).toLocaleString()}</small>
+                </div>
+              ))}
             </div>
-
           </div>
-
         </div>
-
       </div>
 
       <style>{`
@@ -515,7 +333,6 @@ const StaffDashboard = () => {
       @media(max-width:720px){.header h1{font-size:34px}.staff-page{padding-left:18px;padding-right:18px}}
 
       `}</style>
-
     </div>
   );
 };

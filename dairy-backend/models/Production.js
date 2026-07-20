@@ -6,7 +6,7 @@ const productionSchema = new mongoose.Schema({
   milkUsed: Number,
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 module.exports = mongoose.model("Production", productionSchema);

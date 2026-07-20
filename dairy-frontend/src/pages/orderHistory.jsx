@@ -1,63 +1,49 @@
 import React, { useEffect, useState } from "react";
 
 const OrderHistory = () => {
-
   const [orders, setOrders] = useState([]);
 
-  const user =
-    JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     fetchOrders();
   }, []);
 
   const fetchOrders = async () => {
-
     try {
-
       const res = await fetch(
-        `${process.env.REACT_APP_API_URL}/api/orders/shop/${user?.name}`
+        `${process.env.REACT_APP_API_URL}/api/orders/shop/${user?.name}`,
       );
 
       const data = await res.json();
 
       setOrders(data.data || []);
-
     } catch (err) {
-
       console.log(err);
     }
   };
 
   const cancelOrder = async (id) => {
-
     try {
+      await fetch(`${process.env.REACT_APP_API_URL}/api/orders/${id}`, {
+        method: "PUT",
 
-      await fetch(
-        `${process.env.REACT_APP_API_URL}/api/orders/${id}`,
-        {
-          method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            status: "Cancelled",
-          }),
-        }
-      );
+        body: JSON.stringify({
+          status: "Cancelled",
+        }),
+      });
 
       fetchOrders();
-
     } catch (err) {
-
       console.log(err);
     }
   };
 
   const getProgress = (status) => {
-
     if (status === "Placed") return "15%";
 
     if (status === "Paid") return "60%";
@@ -68,219 +54,122 @@ const OrderHistory = () => {
   };
 
   const getImage = (img) => {
+    if (!img) return "https://via.placeholder.com/120";
 
-    if (!img)
-      return "https://via.placeholder.com/120";
-
-    if (img.startsWith("http"))
-      return img;
+    if (img.startsWith("http")) return img;
 
     return `${process.env.REACT_APP_API_URL}${img}`;
   };
 
   return (
-
     <>
       <div className="orders-page">
-
         <div className="bg-glow one"></div>
         <div className="bg-glow two"></div>
 
         <div className="orders-container">
-
           <div className="heading">
-
-            <span className="badge">
-              📦 DairyNest Orders
-            </span>
+            <span className="badge">📦 DairyNest Orders</span>
 
             <h1>
               My Premium
               <span> Orders</span>
             </h1>
 
-            <p>
-              Track your fresh dairy deliveries
-              in real-time.
-            </p>
-
+            <p>Track your fresh dairy deliveries in real-time.</p>
           </div>
 
-          {
-            orders.length === 0 && (
+          {orders.length === 0 && (
+            <div className="empty glass">
+              <h2>No Orders Found</h2>
 
-              <div className="empty glass">
+              <p>Your premium dairy orders will appear here.</p>
+            </div>
+          )}
 
-                <h2>No Orders Found</h2>
+          {orders.map((order) => (
+            <div key={order._id} className="order-card glass">
+              <div className="top-section">
+                <div>
+                  <span className={`status ${order.status.toLowerCase()}`}>
+                    {order.status}
+                  </span>
+
+                  <h2>₹{order.totalPrice}</h2>
+                </div>
+
+                {order.status !== "Cancelled" &&
+                  order.status !== "Delivered" && (
+                    <button
+                      className="cancel-btn"
+                      onClick={() => cancelOrder(order._id)}
+                    >
+                      Cancel Order
+                    </button>
+                  )}
+              </div>
+
+              <div className="products-grid">
+                {order.products.map((item, i) => (
+                  <div key={i} className="product-card">
+                    <div className="img-box">
+                      <img src={getImage(item.image)} alt="" />
+                    </div>
+
+                    <div className="product-info">
+                      <h3>{item.productName}</h3>
+
+                      <p>Quantity: {item.quantity}</p>
+
+                      <span>₹{item.price * item.quantity}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="address-box">
+                <h4>🚚 Delivery Address</h4>
+
+                <p>{order?.address?.name}</p>
 
                 <p>
-                  Your premium dairy orders
-                  will appear here.
+                  {order?.address?.city} - {order?.address?.pincode}
                 </p>
 
+                <p>📞 {order?.address?.phone}</p>
               </div>
-            )
-          }
 
-          {
-            orders.map((order) => (
-
-              <div
-                key={order._id}
-                className="order-card glass"
-              >
-
-                <div className="top-section">
-
-                  <div>
-
-                    <span
-                      className={`status ${order.status.toLowerCase()}`}
-                    >
-                      {order.status}
-                    </span>
-
-                    <h2>
-                      ₹{order.totalPrice}
-                    </h2>
-
-                  </div>
-
-                  {
-                    order.status !== "Cancelled" &&
-                    order.status !== "Delivered" && (
-
-                      <button
-                        className="cancel-btn"
-                        onClick={() =>
-                          cancelOrder(order._id)
-                        }
-                      >
-                        Cancel Order
-                      </button>
-                    )
-                  }
-
-                </div>
-
-                <div className="products-grid">
-
-                  {
-                    order.products.map((item, i) => (
-
-                      <div
-                        key={i}
-                        className="product-card"
-                      >
-
-                        <div className="img-box">
-
-                          <img
-                            src={getImage(item.image)}
-                            alt=""
-                          />
-
-                        </div>
-
-                        <div className="product-info">
-
-                          <h3>
-                            {item.productName}
-                          </h3>
-
-                          <p>
-                            Quantity:
-                            {" "}
-                            {item.quantity}
-                          </p>
-
-                          <span>
-                            ₹
-                            {item.price *
-                              item.quantity}
-                          </span>
-
-                        </div>
-
-                      </div>
-                    ))
-                  }
-
-                </div>
-
-                <div className="address-box">
-
-                  <h4>
-                    🚚 Delivery Address
-                  </h4>
-
-                  <p>
-                    {order?.address?.name}
-                  </p>
-
-                  <p>
-                    {order?.address?.city}
-                    {" "}
-                    -
-                    {" "}
-                    {order?.address?.pincode}
-                  </p>
-
-                  <p>
-                    📞
-                    {" "}
-                    {order?.address?.phone}
-                  </p>
-
-                </div>
-
-                <div className="tracking">
+              <div className="tracking">
+                <div
+                  className="track-line"
+                  style={{
+                    "--progress": getProgress(order.status),
+                  }}
+                >
+                  <div className="dot active"></div>
 
                   <div
-                    className="track-line"
-                    style={{
-                      "--progress":
-                        getProgress(order.status),
-                    }}
-                  >
+                    className={`dot ${
+                      order.status !== "Placed" ? "active" : ""
+                    }`}
+                  ></div>
 
-                    <div className="dot active"></div>
-
-                    <div
-                      className={`dot ${
-                        order.status !== "Placed"
-                          ? "active"
-                          : ""
-                      }`}
-                    ></div>
-
-                    <div
-                      className={`dot ${
-                        order.status ===
-                        "Delivered"
-                          ? "active"
-                          : ""
-                      }`}
-                    ></div>
-
-                  </div>
-
-                  <div className="labels">
-
-                    <span>Placed</span>
-                    <span>Paid</span>
-                    <span>Delivered</span>
-
-                  </div>
-
+                  <div
+                    className={`dot ${
+                      order.status === "Delivered" ? "active" : ""
+                    }`}
+                  ></div>
                 </div>
 
+                <div className="labels">
+                  <span>Placed</span>
+                  <span>Paid</span>
+                  <span>Delivered</span>
+                </div>
               </div>
-            ))
-          }
-
+            </div>
+          ))}
         </div>
-
       </div>
 
       <style>{`
@@ -339,7 +228,6 @@ const OrderHistory = () => {
       @media(max-width:1000px){.top-section{flex-direction:column;align-items:flex-start;}.products-grid{grid-template-columns:1fr;}}
       @media(max-width:720px){.orders-page{padding:90px 16px 40px;}.heading h1{font-size:40px;}.order-card{padding:22px;}.products-grid{gap:14px;}.product-card{flex-direction:column;align-items:center;text-align:center;}.img-box{width:100%;height:180px;}.product-info{align-items:center;}}
       `}</style>
-
     </>
   );
 };

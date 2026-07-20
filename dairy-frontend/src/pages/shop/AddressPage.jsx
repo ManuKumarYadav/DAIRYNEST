@@ -40,7 +40,13 @@ const AddressPage = () => {
   };
 
   const handleContinue = () => {
-    if (!form.name || !form.phone || !form.address || !form.city || !form.pincode) {
+    if (
+      !form.name ||
+      !form.phone ||
+      !form.address ||
+      !form.city ||
+      !form.pincode
+    ) {
       alert("Please fill all details");
       return;
     }
@@ -66,27 +72,56 @@ const AddressPage = () => {
           <div style={styles.formGrid}>
             <label style={styles.field}>
               <FaUser />
-              <input type="text" name="name" placeholder="Full Name" value={form.name} onChange={handleChange} />
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={form.name}
+                onChange={handleChange}
+              />
             </label>
 
             <label style={styles.field}>
               <FaPhoneAlt />
-              <input type="text" name="phone" placeholder="Phone Number" value={form.phone} onChange={handleChange} />
+              <input
+                type="text"
+                name="phone"
+                placeholder="Phone Number"
+                value={form.phone}
+                onChange={handleChange}
+              />
             </label>
 
             <label style={{ ...styles.field, ...styles.fullField }}>
               <FaMapMarkerAlt />
-              <textarea name="address" placeholder="Street / Area" value={form.address} onChange={handleChange} />
+              <textarea
+                name="address"
+                placeholder="Street / Area"
+                value={form.address}
+                onChange={handleChange}
+              />
             </label>
 
             <label style={styles.field}>
               <FaRoute />
-              <input type="text" name="city" placeholder="City" value={form.city} onChange={handleChange} />
+              <input
+                type="text"
+                name="city"
+                placeholder="City"
+                value={form.city}
+                onChange={handleChange}
+              />
             </label>
 
             <label style={styles.field}>
               <FaMapMarkedAlt />
-              <input type="text" name="pincode" placeholder="Pincode" value={form.pincode} onChange={handleChange} />
+              <input
+                type="text"
+                name="pincode"
+                placeholder="Pincode"
+                value={form.pincode}
+                onChange={handleChange}
+              />
             </label>
           </div>
 
@@ -118,7 +153,10 @@ const AddressPage = () => {
             <FaClock />
             <div>
               <h4>Morning Delivery</h4>
-              <p>Fresh dairy products are packed cold and scheduled for fast route delivery.</p>
+              <p>
+                Fresh dairy products are packed cold and scheduled for fast
+                route delivery.
+              </p>
             </div>
           </div>
         </aside>
@@ -149,7 +187,8 @@ const styles = {
     padding: 30,
     border: "1px solid rgba(11,87,164,0.14)",
     borderRadius: 8,
-    background: "linear-gradient(135deg, rgba(255,255,255,0.94), rgba(240,247,255,0.9))",
+    background:
+      "linear-gradient(135deg, rgba(255,255,255,0.94), rgba(240,247,255,0.9))",
     boxShadow: "0 30px 90px rgba(6,35,83,0.13)",
   },
   eyebrow: {
@@ -224,7 +263,8 @@ const styles = {
     padding: 24,
     border: "1px solid rgba(11,87,164,0.12)",
     borderRadius: 8,
-    background: "linear-gradient(145deg, rgba(11,63,138,0.98), rgba(8,120,184,0.92))",
+    background:
+      "linear-gradient(145deg, rgba(11,63,138,0.98), rgba(8,120,184,0.92))",
     color: "#fff",
     boxShadow: "0 30px 90px rgba(6,35,83,0.18)",
   },

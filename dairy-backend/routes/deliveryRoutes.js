@@ -2,9 +2,9 @@ const router = require("express").Router();
 const auth = require("../middleware/authMiddleware");
 
 const {
-    createDelivery,
-    getDeliveries,
-    markDelivered
+  createDelivery,
+  getDeliveries,
+  markDelivered,
 } = require("../controllers/deliveryController");
 
 router.post("/", auth(["admin"]), createDelivery);

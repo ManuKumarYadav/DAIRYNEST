@@ -76,7 +76,11 @@ const Cart = () => {
           ) : (
             cart.map((item, index) => (
               <article key={`${item._id}-${index}`} style={styles.cartCard}>
-                <img src={getImage(item)} alt={item.name} style={styles.image} />
+                <img
+                  src={getImage(item)}
+                  alt={item.name}
+                  style={styles.image}
+                />
 
                 <div style={styles.cartDetails}>
                   <span style={styles.itemBadge}>
@@ -84,7 +88,9 @@ const Cart = () => {
                     Cold packed
                   </span>
                   <h3 style={styles.itemName}>{item.name}</h3>
-                  <p style={styles.itemDesc}>Farm fresh dairy product prepared for delivery.</p>
+                  <p style={styles.itemDesc}>
+                    Farm fresh dairy product prepared for delivery.
+                  </p>
                   <strong style={styles.mainPrice}>
                     <FaRupeeSign />
                     {item.price}
@@ -93,11 +99,19 @@ const Cart = () => {
 
                 <div style={styles.qtyPanel}>
                   <div style={styles.qtyRow}>
-                    <button style={styles.qtyBtn} onClick={() => decreaseQty(index)} aria-label="Decrease quantity">
+                    <button
+                      style={styles.qtyBtn}
+                      onClick={() => decreaseQty(index)}
+                      aria-label="Decrease quantity"
+                    >
                       <FaMinus />
                     </button>
                     <span style={styles.qtyNum}>{item.quantity}</span>
-                    <button style={styles.qtyBtn} onClick={() => increaseQty(index)} aria-label="Increase quantity">
+                    <button
+                      style={styles.qtyBtn}
+                      onClick={() => increaseQty(index)}
+                      aria-label="Increase quantity"
+                    >
                       <FaPlus />
                     </button>
                   </div>
@@ -105,7 +119,10 @@ const Cart = () => {
                     <FaRupeeSign />
                     {item.price * item.quantity}
                   </strong>
-                  <button style={styles.removeBtn} onClick={() => removeItem(index)}>
+                  <button
+                    style={styles.removeBtn}
+                    onClick={() => removeItem(index)}
+                  >
                     <FaTrash />
                     Remove
                   </button>
@@ -129,7 +146,11 @@ const Cart = () => {
             <span>Total</span>
             <strong>Rs {total}</strong>
           </div>
-          <button style={styles.checkoutBtn} onClick={() => navigate("/address")} disabled={cart.length === 0}>
+          <button
+            style={styles.checkoutBtn}
+            onClick={() => navigate("/address")}
+            disabled={cart.length === 0}
+          >
             Proceed To Checkout
             <FaArrowRight />
           </button>
@@ -142,7 +163,9 @@ const Cart = () => {
 const SummaryRow = ({ label, value, tone }) => (
   <div style={styles.summaryRow}>
     <span>{label}</span>
-    <strong style={tone === "green" ? styles.greenText : undefined}>{value}</strong>
+    <strong style={tone === "green" ? styles.greenText : undefined}>
+      {value}
+    </strong>
   </div>
 );
 
@@ -172,7 +195,8 @@ const styles = {
     padding: 28,
     border: "1px solid rgba(11,87,164,0.14)",
     borderRadius: 8,
-    background: "linear-gradient(135deg, rgba(255,255,255,0.94), rgba(240,247,255,0.9))",
+    background:
+      "linear-gradient(135deg, rgba(255,255,255,0.94), rgba(240,247,255,0.9))",
     boxShadow: "0 30px 90px rgba(6,35,83,0.13)",
   },
   eyebrow: {
@@ -312,7 +336,8 @@ const styles = {
     padding: 24,
     border: "1px solid rgba(11,87,164,0.12)",
     borderRadius: 8,
-    background: "linear-gradient(145deg, rgba(11,63,138,0.98), rgba(8,120,184,0.92))",
+    background:
+      "linear-gradient(145deg, rgba(11,63,138,0.98), rgba(8,120,184,0.92))",
     color: "#fff",
     boxShadow: "0 30px 90px rgba(6,35,83,0.18)",
   },

@@ -12,11 +12,10 @@ exports.addMilk = async (req, res) => {
 
     const milk = await Milk.create({
       quantity: Number(quantity),
-      date: new Date()
+      date: new Date(),
     });
 
     res.json({ msg: "Milk added successfully", milk });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -51,14 +50,13 @@ exports.addProduction = async (req, res) => {
       productName: product.name,
       quantity: Number(quantity),
       milkUsed: Number(milkUsed),
-      date: new Date()
+      date: new Date(),
     });
 
     res.json({
       msg: "Production added & stock updated",
-      production
+      production,
     });
-
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

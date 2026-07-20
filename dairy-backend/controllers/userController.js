@@ -21,7 +21,7 @@ exports.createStaff = async (req, res) => {
       email,
       password: hash,
       role: "staff",
-      isDeleted: false
+      isDeleted: false,
     });
 
     res.json(user);
@@ -33,7 +33,7 @@ exports.getStaff = async (req, res) => {
   try {
     const staff = await User.find({
       role: "staff",
-      isDeleted: false
+      isDeleted: false,
     });
 
     res.json(staff);
@@ -44,7 +44,7 @@ exports.getStaff = async (req, res) => {
 exports.deleteStaff = async (req, res) => {
   try {
     await User.findByIdAndUpdate(req.params.id, {
-      isDeleted: true
+      isDeleted: true,
     });
 
     res.json({ msg: "Staff deleted" });

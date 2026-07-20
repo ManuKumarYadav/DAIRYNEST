@@ -37,7 +37,6 @@ router.post("/", async (req, res) => {
       success: true,
       data: savedOrder,
     });
-
   } catch (err) {
     console.log("CREATE ERROR:", err);
     res.status(500).json({
@@ -55,7 +54,6 @@ router.get("/", async (req, res) => {
       success: true,
       data: orders,
     });
-
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -71,7 +69,6 @@ router.get("/shop/:owner", async (req, res) => {
       success: true,
       data: orders,
     });
-
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -82,11 +79,10 @@ router.put("/:id", async (req, res) => {
     const updated = await Order.findByIdAndUpdate(
       req.params.id,
       { status: req.body.status },
-      { new: true }
+      { new: true },
     );
 
     res.json({ success: true, data: updated });
-
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -97,7 +93,6 @@ router.delete("/:id", async (req, res) => {
     await Order.findByIdAndDelete(req.params.id);
 
     res.json({ success: true });
-
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

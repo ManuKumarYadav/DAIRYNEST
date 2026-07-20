@@ -2,10 +2,10 @@ const router = require("express").Router();
 const auth = require("../middleware/authMiddleware");
 
 const {
-    addProduct,
-    getProducts,
-    updateProduct,
-    deleteProduct
+  addProduct,
+  getProducts,
+  updateProduct,
+  deleteProduct,
 } = require("../controllers/inventoryController");
 
 router.post("/", auth(["admin"]), addProduct);

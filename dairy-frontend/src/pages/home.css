@@ -18,7 +18,10 @@ body {
     linear-gradient(90deg, rgba(23, 82, 170, 0.06) 1px, transparent 1px),
     linear-gradient(rgba(23, 82, 170, 0.06) 1px, transparent 1px),
     linear-gradient(135deg, #ffffff 0%, #e8f6ff 44%, #fff7d9 100%);
-  background-size: 46px 46px, 46px 46px, auto;
+  background-size:
+    46px 46px,
+    46px 46px,
+    auto;
 }
 
 .amul-hero,
@@ -103,7 +106,10 @@ body {
   cursor: pointer;
   font-size: 15px;
   font-weight: 900;
-  transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    background 0.22s ease;
 }
 
 .primary-cta {
@@ -151,7 +157,11 @@ body {
   border-radius: 8px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.92), transparent 11rem),
+    radial-gradient(
+      circle at 30% 24%,
+      rgba(255, 255, 255, 0.92),
+      transparent 11rem
+    ),
     linear-gradient(155deg, #0b57a4 0%, #0f76bc 50%, #ffd43b 51%, #ffffff 100%);
   box-shadow: 0 34px 90px rgba(11, 63, 138, 0.2);
 }
@@ -308,7 +318,12 @@ body {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(6, 35, 83, 0.72), rgba(6, 35, 83, 0.18) 46%, rgba(6, 35, 83, 0.42)),
+    linear-gradient(
+      90deg,
+      rgba(6, 35, 83, 0.72),
+      rgba(6, 35, 83, 0.18) 46%,
+      rgba(6, 35, 83, 0.42)
+    ),
     linear-gradient(0deg, rgba(6, 35, 83, 0.72), transparent 48%);
 }
 
@@ -325,7 +340,11 @@ body {
   padding: 14px 16px;
   border-radius: 8px;
   color: #ffffff;
-  background: linear-gradient(135deg, rgba(11, 87, 164, 0.94), rgba(8, 120, 184, 0.86));
+  background: linear-gradient(
+    135deg,
+    rgba(11, 87, 164, 0.94),
+    rgba(8, 120, 184, 0.86)
+  );
   box-shadow: 0 16px 36px rgba(6, 35, 83, 0.22);
 }
 
@@ -638,7 +657,9 @@ body {
   border-radius: 8px;
   color: #0b57a4;
   background: #ffffff;
-  transition: border 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    border 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .auth-form label:focus-within {
@@ -679,7 +700,10 @@ body {
   cursor: pointer;
   font-size: 16px;
   font-weight: 900;
-  transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    opacity 0.22s ease;
 }
 
 .auth-btn:disabled {

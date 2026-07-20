@@ -59,7 +59,7 @@ const AdminOrders = () => {
       delivered: orders.filter((order) => order.status === "Delivered").length,
       cancelled: orders.filter((order) => order.status === "Cancelled").length,
     }),
-    [orders]
+    [orders],
   );
 
   return (
@@ -79,24 +79,37 @@ const AdminOrders = () => {
       </section>
 
       <section style={styles.metricsGrid}>
-        <Metric label="Total Orders" value={counts.total} icon={<FaShoppingBag />} />
+        <Metric
+          label="Total Orders"
+          value={counts.total}
+          icon={<FaShoppingBag />}
+        />
         <Metric label="Pending" value={counts.pending} icon={<FaClock />} />
         <Metric label="Paid" value={counts.paid} icon={<FaReceipt />} />
         <Metric label="Delivered" value={counts.delivered} icon={<FaTruck />} />
-        <Metric label="Cancelled" value={counts.cancelled} icon={<FaTimesCircle />} tone="danger" />
+        <Metric
+          label="Cancelled"
+          value={counts.cancelled}
+          icon={<FaTimesCircle />}
+          tone="danger"
+        />
       </section>
 
       {loading ? (
         <div style={styles.stateCard}>
           <div style={styles.loader}></div>
           <h2 style={styles.stateTitle}>Loading Orders</h2>
-          <p style={styles.stateText}>Fetching the latest DairyNest order activity.</p>
+          <p style={styles.stateText}>
+            Fetching the latest DairyNest order activity.
+          </p>
         </div>
       ) : orders.length === 0 ? (
         <div style={styles.stateCard}>
           <FaBoxOpen style={styles.emptyIcon} />
           <h2 style={styles.stateTitle}>No Orders Found</h2>
-          <p style={styles.stateText}>Orders will appear here once customers place them.</p>
+          <p style={styles.stateText}>
+            Orders will appear here once customers place them.
+          </p>
         </div>
       ) : (
         <section style={styles.grid}>
@@ -111,21 +124,32 @@ const AdminOrders = () => {
               <div
                 style={{
                   ...styles.cardAccent,
-                  ...(order.status === "Cancelled" ? styles.cancelledAccent : {}),
+                  ...(order.status === "Cancelled"
+                    ? styles.cancelledAccent
+                    : {}),
                 }}
               ></div>
               <div style={styles.cardTop}>
                 <div>
-                  <span style={styles.orderId}>#{order._id?.slice(-6) || "ORDER"}</span>
-                  <h2 style={styles.productName}>{order.productName || "Dairy Product"}</h2>
+                  <span style={styles.orderId}>
+                    #{order._id?.slice(-6) || "ORDER"}
+                  </span>
+                  <h2 style={styles.productName}>
+                    {order.productName || "Dairy Product"}
+                  </h2>
                   <p style={styles.shopName}>
                     <FaStore />
                     {order.shopName || "DairyNest Shop"}
                   </p>
                 </div>
 
-                <span style={{ ...styles.statusBadge, ...getStatusStyle(order.status) }}>
-                {getStatusIcon(order.status)}
+                <span
+                  style={{
+                    ...styles.statusBadge,
+                    ...getStatusStyle(order.status),
+                  }}
+                >
+                  {getStatusIcon(order.status)}
                   {order.status || "Pending"}
                 </span>
               </div>
@@ -135,8 +159,12 @@ const AdminOrders = () => {
                   <FaBoxOpen />
                 </span>
                 <div style={styles.ticketCopy}>
-                  <strong style={styles.ticketTitle}>{order.productName || "Dairy Product"}</strong>
-                  <span style={styles.ticketText}>Fresh dairy order prepared for route dispatch</span>
+                  <strong style={styles.ticketTitle}>
+                    {order.productName || "Dairy Product"}
+                  </strong>
+                  <span style={styles.ticketText}>
+                    Fresh dairy order prepared for route dispatch
+                  </span>
                 </div>
               </div>
 
@@ -157,7 +185,9 @@ const AdminOrders = () => {
                       key={step}
                       style={{
                         ...styles.timelineStep,
-                        ...(isStepReached(order.status, step) ? styles.timelineStepActive : {}),
+                        ...(isStepReached(order.status, step)
+                          ? styles.timelineStepActive
+                          : {}),
                       }}
                     >
                       {step}
@@ -175,7 +205,8 @@ const AdminOrders = () => {
                   </p>
                   <p style={styles.addressRow}>
                     <FaMapMarkerAlt />
-                    {order.address.street}, {order.address.city} - {order.address.pincode}
+                    {order.address.street}, {order.address.city} -{" "}
+                    {order.address.pincode}
                   </p>
                   <p style={styles.addressRow}>
                     <FaPhoneAlt />
@@ -186,22 +217,32 @@ const AdminOrders = () => {
 
               <div style={styles.buttonRow}>
                 {order.status === "Pending" && (
-                  <button style={styles.payBtn} onClick={() => updateStatus(order._id, "Paid")}>
+                  <button
+                    style={styles.payBtn}
+                    onClick={() => updateStatus(order._id, "Paid")}
+                  >
                     Mark Paid
                   </button>
                 )}
 
                 {order.status === "Paid" && (
-                  <button style={styles.deliverBtn} onClick={() => updateStatus(order._id, "Delivered")}>
+                  <button
+                    style={styles.deliverBtn}
+                    onClick={() => updateStatus(order._id, "Delivered")}
+                  >
                     Mark Delivered
                   </button>
                 )}
 
-                {order.status !== "Cancelled" && order.status !== "Delivered" && (
-                  <button style={styles.cancelBtn} onClick={() => updateStatus(order._id, "Cancelled")}>
-                    Cancel Order
-                  </button>
-                )}
+                {order.status !== "Cancelled" &&
+                  order.status !== "Delivered" && (
+                    <button
+                      style={styles.cancelBtn}
+                      onClick={() => updateStatus(order._id, "Cancelled")}
+                    >
+                      Cancel Order
+                    </button>
+                  )}
               </div>
             </article>
           ))}
@@ -212,8 +253,20 @@ const AdminOrders = () => {
 };
 
 const Metric = ({ label, value, icon, tone }) => (
-  <article style={{ ...styles.metricCard, ...(tone === "danger" ? styles.dangerMetricCard : {}) }}>
-    <span style={{ ...styles.metricIcon, ...(tone === "danger" ? styles.dangerMetricIcon : {}) }}>{icon}</span>
+  <article
+    style={{
+      ...styles.metricCard,
+      ...(tone === "danger" ? styles.dangerMetricCard : {}),
+    }}
+  >
+    <span
+      style={{
+        ...styles.metricIcon,
+        ...(tone === "danger" ? styles.dangerMetricIcon : {}),
+      }}
+    >
+      {icon}
+    </span>
     <div>
       <strong style={styles.metricValue}>{value}</strong>
       <p style={styles.metricLabel}>{label}</p>
@@ -322,7 +375,8 @@ const styles = {
   },
   dangerMetricCard: {
     border: "1px solid rgba(220,38,38,0.14)",
-    background: "linear-gradient(135deg, rgba(255,255,255,0.95), rgba(254,242,242,0.92))",
+    background:
+      "linear-gradient(135deg, rgba(255,255,255,0.95), rgba(254,242,242,0.92))",
   },
   metricIcon: {
     display: "grid",

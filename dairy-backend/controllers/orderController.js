@@ -15,10 +15,8 @@ exports.getOrders = async (req, res) => {
 };
 
 exports.updateOrder = async (req, res) => {
-  const order = await Order.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
+  const order = await Order.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
   res.json(order);
 };

@@ -28,7 +28,12 @@ const Navbar = ({ cart = [] }) => {
     if (user.role === "shop") {
       return [
         { label: "Shop", path: "/shop", icon: <FaStore /> },
-        { label: "Cart", path: "/cart", icon: <FaShoppingCart />, badge: cart.length },
+        {
+          label: "Cart",
+          path: "/cart",
+          icon: <FaShoppingCart />,
+          badge: cart.length,
+        },
         { label: "Orders", path: "/orders", icon: <FaBoxOpen /> },
       ];
     }
@@ -74,7 +79,8 @@ const Navbar = ({ cart = [] }) => {
     navigate("/");
   };
 
-  const activeMenu = (path) => (location.pathname === path ? "active-link" : "");
+  const activeMenu = (path) =>
+    location.pathname === path ? "active-link" : "";
   const userInitial = user?.name?.charAt(0)?.toUpperCase() || "U";
 
   return (
@@ -489,7 +495,10 @@ const Navbar = ({ cart = [] }) => {
           </div>
         </div>
 
-        <div className={`mobile-backdrop ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(false)} />
+        <div
+          className={`mobile-backdrop ${menuOpen ? "open" : ""}`}
+          onClick={() => setMenuOpen(false)}
+        />
 
         {user && (
           <div className={`premium-links ${menuOpen ? "open" : ""}`}>
@@ -501,7 +510,9 @@ const Navbar = ({ cart = [] }) => {
               >
                 {item.icon}
                 <span>{item.label}</span>
-                {item.badge > 0 && <span className="cart-badge">{item.badge}</span>}
+                {item.badge > 0 && (
+                  <span className="cart-badge">{item.badge}</span>
+                )}
               </button>
             ))}
           </div>
@@ -518,7 +529,11 @@ const Navbar = ({ cart = [] }) => {
                 </div>
               </div>
 
-              <button className="logout-btn" onClick={handleLogout} aria-label="Logout">
+              <button
+                className="logout-btn"
+                onClick={handleLogout}
+                aria-label="Logout"
+              >
                 <FaSignOutAlt />
                 <span>Logout</span>
               </button>

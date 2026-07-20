@@ -4,8 +4,8 @@ const milkSchema = new mongoose.Schema({
   quantity: Number,
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = mongoose.model("Milk", milkSchema);

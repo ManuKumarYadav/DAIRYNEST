@@ -44,7 +44,13 @@ const highlights = [
   },
 ];
 
-const products = ["Taaza Milk", "Gold Milk", "Fresh Paneer", "Curd", "Pure Ghee"];
+const products = [
+  "Taaza Milk",
+  "Gold Milk",
+  "Fresh Paneer",
+  "Curd",
+  "Pure Ghee",
+];
 
 const productionProducts = [
   {
@@ -78,7 +84,9 @@ const Home = () => {
   const openAuth = (loginMode = true) => {
     setIsLogin(loginMode);
     setTimeout(() => {
-      document.getElementById("auth")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      document
+        .getElementById("auth")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 80);
   };
 
@@ -167,11 +175,19 @@ const Home = () => {
           </p>
 
           <div className="hero-actions">
-            <button className="primary-cta" type="button" onClick={() => openAuth(false)}>
+            <button
+              className="primary-cta"
+              type="button"
+              onClick={() => openAuth(false)}
+            >
               Start account
               <FaArrowRight />
             </button>
-            <button className="secondary-cta" type="button" onClick={() => openAuth(true)}>
+            <button
+              className="secondary-cta"
+              type="button"
+              onClick={() => openAuth(true)}
+            >
               Login
             </button>
           </div>
@@ -233,7 +249,10 @@ const Home = () => {
               <strong>DairyNest</strong>
               <span>Ice cream, paneer, and lassi production</span>
             </div>
-            <div className="product-film-panel" aria-label="DairyNest manufactured dairy products">
+            <div
+              className="product-film-panel"
+              aria-label="DairyNest manufactured dairy products"
+            >
               {productionProducts.map((item) => (
                 <article key={item.name}>
                   <span>{item.icon}</span>
@@ -299,7 +318,9 @@ const Home = () => {
       <section className="auth-section" id="auth">
         <div className="auth-intro">
           <span>Get Started</span>
-          <h2>{isLogin ? "Login to DairyNest" : "Create your DairyNest account"}</h2>
+          <h2>
+            {isLogin ? "Login to DairyNest" : "Create your DairyNest account"}
+          </h2>
           <p>
             Open your dairy workspace for admin dashboards, staff routes, shop
             ordering, and customer deliveries.

@@ -33,7 +33,6 @@ router.post("/create-order", async (req, res) => {
       amount: order.amount,
       currency: order.currency,
     });
-
   } catch (err) {
     console.error("CREATE ORDER ERROR FULL:", err);
 
@@ -45,11 +44,8 @@ router.post("/create-order", async (req, res) => {
 });
 router.post("/verify-payment", (req, res) => {
   try {
-    const {
-      razorpay_order_id,
-      razorpay_payment_id,
-      razorpay_signature,
-    } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+      req.body;
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
       return res.status(400).json({
@@ -68,7 +64,6 @@ router.post("/verify-payment", (req, res) => {
     } else {
       return res.status(400).json({ success: false });
     }
-
   } catch (error) {
     console.error("VERIFY ERROR:", error);
 

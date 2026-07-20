@@ -22,7 +22,7 @@ router.post("/", upload.single("image"), async (req, res) => {
       originalPrice: Number(originalPrice) || 0,
       discount: Number(discount) || 0,
       stock: Number(stock) || 0,
-      image: req.file ? req.file.path : ""
+      image: req.file ? req.file.path : "",
     });
 
     await product.save();

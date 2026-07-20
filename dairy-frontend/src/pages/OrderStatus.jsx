@@ -1,11 +1,7 @@
 import React from "react";
-import {
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const OrderStatus = () => {
-
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -13,198 +9,116 @@ const OrderStatus = () => {
   let orders = location.state?.orders;
 
   if (!orders) {
-
-    const saved =
-      JSON.parse(
-        localStorage.getItem("latestOrders")
-      );
+    const saved = JSON.parse(localStorage.getItem("latestOrders"));
 
     orders = saved || [];
   }
 
   if (!orders || orders.length === 0) {
-
     return (
-
       <div className="status-page">
-
         <div className="bg one"></div>
         <div className="bg two"></div>
 
         <div className="empty-card glass">
-
-          <div className="empty-icon">
-            📦
-          </div>
+          <div className="empty-icon">📦</div>
 
           <h1>No Orders Found</h1>
 
-          <p>
-            Looks like you haven't placed
-            any premium dairy orders yet.
-          </p>
+          <p>Looks like you haven't placed any premium dairy orders yet.</p>
 
-          <button
-            className="shop-btn"
-            onClick={() => navigate("/shop")}
-          >
+          <button className="shop-btn" onClick={() => navigate("/shop")}>
             Go To Shop
           </button>
-
         </div>
 
         <Style />
-
       </div>
     );
   }
 
   return (
-
     <div className="status-page">
-
       <div className="bg one"></div>
       <div className="bg two"></div>
 
       <div className="status-container">
-
         {/* TOP */}
 
         <div className="success-section">
+          <div className="success-icon">✓</div>
 
-          <div className="success-icon">
-            ✓
-          </div>
-
-          <span className="badge">
-            Payment Successful
-          </span>
+          <span className="badge">Payment Successful</span>
 
           <h1>
             Order
             <span> Confirmed</span>
           </h1>
 
-          <p>
-            Your premium dairy products
-            are now being prepared and
-            shipped.
-          </p>
-
+          <p>Your premium dairy products are now being prepared and shipped.</p>
         </div>
 
         {/* ORDERS */}
 
         <div className="orders-grid">
+          {orders.map((order, index) => (
+            <div key={index} className="order-card glass">
+              <div className="top-row">
+                <div>
+                  <h2>{order?.productName || "Product"}</h2>
 
-          {
-            orders.map((order, index) => (
-
-              <div
-                key={index}
-                className="order-card glass"
-              >
-
-                <div className="top-row">
-
-                  <div>
-
-                    <h2>
-                      {order?.productName ||
-                        "Product"}
-                    </h2>
-
-                    <p className="shop-name">
-                      🏪
-                      {" "}
-                      {order?.shopName}
-                    </p>
-
-                  </div>
-
-                  <div className="qty-box">
-
-                    x
-                    {order?.quantity}
-
-                  </div>
-
+                  <p className="shop-name">🏪 {order?.shopName}</p>
                 </div>
 
-                <div className="line"></div>
-
-                <div className="status-row">
-
-                  <span>
-                    Order Status
-                  </span>
-
-                  <div className="status-badge">
-                    {order?.status}
-                  </div>
-
-                </div>
-
-                <div className="delivery-box">
-
-                  <h4>
-                    🚚 Delivery Update
-                  </h4>
-
-                  <p>
-                    Your order is packed and
-                    will arrive shortly.
-                  </p>
-
-                </div>
-
-                {/* TRACKING */}
-
-                <div className="tracking">
-
-                  <div className="track-line">
-
-                    <div className="dot active"></div>
-                    <div className="dot active"></div>
-                    <div className="dot"></div>
-
-                  </div>
-
-                  <div className="labels">
-
-                    <span>Placed</span>
-                    <span>Paid</span>
-                    <span>Delivered</span>
-
-                  </div>
-
-                </div>
-
+                <div className="qty-box">x{order?.quantity}</div>
               </div>
-            ))
-          }
 
+              <div className="line"></div>
+
+              <div className="status-row">
+                <span>Order Status</span>
+
+                <div className="status-badge">{order?.status}</div>
+              </div>
+
+              <div className="delivery-box">
+                <h4>🚚 Delivery Update</h4>
+
+                <p>Your order is packed and will arrive shortly.</p>
+              </div>
+
+              {/* TRACKING */}
+
+              <div className="tracking">
+                <div className="track-line">
+                  <div className="dot active"></div>
+                  <div className="dot active"></div>
+                  <div className="dot"></div>
+                </div>
+
+                <div className="labels">
+                  <span>Placed</span>
+                  <span>Paid</span>
+                  <span>Delivered</span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* BUTTON */}
 
-        <button
-          className="view-btn"
-          onClick={() => navigate("/orders")}
-        >
+        <button className="view-btn" onClick={() => navigate("/orders")}>
           View All Orders →
         </button>
-
       </div>
 
       <Style />
-
     </div>
   );
 };
 
 const Style = () => (
-
   <style>{`
 
   *{margin:0;padding:0;box-sizing:border-box;font-family:"Poppins",sans-serif;}

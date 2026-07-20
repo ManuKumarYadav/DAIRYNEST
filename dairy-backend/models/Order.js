@@ -53,16 +53,15 @@ const orderSchema = new mongoose.Schema(
       pincode: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 orderSchema.pre("save", function () {
   if (this.products && this.products.length > 0) {
     this.totalPrice = this.products.reduce(
       (sum, item) => sum + item.price * item.quantity,
-      0
+      0,
     );
   }
 });
 
-module.exports =
-mongoose.models.Order || mongoose.model("Order", orderSchema);
+module.exports = mongoose.models.Order || mongoose.model("Order", orderSchema);

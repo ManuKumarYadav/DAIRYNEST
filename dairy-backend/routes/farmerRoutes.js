@@ -4,7 +4,7 @@ const auth = require("../middleware/authMiddleware");
 const {
   addFarmer,
   getFarmers,
-  deleteFarmer 
+  deleteFarmer,
 } = require("../controllers/farmerController");
 
 router.post("/", auth(["admin"]), addFarmer);

@@ -23,7 +23,11 @@ const AdminDashboard = () => {
   const [products, setProducts] = useState([]);
 
   const [farmerForm, setFarmerForm] = useState({ name: "", village: "" });
-  const [staffForm, setStaffForm] = useState({ name: "", email: "", password: "" });
+  const [staffForm, setStaffForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [productForm, setProductForm] = useState({
     name: "",
     price: "",
@@ -50,7 +54,9 @@ const AdminDashboard = () => {
       setStaff(await sRes.json());
 
       const productData = await pRes.json();
-      setProducts(Array.isArray(productData) ? productData : productData.products || []);
+      setProducts(
+        Array.isArray(productData) ? productData : productData.products || [],
+      );
     } catch (err) {
       console.log(err);
     }
@@ -76,7 +82,13 @@ const AdminDashboard = () => {
       body: formData,
     });
 
-    setProductForm({ name: "", price: "", originalPrice: "", discount: "", image: null });
+    setProductForm({
+      name: "",
+      price: "",
+      originalPrice: "",
+      discount: "",
+      image: null,
+    });
     fetchAll();
   };
 
@@ -170,15 +182,22 @@ const AdminDashboard = () => {
             </span>
             <div>
               <strong style={styles.heroPanelTitle}>Morning Operations</strong>
-              <p style={styles.heroPanelText}>Products, partners, and delivery teams ready for dispatch.</p>
+              <p style={styles.heroPanelText}>
+                Products, partners, and delivery teams ready for dispatch.
+              </p>
             </div>
           </div>
           <div style={styles.controlList}>
             {controlPoints.map((item) => (
-              <span style={styles.controlPill} key={item}>{item}</span>
+              <span style={styles.controlPill} key={item}>
+                {item}
+              </span>
             ))}
           </div>
-          <button style={styles.orderBtn} onClick={() => navigate("/admin/orders")}>
+          <button
+            style={styles.orderBtn}
+            onClick={() => navigate("/admin/orders")}
+          >
             <FaTruck />
             View Orders
           </button>
@@ -200,29 +219,89 @@ const AdminDashboard = () => {
       <section style={styles.formGrid}>
         <form onSubmit={addProduct} style={styles.formCard}>
           <div style={styles.formHeading}>
-            <span style={styles.formIcon}><FaBoxOpen /></span>
+            <span style={styles.formIcon}>
+              <FaBoxOpen />
+            </span>
             <h2 style={styles.cardTitle}>Add Dairy Product</h2>
           </div>
-          <input style={styles.input} placeholder="Product Name" value={productForm.name} onChange={(e) => setProductForm({ ...productForm, name: e.target.value })} />
-          <input style={styles.input} placeholder="Price" value={productForm.price} onChange={(e) => setProductForm({ ...productForm, price: e.target.value })} />
-          <input style={styles.input} placeholder="Original Price" value={productForm.originalPrice} onChange={(e) => setProductForm({ ...productForm, originalPrice: e.target.value })} />
-          <input style={styles.input} placeholder="Discount" value={productForm.discount} onChange={(e) => setProductForm({ ...productForm, discount: e.target.value })} />
+          <input
+            style={styles.input}
+            placeholder="Product Name"
+            value={productForm.name}
+            onChange={(e) =>
+              setProductForm({ ...productForm, name: e.target.value })
+            }
+          />
+          <input
+            style={styles.input}
+            placeholder="Price"
+            value={productForm.price}
+            onChange={(e) =>
+              setProductForm({ ...productForm, price: e.target.value })
+            }
+          />
+          <input
+            style={styles.input}
+            placeholder="Original Price"
+            value={productForm.originalPrice}
+            onChange={(e) =>
+              setProductForm({ ...productForm, originalPrice: e.target.value })
+            }
+          />
+          <input
+            style={styles.input}
+            placeholder="Discount"
+            value={productForm.discount}
+            onChange={(e) =>
+              setProductForm({ ...productForm, discount: e.target.value })
+            }
+          />
           <label style={styles.fileInput}>
             <FaImage />
             <span>{productForm.image?.name || "Upload product image"}</span>
-            <input type="file" style={styles.hiddenFile} onChange={(e) => setProductForm({ ...productForm, image: e.target.files[0] })} />
+            <input
+              type="file"
+              style={styles.hiddenFile}
+              onChange={(e) =>
+                setProductForm({ ...productForm, image: e.target.files[0] })
+              }
+            />
           </label>
           <button style={styles.primaryBtn}>Add Product</button>
         </form>
 
         <form onSubmit={addStaff} style={styles.formCard}>
           <div style={styles.formHeading}>
-            <span style={styles.formIcon}><FaUsers /></span>
+            <span style={styles.formIcon}>
+              <FaUsers />
+            </span>
             <h2 style={styles.cardTitle}>Add Staff Member</h2>
           </div>
-          <input style={styles.input} placeholder="Staff Name" value={staffForm.name} onChange={(e) => setStaffForm({ ...staffForm, name: e.target.value })} />
-          <input style={styles.input} placeholder="Email" value={staffForm.email} onChange={(e) => setStaffForm({ ...staffForm, email: e.target.value })} />
-          <input type="password" style={styles.input} placeholder="Password" value={staffForm.password} onChange={(e) => setStaffForm({ ...staffForm, password: e.target.value })} />
+          <input
+            style={styles.input}
+            placeholder="Staff Name"
+            value={staffForm.name}
+            onChange={(e) =>
+              setStaffForm({ ...staffForm, name: e.target.value })
+            }
+          />
+          <input
+            style={styles.input}
+            placeholder="Email"
+            value={staffForm.email}
+            onChange={(e) =>
+              setStaffForm({ ...staffForm, email: e.target.value })
+            }
+          />
+          <input
+            type="password"
+            style={styles.input}
+            placeholder="Password"
+            value={staffForm.password}
+            onChange={(e) =>
+              setStaffForm({ ...staffForm, password: e.target.value })
+            }
+          />
           <button style={styles.yellowBtn}>
             <FaUserPlus />
             Add Staff
@@ -231,11 +310,27 @@ const AdminDashboard = () => {
 
         <form onSubmit={addFarmer} style={styles.formCard}>
           <div style={styles.formHeading}>
-            <span style={styles.formIcon}><FaSeedling /></span>
+            <span style={styles.formIcon}>
+              <FaSeedling />
+            </span>
             <h2 style={styles.cardTitle}>Add Farmer Partner</h2>
           </div>
-          <input style={styles.input} placeholder="Farmer Name" value={farmerForm.name} onChange={(e) => setFarmerForm({ ...farmerForm, name: e.target.value })} />
-          <input style={styles.input} placeholder="Village" value={farmerForm.village} onChange={(e) => setFarmerForm({ ...farmerForm, village: e.target.value })} />
+          <input
+            style={styles.input}
+            placeholder="Farmer Name"
+            value={farmerForm.name}
+            onChange={(e) =>
+              setFarmerForm({ ...farmerForm, name: e.target.value })
+            }
+          />
+          <input
+            style={styles.input}
+            placeholder="Village"
+            value={farmerForm.village}
+            onChange={(e) =>
+              setFarmerForm({ ...farmerForm, village: e.target.value })
+            }
+          />
           <button style={styles.greenBtn}>
             <FaSeedling />
             Add Farmer
@@ -243,12 +338,22 @@ const AdminDashboard = () => {
         </form>
       </section>
 
-      <SectionTitle title="Dairy Product Catalog" subtitle="Keep product pricing, image, discount, and stock visible." />
+      <SectionTitle
+        title="Dairy Product Catalog"
+        subtitle="Keep product pricing, image, discount, and stock visible."
+      />
       <section style={styles.productGrid}>
         {products.map((p) => (
           <article key={p._id} style={styles.productCard}>
             <div style={styles.imageBox}>
-              <img src={p.image || "https://via.placeholder.com/300x220?text=DairyNest"} alt={p.name} style={styles.image} />
+              <img
+                src={
+                  p.image ||
+                  "https://via.placeholder.com/300x220?text=DairyNest"
+                }
+                alt={p.name}
+                style={styles.image}
+              />
               <span style={styles.discountBadge}>{p.discount || 0}% OFF</span>
             </div>
             <div style={styles.productBody}>
@@ -261,7 +366,10 @@ const AdminDashboard = () => {
                 <span style={styles.oldPrice}>Rs {p.originalPrice}</span>
               </div>
               <p style={styles.stock}>Stock: {p.stock || 0}</p>
-              <button style={styles.deleteBtn} onClick={() => deleteProduct(p._id)}>
+              <button
+                style={styles.deleteBtn}
+                onClick={() => deleteProduct(p._id)}
+              >
                 <FaTrash />
                 Delete Product
               </button>
@@ -270,17 +378,35 @@ const AdminDashboard = () => {
         ))}
       </section>
 
-      <SectionTitle title="Farmer Partners" subtitle="Trusted farm partners supplying fresh milk base." />
+      <SectionTitle
+        title="Farmer Partners"
+        subtitle="Trusted farm partners supplying fresh milk base."
+      />
       <section style={styles.peopleGrid}>
         {farmers.map((f) => (
-          <PeopleCard key={f._id} name={f.name} detail={f.village} icon={<FaSeedling />} onDelete={() => deleteFarmer(f._id)} />
+          <PeopleCard
+            key={f._id}
+            name={f.name}
+            detail={f.village}
+            icon={<FaSeedling />}
+            onDelete={() => deleteFarmer(f._id)}
+          />
         ))}
       </section>
 
-      <SectionTitle title="Staff Members" subtitle="DairyNest operations and delivery management team." />
+      <SectionTitle
+        title="Staff Members"
+        subtitle="DairyNest operations and delivery management team."
+      />
       <section style={styles.peopleGrid}>
         {staff.map((s) => (
-          <PeopleCard key={s._id} name={s.name} detail={s.email} icon={<FaStore />} onDelete={() => deleteStaff(s._id)} />
+          <PeopleCard
+            key={s._id}
+            name={s.name}
+            detail={s.email}
+            icon={<FaStore />}
+            onDelete={() => deleteStaff(s._id)}
+          />
         ))}
       </section>
     </main>

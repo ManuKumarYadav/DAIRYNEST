@@ -67,7 +67,9 @@ const ShopDashboard = ({ setCart }) => {
             <FaLeaf />
             DairyNest Shop
           </span>
-          <h1 style={styles.heading}>Premium dairy products for your daily counter.</h1>
+          <h1 style={styles.heading}>
+            Premium dairy products for your daily counter.
+          </h1>
           <p style={styles.subtitle}>
             Order fresh milk, paneer, curd, ghee, lassi, and ice cream with
             clean packing and reliable morning dispatch.
@@ -102,14 +104,25 @@ const ShopDashboard = ({ setCart }) => {
           <div style={styles.emptyCard}>
             <FaBoxOpen />
             <h2>No Products Available</h2>
-            <p>Fresh DairyNest products will appear here once admin adds them.</p>
+            <p>
+              Fresh DairyNest products will appear here once admin adds them.
+            </p>
           </div>
         ) : (
           products.map((product) => (
             <article key={product._id} style={styles.card}>
               <div style={styles.imageBox}>
-                <img src={product.image || "https://via.placeholder.com/300?text=DairyNest"} alt={product.name} style={styles.image} />
-                {product.discount > 0 && <span style={styles.discount}>{product.discount}% OFF</span>}
+                <img
+                  src={
+                    product.image ||
+                    "https://via.placeholder.com/300?text=DairyNest"
+                  }
+                  alt={product.name}
+                  style={styles.image}
+                />
+                {product.discount > 0 && (
+                  <span style={styles.discount}>{product.discount}% OFF</span>
+                )}
                 <span style={styles.freshBadge}>
                   <FaCheckCircle />
                   Fresh
@@ -118,30 +131,49 @@ const ShopDashboard = ({ setCart }) => {
 
               <div style={styles.details}>
                 <h2 style={styles.name}>{product.name}</h2>
-                <p style={styles.desc}>Premium DairyNest dairy product for shop supply.</p>
+                <p style={styles.desc}>
+                  Premium DairyNest dairy product for shop supply.
+                </p>
 
                 <div style={styles.priceRow}>
                   <strong style={styles.price}>
                     <FaRupeeSign />
                     {product.price}
                   </strong>
-                  {product.originalPrice && <span style={styles.oldPrice}>Rs {product.originalPrice}</span>}
+                  {product.originalPrice && (
+                    <span style={styles.oldPrice}>
+                      Rs {product.originalPrice}
+                    </span>
+                  )}
                 </div>
 
-                <p style={{ ...styles.stock, ...(product.stock === 0 ? styles.outStock : {}) }}>
-                  {product.stock === 0 ? "Out of Stock" : `Stock: ${product.stock}`}
+                <p
+                  style={{
+                    ...styles.stock,
+                    ...(product.stock === 0 ? styles.outStock : {}),
+                  }}
+                >
+                  {product.stock === 0
+                    ? "Out of Stock"
+                    : `Stock: ${product.stock}`}
                 </p>
 
                 <div style={styles.btnRow}>
                   <button
-                    style={{ ...styles.cartBtn, opacity: product.stock === 0 ? 0.5 : 1 }}
+                    style={{
+                      ...styles.cartBtn,
+                      opacity: product.stock === 0 ? 0.5 : 1,
+                    }}
                     disabled={product.stock === 0}
                     onClick={() => addToCart(product)}
                   >
                     <FaCartPlus />
                     Add Cart
                   </button>
-                  <button style={styles.buyBtn} onClick={() => navigate("/cart")}>
+                  <button
+                    style={styles.buyBtn}
+                    onClick={() => navigate("/cart")}
+                  >
                     Buy Now
                   </button>
                 </div>
@@ -175,7 +207,8 @@ const styles = {
     padding: 30,
     border: "1px solid rgba(11,87,164,0.14)",
     borderRadius: 8,
-    background: "linear-gradient(135deg, rgba(255,255,255,0.94), rgba(240,247,255,0.9))",
+    background:
+      "linear-gradient(135deg, rgba(255,255,255,0.94), rgba(240,247,255,0.9))",
     boxShadow: "0 30px 90px rgba(6,35,83,0.13)",
   },
   eyebrow: {
@@ -210,7 +243,8 @@ const styles = {
     padding: 24,
     borderRadius: 8,
     color: "#fff",
-    background: "linear-gradient(145deg, rgba(11,63,138,0.98), rgba(8,120,184,0.92))",
+    background:
+      "linear-gradient(145deg, rgba(11,63,138,0.98), rgba(8,120,184,0.92))",
     boxShadow: "0 24px 60px rgba(11,63,138,0.22)",
   },
   heroPanelIcon: {

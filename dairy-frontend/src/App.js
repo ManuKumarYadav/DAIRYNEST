@@ -9,7 +9,6 @@ import OrderStatus from "./pages/OrderStatus";
 import OrderHistory from "./pages/orderHistory";
 import AddressPage from "./pages/shop/AddressPage";
 
-
 import Home from "./pages/Home";
 
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -39,7 +38,7 @@ function App() {
         {/* PUBLIC */}
         <Route path="/" element={<Home />} />
         <Route path="/admin/orders" element={<AdminOrders />} />
-        <Route path="/payment" element={<PaymentPage />} />   
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/order-status" element={<OrderStatus />} />
         <Route path="/orders" element={<OrderHistory />} />
         <Route path="/address" element={<AddressPage />} />

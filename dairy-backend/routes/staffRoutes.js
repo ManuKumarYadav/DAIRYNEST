@@ -7,11 +7,10 @@ const {
   addMilk,
   getMilk,
   addProduction,
-  getProduction
+  getProduction,
 } = require("../controllers/staffController");
 
 router.post("/milk", auth(["staff"]), addMilk);
-
 
 router.get("/milk", auth(["staff"]), getMilk);
 

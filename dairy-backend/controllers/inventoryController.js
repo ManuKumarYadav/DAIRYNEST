@@ -6,7 +6,7 @@ exports.addProduct = async (req, res) => {
     const product = await Inventory.create({
       productName,
       price,
-      stock: 0
+      stock: 0,
     });
 
     res.json(product);
@@ -16,33 +16,31 @@ exports.addProduct = async (req, res) => {
 };
 
 exports.getProducts = async (req, res) => {
-    try {
-        const products = await Inventory.find();
-        res.json(products);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+  try {
+    const products = await Inventory.find();
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 exports.updateProduct = async (req, res) => {
-    try {
-        const product = await Inventory.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
+  try {
+    const product = await Inventory.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
 
-        res.json(product);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 exports.deleteProduct = async (req, res) => {
-    try {
-        await Inventory.findByIdAndDelete(req.params.id);
-        res.json({ msg: "Product deleted" });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+  try {
+    await Inventory.findByIdAndDelete(req.params.id);
+    res.json({ msg: "Product deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };

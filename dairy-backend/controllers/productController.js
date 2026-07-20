@@ -10,13 +10,13 @@ exports.addProduct = async (req, res) => {
     discount = Number(discount);
 
     if (!name || !price) {
-      return res.status(400).json({ msg: "Name & Price required ❌" });
+      return res.status(400).json({ msg: "Name & Price required" });
     }
 
     const exists = await Product.findOne({ name: name.toLowerCase() });
 
     if (exists) {
-      return res.status(400).json({ msg: "Product already exists ❌" });
+      return res.status(400).json({ msg: "Product already exists" });
     }
 
     const product = await Product.create({
@@ -25,11 +25,10 @@ exports.addProduct = async (req, res) => {
       originalPrice,
       discount,
       image,
-      stock: 0
+      stock: 0,
     });
 
     res.json(product);
-
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err.message });
