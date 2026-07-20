@@ -18,7 +18,3 @@ DairyNest/
 ├── dairy-frontend/
 └── dairy-backend/
 ```
-
-##  Author
-
-**Manu Kumar Yadav**
