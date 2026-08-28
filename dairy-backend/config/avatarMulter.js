@@ -9,7 +9,12 @@ const storage = multer.diskStorage({
   destination: (_req, _file, cb) => cb(null, avatarDir),
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname).toLowerCase() || ".jpg";
-    cb(null, `${String(req.user?.id || "user").replace(/[^a-zA-Z0-9]/g, "").slice(0, 24)}-${Date.now()}${ext}`);
+    cb(
+      null,
+      `${String(req.user?.id || "user")
+        .replace(/[^a-zA-Z0-9]/g, "")
+        .slice(0, 24)}-${Date.now()}${ext}`,
+    );
   },
 });
 

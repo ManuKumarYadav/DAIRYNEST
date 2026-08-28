@@ -1,12 +1,24 @@
 .dn-address-page {
   min-height: 100vh;
   padding: 100px clamp(16px, 4vw, 48px) 60px;
-  background: 
-    radial-gradient(circle at 90% 10%, rgba(255, 212, 59, 0.22), transparent 28rem),
-    radial-gradient(circle at 10% 30%, rgba(8, 120, 184, 0.16), transparent 30rem),
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(255, 212, 59, 0.22),
+      transparent 28rem
+    ),
+    radial-gradient(
+      circle at 10% 30%,
+      rgba(8, 120, 184, 0.16),
+      transparent 30rem
+    ),
     linear-gradient(135deg, #f7faff 0%, #eaf4ff 50%, #fffbf0 100%);
   color: #0d213f;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
 }
 
 .dn-address-header-wrap {
@@ -108,7 +120,9 @@
   border: 1px solid rgba(11, 87, 164, 0.12);
   box-shadow: 0 16px 40px rgba(11, 63, 138, 0.07);
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 /* Map Card */
@@ -187,9 +201,18 @@
 }
 
 @keyframes dnPulse {
-  0% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(0.98); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Map Search */
@@ -374,8 +397,14 @@
 }
 
 @keyframes pulseShadow {
-  0% { transform: translateX(-50%) scale(0.6); opacity: 0.8; }
-  100% { transform: translateX(-50%) scale(1.6); opacity: 0; }
+  0% {
+    transform: translateX(-50%) scale(0.6);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(-50%) scale(1.6);
+    opacity: 0;
+  }
 }
 
 /* Detected Pill */

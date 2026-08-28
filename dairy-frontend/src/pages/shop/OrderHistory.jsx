@@ -77,27 +77,41 @@ const OrderHistory = () => {
             <div key={order._id} className="order-card glass">
               <div className="top-section">
                 <div>
-                  <span className={`status ${(order.status || "").toLowerCase()}`}>
+                  <span
+                    className={`status ${(order.status || "").toLowerCase()}`}
+                  >
                     {order.status}
                   </span>
-                  <h2>₹{order.totalPrice || order.products?.reduce((sum, p) => sum + (p.price * p.quantity), 0) || 0}</h2>
+                  <h2>
+                    ₹
+                    {order.totalPrice ||
+                      order.products?.reduce(
+                        (sum, p) => sum + p.price * p.quantity,
+                        0,
+                      ) ||
+                      0}
+                  </h2>
                 </div>
 
-                {order.status !== "Cancelled" && order.status !== "Delivered" && (
-                  <button
-                    className="cancel-btn"
-                    onClick={() => cancelOrder(order._id)}
-                  >
-                    Cancel Order
-                  </button>
-                )}
+                {order.status !== "Cancelled" &&
+                  order.status !== "Delivered" && (
+                    <button
+                      className="cancel-btn"
+                      onClick={() => cancelOrder(order._id)}
+                    >
+                      Cancel Order
+                    </button>
+                  )}
               </div>
 
               <div className="products-grid">
                 {order.products?.map((item, i) => (
                   <div key={i} className="product-card">
                     <div className="img-box">
-                      <img src={getImageUrl(item.image)} alt={item.productName} />
+                      <img
+                        src={getImageUrl(item.image)}
+                        alt={item.productName}
+                      />
                     </div>
 
                     <div className="product-info">

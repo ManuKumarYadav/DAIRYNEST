@@ -5,7 +5,6 @@ const API = axios.create({
   baseURL: API_BASE_URL,
 });
 
-// Request interceptor to attach JWT token
 API.interceptors.request.use(
   (config) => {
     try {
@@ -13,12 +12,10 @@ API.interceptors.request.use(
       if (user && user.token) {
         config.headers.Authorization = `Bearer ${user.token}`;
       }
-    } catch (e) {
-      // ignore JSON parse errors
-    }
+    } catch (e) {}
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 export default API;

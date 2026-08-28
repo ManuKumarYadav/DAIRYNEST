@@ -29,30 +29,29 @@ const PaymentPage = () => {
 
   const total = cart.reduce(
     (sum, item) => sum + (item.price || 0) * (item.quantity || 0),
-    0
+    0,
   );
 
   const handlePayment = async () => {
     if (!window.Razorpay) {
-      alert("Razorpay SDK is still loading or unavailable. Please check your internet connection.");
+      alert(
+        "Razorpay SDK is still loading or unavailable. Please check your internet connection.",
+      );
       return;
     }
 
     try {
       setLoading(true);
 
-      const res = await fetch(
-        `${API_BASE_URL}/api/payment/create-order`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: total,
-          }),
-        }
-      );
+      const res = await fetch(`${API_BASE_URL}/api/payment/create-order`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: total,
+        }),
+      });
 
       const data = await res.json();
 
@@ -78,7 +77,7 @@ const PaymentPage = () => {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify(response),
-              }
+              },
             );
 
             const verifyData = await verifyRes.json();
@@ -88,26 +87,23 @@ const PaymentPage = () => {
               return;
             }
 
-            const saveRes = await fetch(
-              `${API_BASE_URL}/api/orders`,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  shopName: "DairyNest",
-                  shopOwner: user?.name || "guest",
-                  address: address,
-                  products: cart.map((item) => ({
-                    productName: item.name || item.productName,
-                    quantity: item.quantity,
-                    price: item.price,
-                    image: item.image,
-                  })),
-                }),
-              }
-            );
+            const saveRes = await fetch(`${API_BASE_URL}/api/orders`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                shopName: "DairyNest",
+                shopOwner: user?.name || "guest",
+                address: address,
+                products: cart.map((item) => ({
+                  productName: item.name || item.productName,
+                  quantity: item.quantity,
+                  price: item.price,
+                  image: item.image,
+                })),
+              }),
+            });
 
             const saved = await saveRes.json();
 
@@ -153,14 +149,23 @@ const PaymentPage = () => {
       <div className="bg one"></div>
       <div className="bg two"></div>
 
-      <div style={{ maxWidth: "1100px", margin: "0 auto", padding: "0 clamp(12px, 4vw, 40px)", paddingTop: "90px", position: "relative", zIndex: 10 }}>
+      <div
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          padding: "0 clamp(12px, 4vw, 40px)",
+          paddingTop: "90px",
+          position: "relative",
+          zIndex: 10,
+        }}
+      >
         <BackButton to="/address" label="Back to Address" />
       </div>
 
       <div className="payment-container">
-        {/* LEFT */}
+        {}
         <div className="left-section">
-          {/* ADDRESS */}
+          {}
           <div className="glass address-card">
             <span className="badge">📍 Delivery Address</span>
             <h2>Shipping Details</h2>
@@ -179,13 +184,16 @@ const PaymentPage = () => {
             )}
           </div>
 
-          {/* PRODUCTS */}
+          {}
           <div className="glass products-card">
             <h2>🛒 Order Items</h2>
 
             {cart.map((item, i) => (
               <div key={i} className="item-card">
-                <img src={getImageUrl(item.image)} alt={item.name || item.productName} />
+                <img
+                  src={getImageUrl(item.image)}
+                  alt={item.name || item.productName}
+                />
                 <div className="item-info">
                   <h3>{item.name || item.productName}</h3>
                   <p>Qty: {item.quantity}</p>
@@ -196,7 +204,7 @@ const PaymentPage = () => {
           </div>
         </div>
 
-        {/* RIGHT */}
+        {}
         <div className="right-section">
           <div className="glass summary">
             <div className="top-dots">

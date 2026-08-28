@@ -218,12 +218,14 @@ const StaffDashboard = () => {
           label="Total Milk In (L)"
           value={fmt(summary.totalIn)}
         />
+
         <SummaryCard
           color="#f59e0b"
           icon="⚗️"
           label="Total Milk Used (L)"
           value={fmt(summary.totalUsed)}
         />
+
         <SummaryCard
           color={summary.balance < 50 ? "#ef4444" : "#22c55e"}
           icon="📊"
@@ -231,6 +233,7 @@ const StaffDashboard = () => {
           value={fmt(summary.balance)}
           alert={summary.balance < 50 ? "Low stock!" : null}
         />
+
         <SummaryCard
           color="#8b5cf6"
           icon="🏭"
@@ -242,12 +245,14 @@ const StaffDashboard = () => {
             ).length
           }
         />
+
         <SummaryCard
           color="#0b57a4"
           icon="🌾"
           label="Farmer Partners"
           value={farmers.length}
         />
+
         <SummaryCard
           color="#ec4899"
           icon="📦"

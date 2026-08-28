@@ -47,7 +47,7 @@ const OrderStatus = () => {
       </div>
 
       <div className="status-container">
-        {/* TOP */}
+        {}
         <div className="success-section">
           <div className="success-icon">✓</div>
           <span className="badge">Payment Successful</span>
@@ -58,7 +58,7 @@ const OrderStatus = () => {
           <p>Your premium dairy products are now being prepared and shipped.</p>
         </div>
 
-        {/* ORDERS */}
+        {}
         <div className="orders-grid">
           {orders.map((order, index) => (
             <div key={index} className="order-card glass">
@@ -83,7 +83,7 @@ const OrderStatus = () => {
                 <p>Your order is packed and will arrive shortly.</p>
               </div>
 
-              {/* TRACKING */}
+              {}
               <div className="tracking">
                 <div className="track-line">
                   <div className="dot active"></div>
@@ -101,7 +101,7 @@ const OrderStatus = () => {
           ))}
         </div>
 
-        {/* BUTTON */}
+        {}
         <button className="view-btn" onClick={() => navigate("/orders")}>
           View All Orders →
         </button>

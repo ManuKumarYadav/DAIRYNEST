@@ -24,7 +24,6 @@ import {
 } from "react-icons/fa";
 import BackButton from "../../components/BackButton";
 
-// Create custom animated DairyNest delivery pin icon
 const createCustomPin = () => {
   return L.divIcon({
     className: "dn-custom-marker-wrapper",
@@ -42,12 +41,11 @@ const createCustomPin = () => {
   });
 };
 
-const DEFAULT_COORDS = { lat: 26.6508, lng: 84.9089 }; // Motihari / Bihar default
+const DEFAULT_COORDS = { lat: 26.6508, lng: 84.9089 };
 
 const AddressPage = () => {
   const navigate = useNavigate();
 
-  // Form state
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -65,7 +63,6 @@ const AddressPage = () => {
     lng: DEFAULT_COORDS.lng,
   });
 
-  // Map state
   const [coords, setCoords] = useState(DEFAULT_COORDS);
   const [locating, setLocating] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -78,7 +75,6 @@ const AddressPage = () => {
   const mapInstanceRef = useRef(null);
   const markerRef = useRef(null);
 
-  // Reverse Geocoding with OpenStreetMap Nominatim
   const reverseGeocode = useCallback(async (lat, lng) => {
     setGeocoding(true);
     try {
@@ -88,7 +84,7 @@ const AddressPage = () => {
           headers: {
             "Accept-Language": "en",
           },
-        }
+        },
       );
       const data = await res.json();
       if (data && data.address) {
@@ -127,17 +123,18 @@ const AddressPage = () => {
     }
   }, []);
 
-  // Update marker & pan if coords change externally
-  const updateMapPosition = useCallback((lat, lng, zoom = 16) => {
-    setCoords({ lat, lng });
-    if (mapInstanceRef.current && markerRef.current) {
-      mapInstanceRef.current.flyTo([lat, lng], zoom, { duration: 1.2 });
-      markerRef.current.setLatLng([lat, lng]);
-    }
-    reverseGeocode(lat, lng);
-  }, [reverseGeocode]);
+  const updateMapPosition = useCallback(
+    (lat, lng, zoom = 16) => {
+      setCoords({ lat, lng });
+      if (mapInstanceRef.current && markerRef.current) {
+        mapInstanceRef.current.flyTo([lat, lng], zoom, { duration: 1.2 });
+        markerRef.current.setLatLng([lat, lng]);
+      }
+      reverseGeocode(lat, lng);
+    },
+    [reverseGeocode],
+  );
 
-  // Initialize from user & saved address on mount
   useEffect(() => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -182,12 +179,10 @@ const AddressPage = () => {
     }
   }, [navigate]);
 
-  // Initialize Leaflet Map (Run once on mount, clean up safely on unmount)
   useEffect(() => {
     const container = mapContainerRef.current;
     if (!container) return;
 
-    // 1. Destroy existing instance if any
     if (mapInstanceRef.current) {
       try {
         mapInstanceRef.current.remove();
@@ -198,7 +193,6 @@ const AddressPage = () => {
       markerRef.current = null;
     }
 
-    // 2. Clear Leaflet ID and child nodes from DOM container
     if (container._leaflet_id) {
       delete container._leaflet_id;
     }
@@ -263,7 +257,6 @@ const AddressPage = () => {
       mapInstanceRef.current = map;
       markerRef.current = marker;
 
-      // Initial reverse geocode
       reverseGeocode(initLat, initLng);
     } catch (err) {
       console.error("Leaflet initialization error:", err);
@@ -282,7 +275,6 @@ const AddressPage = () => {
     };
   }, [reverseGeocode]);
 
-  // Locate Current GPS Position
   const handleUseCurrentLocation = () => {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by your browser");
@@ -299,15 +291,14 @@ const AddressPage = () => {
       (error) => {
         console.error("GPS error:", error);
         alert(
-          "Could not detect location. Please check browser location permissions or enter address manually."
+          "Could not detect location. Please check browser location permissions or enter address manually.",
         );
         setLocating(false);
       },
-      { enableHighAccuracy: true, timeout: 10000 }
+      { enableHighAccuracy: true, timeout: 10000 },
     );
   };
 
-  // Search places via Nominatim Search API
   const handleSearchPlaces = async (e) => {
     e?.preventDefault();
     if (!searchQuery.trim()) return;
@@ -316,13 +307,13 @@ const AddressPage = () => {
     try {
       const res = await fetch(
         `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-          searchQuery
+          searchQuery,
         )}&countrycodes=in&limit=5`,
         {
           headers: {
             "Accept-Language": "en",
           },
-        }
+        },
       );
       const data = await res.json();
       setSearchResults(data || []);
@@ -341,13 +332,11 @@ const AddressPage = () => {
     setSearchQuery(result.display_name.split(",")[0]);
   };
 
-  // Handle Form Change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Submit and save
   const handleContinue = () => {
     if (!form.name.trim()) {
       alert("Please enter recipient name");
@@ -370,7 +359,6 @@ const AddressPage = () => {
       return;
     }
 
-    // Compose formatted street address for backwards-compatibility with backend
     const fullStreetAddress = [
       form.houseNo,
       form.street,
@@ -398,7 +386,7 @@ const AddressPage = () => {
 
   return (
     <main className="dn-address-page">
-      {/* Top Header Navigation */}
+      {}
       <div className="dn-address-header-wrap">
         <BackButton to="/cart" label="Back to Cart" />
         <div className="dn-checkout-stepper">
@@ -420,9 +408,9 @@ const AddressPage = () => {
       </div>
 
       <div className="dn-address-layout">
-        {/* Left Column: Map + Form */}
+        {}
         <section className="dn-main-content">
-          {/* MAP SELECTOR CARD */}
+          {}
           <div className="dn-card dn-map-card">
             <div className="dn-card-header">
               <div className="dn-header-title">
@@ -431,7 +419,10 @@ const AddressPage = () => {
                 </span>
                 <div>
                   <h2>Select Delivery Location</h2>
-                  <p>Move the pin or search to pinpoint your exact doorstep for fresh milk delivery</p>
+                  <p>
+                    Move the pin or search to pinpoint your exact doorstep for
+                    fresh milk delivery
+                  </p>
                 </div>
               </div>
               <button
@@ -445,7 +436,7 @@ const AddressPage = () => {
               </button>
             </div>
 
-            {/* Map Search Bar */}
+            {}
             <form onSubmit={handleSearchPlaces} className="dn-map-search-bar">
               <FaSearch className="dn-search-icon" />
               <input
@@ -454,6 +445,7 @@ const AddressPage = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
+
               {searchQuery && (
                 <button
                   type="button"
@@ -468,7 +460,7 @@ const AddressPage = () => {
               </button>
             </form>
 
-            {/* Search Dropdown Results */}
+            {}
             {searchResults.length > 0 && (
               <div className="dn-search-dropdown">
                 {searchResults.map((item, idx) => (
@@ -479,7 +471,9 @@ const AddressPage = () => {
                   >
                     <FaMapMarkerAlt className="dn-item-icon" />
                     <div>
-                      <div className="dn-item-title">{item.display_name.split(",")[0]}</div>
+                      <div className="dn-item-title">
+                        {item.display_name.split(",")[0]}
+                      </div>
                       <div className="dn-item-sub">{item.display_name}</div>
                     </div>
                   </div>
@@ -487,7 +481,7 @@ const AddressPage = () => {
               </div>
             )}
 
-            {/* Live Leaflet Map Box */}
+            {}
             <div className="dn-leaflet-container-wrapper">
               <div ref={mapContainerRef} className="dn-leaflet-map-element" />
               <div className="dn-map-hint-overlay">
@@ -496,7 +490,7 @@ const AddressPage = () => {
               </div>
             </div>
 
-            {/* Detected Address Pill */}
+            {}
             <div className="dn-detected-pill">
               <div className="dn-detected-content">
                 <FaCheckCircle className="dn-check-icon" />
@@ -505,7 +499,11 @@ const AddressPage = () => {
                     {geocoding ? "Detecting location..." : "Selected Location"}
                   </span>
                   <span className="dn-pill-text">
-                    {detectedLocationName || "Lat: " + coords.lat.toFixed(4) + ", Lng: " + coords.lng.toFixed(4)}
+                    {detectedLocationName ||
+                      "Lat: " +
+                        coords.lat.toFixed(4) +
+                        ", Lng: " +
+                        coords.lng.toFixed(4)}
                   </span>
                 </div>
               </div>
@@ -515,15 +513,18 @@ const AddressPage = () => {
             </div>
           </div>
 
-          {/* FLIPKART STYLE ADDRESS FORM */}
+          {}
           <div className="dn-card dn-form-card">
             <div className="dn-form-section-title">
               <span className="dn-step-pill">Address Details</span>
               <h3>Complete Delivery Details</h3>
-              <p>Please enter detailed information so our delivery partner can reach you promptly</p>
+              <p>
+                Please enter detailed information so our delivery partner can
+                reach you promptly
+              </p>
             </div>
 
-            {/* Address Type Selection */}
+            {}
             <div className="dn-type-selector-wrap">
               <label className="dn-field-label">Save Address As:</label>
               <div className="dn-type-options">
@@ -557,7 +558,7 @@ const AddressPage = () => {
               </div>
             </div>
 
-            {/* Contact Details Grid */}
+            {}
             <div className="dn-fields-grid">
               <div className="dn-field-group">
                 <label className="dn-field-label">Recipient Full Name *</label>
@@ -574,7 +575,9 @@ const AddressPage = () => {
               </div>
 
               <div className="dn-field-group">
-                <label className="dn-field-label">10-digit Mobile Number *</label>
+                <label className="dn-field-label">
+                  10-digit Mobile Number *
+                </label>
                 <div className="dn-input-box">
                   <span className="dn-country-code">+91</span>
                   <input
@@ -604,7 +607,9 @@ const AddressPage = () => {
               </div>
 
               <div className="dn-field-group">
-                <label className="dn-field-label">Alternate Phone (Optional)</label>
+                <label className="dn-field-label">
+                  Alternate Phone (Optional)
+                </label>
                 <div className="dn-input-box">
                   <FaPhoneAlt className="dn-input-icon" />
                   <input
@@ -619,7 +624,9 @@ const AddressPage = () => {
               </div>
 
               <div className="dn-field-group dn-col-span-2">
-                <label className="dn-field-label">Flat, House no., Building, Apartment *</label>
+                <label className="dn-field-label">
+                  Flat, House no., Building, Apartment *
+                </label>
                 <div className="dn-input-box">
                   <FaHome className="dn-input-icon" />
                   <input
@@ -633,7 +640,9 @@ const AddressPage = () => {
               </div>
 
               <div className="dn-field-group dn-col-span-2">
-                <label className="dn-field-label">Area, Street, Sector, Village *</label>
+                <label className="dn-field-label">
+                  Area, Street, Sector, Village *
+                </label>
                 <div className="dn-input-box">
                   <FaMapMarkerAlt className="dn-input-icon" />
                   <input
@@ -675,9 +684,11 @@ const AddressPage = () => {
               </div>
             </div>
 
-            {/* Delivery Instructions Options */}
+            {}
             <div className="dn-instructions-wrap">
-              <label className="dn-field-label">Delivery Instructions for Dairy Partner:</label>
+              <label className="dn-field-label">
+                Delivery Instructions for Dairy Partner:
+              </label>
               <div className="dn-instruction-chips">
                 {[
                   { text: "Leave at door", icon: <FaDoorOpen /> },
@@ -700,24 +711,29 @@ const AddressPage = () => {
           </div>
         </section>
 
-        {/* Right Column: Sticky Summary & Preview Card */}
+        {}
         <aside className="dn-sidebar-summary">
           <div className="dn-card dn-preview-card">
             <div className="dn-preview-badge-row">
               <span className="dn-brand-pill">
                 <FaTruck /> DairyNest Direct
               </span>
-              <span className="dn-type-badge">{form.addressType.toUpperCase()}</span>
+              <span className="dn-type-badge">
+                {form.addressType.toUpperCase()}
+              </span>
             </div>
 
             <h3 className="dn-preview-heading">Delivery Summary</h3>
 
-            {/* Address Display Box */}
+            {}
             <div className="dn-preview-address-box">
               <div className="dn-recipient-row">
-                <span className="dn-recipient-name">{form.name || "Recipient Name"}</span>
+                <span className="dn-recipient-name">
+                  {form.name || "Recipient Name"}
+                </span>
                 <span className="dn-recipient-phone">
-                  <FaPhoneAlt /> {form.phone ? "+91 " + form.phone : "+91 XXXXXXXXXX"}
+                  <FaPhoneAlt />{" "}
+                  {form.phone ? "+91 " + form.phone : "+91 XXXXXXXXXX"}
                 </span>
               </div>
               <p className="dn-address-body">
@@ -725,9 +741,15 @@ const AddressPage = () => {
                 {form.street ? (
                   <span>{form.street}, </span>
                 ) : (
-                  <span className="dn-placeholder-text">Area / Street not provided yet, </span>
+                  <span className="dn-placeholder-text">
+                    Area / Street not provided yet,{" "}
+                  </span>
                 )}
-                {form.landmark && <span className="dn-landmark-text">Near {form.landmark}, </span>}
+                {form.landmark && (
+                  <span className="dn-landmark-text">
+                    Near {form.landmark},{" "}
+                  </span>
+                )}
                 <span className="dn-city-state">
                   {form.city || "City"} {form.state ? ", " + form.state : ""}{" "}
                   {form.pincode ? "- " + form.pincode : ""}
@@ -736,19 +758,23 @@ const AddressPage = () => {
 
               {form.instruction && (
                 <div className="dn-preview-instruction">
-                  <span className="dn-inst-badge">Note:</span> {form.instruction}
+                  <span className="dn-inst-badge">Note:</span>{" "}
+                  {form.instruction}
                 </div>
               )}
             </div>
 
-            {/* Delivery Guarantee Info */}
+            {}
             <div className="dn-freshness-promise">
               <div className="dn-promise-icon">
                 <FaClock />
               </div>
               <div>
                 <h4>Morning Fresh Slot</h4>
-                <p>Guaranteed cold-chain delivery between <strong>6:00 AM - 8:00 AM</strong></p>
+                <p>
+                  Guaranteed cold-chain delivery between{" "}
+                  <strong>6:00 AM - 8:00 AM</strong>
+                </p>
               </div>
             </div>
 
@@ -763,7 +789,7 @@ const AddressPage = () => {
               </div>
             </div>
 
-            {/* Action CTA Button */}
+            {}
             <button className="dn-deliver-cta-btn" onClick={handleContinue}>
               <span>Deliver Here & Proceed</span>
               <FaArrowRight />

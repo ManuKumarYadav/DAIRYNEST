@@ -58,7 +58,7 @@ const UserDashboard = () => {
         try {
           const meRes = await fetch(
             `${API_BASE_URL}/api/users/me?email=${encodeURIComponent(stored.email || stored.userId || "")}`,
-            { headers }
+            { headers },
           );
           if (meRes.ok) {
             const data = await meRes.json();
@@ -76,10 +76,13 @@ const UserDashboard = () => {
 
         try {
           setLoadingOrders(true);
-          const orderRes = await fetch(`${API_BASE_URL}/api/orders/my`, { headers });
+          const orderRes = await fetch(`${API_BASE_URL}/api/orders/my`, {
+            headers,
+          });
           const orderData = await orderRes.json();
           if (Array.isArray(orderData)) setOrders(orderData);
-          else setOrders(JSON.parse(localStorage.getItem("latestOrders")) || []);
+          else
+            setOrders(JSON.parse(localStorage.getItem("latestOrders")) || []);
         } catch (_) {
           setOrders(JSON.parse(localStorage.getItem("latestOrders")) || []);
         } finally {
@@ -139,7 +142,8 @@ const UserDashboard = () => {
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.msg || data.error || "Could not save profile");
+      if (!res.ok)
+        throw new Error(data.msg || data.error || "Could not save profile");
 
       const safe = persistUser({ ...user, ...data.user });
       setUser(safe);
@@ -151,11 +155,15 @@ const UserDashboard = () => {
           address: safe.address,
           city: safe.city,
           pincode: safe.pincode,
-        })
+        }),
       );
       setProfileMsg("Profile saved.");
     } catch (err) {
-      const fallback = persistUser({ ...user, ...form, name: form.name.trim() });
+      const fallback = persistUser({
+        ...user,
+        ...form,
+        name: form.name.trim(),
+      });
       setUser(fallback);
       localStorage.setItem(
         "address",
@@ -165,9 +173,11 @@ const UserDashboard = () => {
           address: fallback.address,
           city: fallback.city,
           pincode: fallback.pincode,
-        })
+        }),
       );
-      setProfileErr(err.message || "Saved on this device only. Server update failed.");
+      setProfileErr(
+        err.message || "Saved on this device only. Server update failed.",
+      );
     } finally {
       setSaving(false);
     }
@@ -221,9 +231,16 @@ const UserDashboard = () => {
 
   if (!user) return null;
 
-  const totalSpent = orders.reduce((sum, o) => sum + (o.totalAmount || o.amount || 0), 0);
-  const pendingOrders = orders.filter((o) => o.status === "pending" || o.status === "processing").length;
-  const deliveredOrders = orders.filter((o) => o.status === "delivered" || o.status === "Delivered").length;
+  const totalSpent = orders.reduce(
+    (sum, o) => sum + (o.totalAmount || o.amount || 0),
+    0,
+  );
+  const pendingOrders = orders.filter(
+    (o) => o.status === "pending" || o.status === "processing",
+  ).length;
+  const deliveredOrders = orders.filter(
+    (o) => o.status === "delivered" || o.status === "Delivered",
+  ).length;
   const initial = user.name ? user.name.charAt(0).toUpperCase() : "U";
   const avatarSrc = user.avatar ? getImageUrl(user.avatar) : "";
 
@@ -243,8 +260,15 @@ const UserDashboard = () => {
   };
 
   const Avatar = ({ size = 70, className = "" }) => (
-    <div className={`dn-avatar-face ${className}`} style={{ width: size, height: size, fontSize: size * 0.42 }}>
-      {avatarSrc ? <img src={avatarSrc} alt={user.name || "Profile"} /> : initial}
+    <div
+      className={`dn-avatar-face ${className}`}
+      style={{ width: size, height: size, fontSize: size * 0.42 }}
+    >
+      {avatarSrc ? (
+        <img src={avatarSrc} alt={user.name || "Profile"} />
+      ) : (
+        initial
+      )}
     </div>
   );
 
@@ -263,9 +287,13 @@ const UserDashboard = () => {
             <Avatar size={72} />
           </button>
           <div className="dn-dash-intro">
-            <h1 className="dn-dash-welcome">Hello, {user.name?.split(" ")[0] || "Customer"}</h1>
+            <h1 className="dn-dash-welcome">
+              Hello, {user.name?.split(" ")[0] || "Customer"}
+            </h1>
             <p className="dn-dash-email">{user.email || user.userId}</p>
-            <span className="dn-dash-role-badge">{user.role?.toUpperCase() || "SHOP"} ACCOUNT</span>
+            <span className="dn-dash-role-badge">
+              {user.role?.toUpperCase() || "SHOP"} ACCOUNT
+            </span>
           </div>
           <button className="dn-dash-logout-btn" onClick={handleLogout}>
             Sign Out
@@ -294,10 +322,16 @@ const UserDashboard = () => {
           <div className="dn-stat-card accent">
             <div>
               <p className="dn-stat-label">Total Spent</p>
-              <strong className="dn-stat-value">₹{totalSpent.toFixed(0)}</strong>
+              <strong className="dn-stat-value">
+                ₹{totalSpent.toFixed(0)}
+              </strong>
             </div>
           </div>
-          <button type="button" className="dn-stat-card" onClick={() => navigate("/cart")}>
+          <button
+            type="button"
+            className="dn-stat-card"
+            onClick={() => navigate("/cart")}
+          >
             <div>
               <p className="dn-stat-label">Cart Items</p>
               <strong className="dn-stat-value">{cartCount}</strong>
@@ -329,13 +363,21 @@ const UserDashboard = () => {
               </button>
               <button className="dn-qa-card" onClick={() => navigate("/cart")}>
                 <strong>My cart</strong>
-                <p>{cartCount} item{cartCount !== 1 ? "s" : ""} waiting</p>
+                <p>
+                  {cartCount} item{cartCount !== 1 ? "s" : ""} waiting
+                </p>
               </button>
-              <button className="dn-qa-card" onClick={() => setActiveTab("orders")}>
+              <button
+                className="dn-qa-card"
+                onClick={() => setActiveTab("orders")}
+              >
                 <strong>Order history</strong>
                 <p>{orders.length} past orders</p>
               </button>
-              <button className="dn-qa-card" onClick={() => setActiveTab("profile")}>
+              <button
+                className="dn-qa-card"
+                onClick={() => setActiveTab("profile")}
+              >
                 <strong>Edit profile</strong>
                 <p>Name, photo, address</p>
               </button>
@@ -352,21 +394,34 @@ const UserDashboard = () => {
                     return (
                       <div key={order._id || i} className="dn-order-row">
                         <div className="dn-order-id">
-                          <strong>#{(order._id || `ORD-${i + 1}`).slice(-6).toUpperCase()}</strong>
+                          <strong>
+                            #
+                            {(order._id || `ORD-${i + 1}`)
+                              .slice(-6)
+                              .toUpperCase()}
+                          </strong>
                           <span className="dn-order-date">
                             {order.createdAt
-                              ? new Date(order.createdAt).toLocaleDateString("en-IN", {
-                                  day: "numeric",
-                                  month: "short",
-                                  year: "numeric",
-                                })
+                              ? new Date(order.createdAt).toLocaleDateString(
+                                  "en-IN",
+                                  {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric",
+                                  },
+                                )
                               : "Just now"}
                           </span>
                         </div>
-                        <span className="dn-order-status" style={{ background: s.bg, color: s.color }}>
+                        <span
+                          className="dn-order-status"
+                          style={{ background: s.bg, color: s.color }}
+                        >
                           {order.status || "Pending"}
                         </span>
-                        <strong className="dn-order-amount">₹{order.totalAmount || order.amount || 0}</strong>
+                        <strong className="dn-order-amount">
+                          ₹{order.totalAmount || order.amount || 0}
+                        </strong>
                       </div>
                     );
                   })}
@@ -388,7 +443,10 @@ const UserDashboard = () => {
               <div className="dn-empty-state">
                 <h3>No orders yet</h3>
                 <p>Start shopping to see your orders here.</p>
-                <button className="dn-shop-now-btn" onClick={() => navigate("/shop")}>
+                <button
+                  className="dn-shop-now-btn"
+                  onClick={() => navigate("/shop")}
+                >
                   Shop now
                 </button>
               </div>
@@ -399,28 +457,43 @@ const UserDashboard = () => {
                   return (
                     <div key={order._id || i} className="dn-order-row">
                       <div className="dn-order-id">
-                        <strong>#{(order._id || `ORD-${i + 1}`).slice(-6).toUpperCase()}</strong>
+                        <strong>
+                          #
+                          {(order._id || `ORD-${i + 1}`)
+                            .slice(-6)
+                            .toUpperCase()}
+                        </strong>
                         <span className="dn-order-date">
                           {order.createdAt
-                            ? new Date(order.createdAt).toLocaleDateString("en-IN", {
-                                day: "numeric",
-                                month: "short",
-                                year: "numeric",
-                              })
+                            ? new Date(order.createdAt).toLocaleDateString(
+                                "en-IN",
+                                {
+                                  day: "numeric",
+                                  month: "short",
+                                  year: "numeric",
+                                },
+                              )
                             : "Just now"}
                         </span>
                       </div>
                       <div className="dn-order-items-mini">
-                        {(order.items || order.orderItems || []).slice(0, 2).map((it, j) => (
-                          <span key={j} className="dn-item-chip">
-                            {it.productName || it.name || "Item"}
-                          </span>
-                        ))}
+                        {(order.items || order.orderItems || [])
+                          .slice(0, 2)
+                          .map((it, j) => (
+                            <span key={j} className="dn-item-chip">
+                              {it.productName || it.name || "Item"}
+                            </span>
+                          ))}
                       </div>
-                      <span className="dn-order-status" style={{ background: s.bg, color: s.color }}>
+                      <span
+                        className="dn-order-status"
+                        style={{ background: s.bg, color: s.color }}
+                      >
                         {order.status || "Pending"}
                       </span>
-                      <strong className="dn-order-amount">₹{order.totalAmount || order.amount || 0}</strong>
+                      <strong className="dn-order-amount">
+                        ₹{order.totalAmount || order.amount || 0}
+                      </strong>
                     </div>
                   );
                 })}
@@ -452,7 +525,10 @@ const UserDashboard = () => {
                   onChange={handleAvatarPick}
                 />
               </div>
-              <p className="dn-photo-hint">JPG, PNG, or WEBP. Max 2MB. This photo also appears in the top menu.</p>
+              <p className="dn-photo-hint">
+                JPG, PNG, or WEBP. Max 2MB. This photo also appears in the top
+                menu.
+              </p>
             </div>
 
             <form className="dn-profile-form" onSubmit={handleSaveProfile}>
@@ -494,7 +570,12 @@ const UserDashboard = () => {
               </label>
               <label className="dn-field">
                 City
-                <input name="city" value={form.city} onChange={handleFormChange} placeholder="City" />
+                <input
+                  name="city"
+                  value={form.city}
+                  onChange={handleFormChange}
+                  placeholder="City"
+                />
               </label>
               <label className="dn-field">
                 Pincode
@@ -508,14 +589,20 @@ const UserDashboard = () => {
                 />
               </label>
 
-              {profileErr && <p className="dn-form-alert error">{profileErr}</p>}
+              {profileErr && (
+                <p className="dn-form-alert error">{profileErr}</p>
+              )}
               {profileMsg && <p className="dn-form-alert ok">{profileMsg}</p>}
 
               <div className="dn-form-actions">
                 <button type="submit" className="dn-save-btn" disabled={saving}>
                   {saving ? "Saving…" : "Save changes"}
                 </button>
-                <button type="button" className="dn-danger-btn" onClick={handleLogout}>
+                <button
+                  type="button"
+                  className="dn-danger-btn"
+                  onClick={handleLogout}
+                >
                   Sign out
                 </button>
               </div>

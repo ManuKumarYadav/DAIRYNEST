@@ -5,7 +5,6 @@ const cors = require("cors");
 const connectDB = require("./config/db");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
-// IMPORT ROUTES
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const farmerRoutes = require("./routes/farmerRoutes");
@@ -20,19 +19,15 @@ const uploadRoutes = require("./routes/uploadRoutes");
 
 const app = express();
 
-// MIDDLEWARE
 app.use(cors());
 app.use(express.json());
 
-// STATIC FILES
 app.use("/uploads", express.static("uploads"));
 
-// HEALTH CHECK
 app.get("/", (req, res) => {
   res.send("DairyNest Backend Running");
 });
 
-// API ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/farmers", farmerRoutes);
@@ -45,13 +40,11 @@ app.use("/api/staff", staffRoutes);
 app.use("/api/payment", paymentRoutes);
 app.use("/api", uploadRoutes);
 
-// ERROR HANDLERS
 app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-// CONNECT DATABASE AND START SERVER
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

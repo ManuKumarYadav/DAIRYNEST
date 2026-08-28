@@ -36,14 +36,16 @@ exports.createPaymentOrder = async (req, res) => {
 
     res.status(500).json({
       success: false,
-      message: err?.error?.description || err.message || "Order creation failed",
+      message:
+        err?.error?.description || err.message || "Order creation failed",
     });
   }
 };
 
 exports.verifyPayment = (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+      req.body;
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) {
       return res.status(400).json({
@@ -58,9 +60,14 @@ exports.verifyPayment = (req, res) => {
       .digest("hex");
 
     if (generatedSignature === razorpay_signature) {
-      return res.json({ success: true, message: "Payment verified successfully" });
+      return res.json({
+        success: true,
+        message: "Payment verified successfully",
+      });
     } else {
-      return res.status(400).json({ success: false, message: "Invalid payment signature" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid payment signature" });
     }
   } catch (error) {
     console.error("VERIFY PAYMENT ERROR:", error);

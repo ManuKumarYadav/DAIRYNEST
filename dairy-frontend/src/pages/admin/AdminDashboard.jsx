@@ -27,12 +27,22 @@ const AdminDashboard = () => {
   const [farmers, setFarmers] = useState([]);
   const [staff, setStaff] = useState([]);
   const [products, setProducts] = useState([]);
-  const [activePanel, setActivePanel] = useState(null); // 'product' | 'staff' | 'farmer'
+  const [activePanel, setActivePanel] = useState(null);
   const [toast, setToast] = useState("");
 
   const [farmerForm, setFarmerForm] = useState({ name: "", village: "" });
-  const [staffForm, setStaffForm] = useState({ name: "", userId: "", password: "" });
-  const [productForm, setProductForm] = useState({ name: "", price: "", originalPrice: "", discount: "", image: null });
+  const [staffForm, setStaffForm] = useState({
+    name: "",
+    userId: "",
+    password: "",
+  });
+  const [productForm, setProductForm] = useState({
+    name: "",
+    price: "",
+    originalPrice: "",
+    discount: "",
+    image: null,
+  });
 
   const token = localStorage.getItem("token");
 
@@ -44,20 +54,28 @@ const AdminDashboard = () => {
   const fetchAll = useCallback(async () => {
     try {
       const [fRes, sRes, pRes] = await Promise.all([
-        fetch(`${API_BASE}/api/farmers`, { headers: { Authorization: "Bearer " + token } }),
-        fetch(`${API_BASE}/api/users/staff`, { headers: { Authorization: "Bearer " + token } }),
+        fetch(`${API_BASE}/api/farmers`, {
+          headers: { Authorization: "Bearer " + token },
+        }),
+        fetch(`${API_BASE}/api/users/staff`, {
+          headers: { Authorization: "Bearer " + token },
+        }),
         fetch(`${API_BASE}/api/products`),
       ]);
       setFarmers(await fRes.json());
       setStaff(await sRes.json());
       const productData = await pRes.json();
-      setProducts(Array.isArray(productData) ? productData : productData.products || []);
+      setProducts(
+        Array.isArray(productData) ? productData : productData.products || [],
+      );
     } catch (err) {
       console.log(err);
     }
   }, [token]);
 
-  useEffect(() => { fetchAll(); }, [fetchAll]);
+  useEffect(() => {
+    fetchAll();
+  }, [fetchAll]);
 
   const addProduct = async (e) => {
     e.preventDefault();
@@ -75,9 +93,18 @@ const AdminDashboard = () => {
         body: formData,
       });
       const data = await res.json();
-      if (!res.ok) { showToast(data.msg || "Failed to add product"); return; }
+      if (!res.ok) {
+        showToast(data.msg || "Failed to add product");
+        return;
+      }
       showToast("✅ Product added successfully!");
-      setProductForm({ name: "", price: "", originalPrice: "", discount: "", image: null });
+      setProductForm({
+        name: "",
+        price: "",
+        originalPrice: "",
+        discount: "",
+        image: null,
+      });
       setActivePanel(null);
       fetchAll();
     } catch (err) {
@@ -88,20 +115,30 @@ const AdminDashboard = () => {
   const addStaff = async (e) => {
     e.preventDefault();
     if (!staffForm.name || !staffForm.userId || !staffForm.password) {
-      showToast("⚠️ Please fill all fields"); return;
+      showToast("⚠️ Please fill all fields");
+      return;
     }
     const trimmedUserId = staffForm.userId.trim();
-    if (staff.some((s) => s.userId.toLowerCase() === trimmedUserId.toLowerCase())) {
-      showToast(`⚠️ User ID "${trimmedUserId}" already exists`); return;
+    if (
+      staff.some((s) => s.userId.toLowerCase() === trimmedUserId.toLowerCase())
+    ) {
+      showToast(`⚠️ User ID "${trimmedUserId}" already exists`);
+      return;
     }
     try {
       const res = await fetch(`${API_BASE}/api/users/staff`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
         body: JSON.stringify({ ...staffForm, userId: trimmedUserId }),
       });
       const data = await res.json();
-      if (!res.ok) { showToast(data.msg || "Failed to add staff"); return; }
+      if (!res.ok) {
+        showToast(data.msg || "Failed to add staff");
+        return;
+      }
       showToast(`✅ Staff "${data.name}" added!`);
       setStaffForm({ name: "", userId: "", password: "" });
       setActivePanel(null);
@@ -114,16 +151,23 @@ const AdminDashboard = () => {
   const addFarmer = async (e) => {
     e.preventDefault();
     if (!farmerForm.name || !farmerForm.village) {
-      showToast("⚠️ Please fill Farmer Name and Village"); return;
+      showToast("⚠️ Please fill Farmer Name and Village");
+      return;
     }
     try {
       const res = await fetch(`${API_BASE}/api/farmers`, {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: "Bearer " + token },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
         body: JSON.stringify(farmerForm),
       });
       const data = await res.json();
-      if (!res.ok) { showToast(data.msg || "Failed to add farmer"); return; }
+      if (!res.ok) {
+        showToast(data.msg || "Failed to add farmer");
+        return;
+      }
       showToast("✅ Farmer partner added!");
       setFarmerForm({ name: "", village: "" });
       setActivePanel(null);
@@ -137,40 +181,58 @@ const AdminDashboard = () => {
     if (!window.confirm("Delete this product?")) return;
     try {
       const res = await fetch(`${API_BASE}/api/products/${id}`, {
-        method: "DELETE", headers: { Authorization: "Bearer " + token },
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token },
       });
-      if (res.ok) { fetchAll(); showToast("🗑️ Product deleted"); }
-    } catch (err) { console.error(err); }
+      if (res.ok) {
+        fetchAll();
+        showToast("🗑️ Product deleted");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const deleteFarmer = async (id) => {
     if (!window.confirm("Remove this farmer?")) return;
     try {
       const res = await fetch(`${API_BASE}/api/farmers/${id}`, {
-        method: "DELETE", headers: { Authorization: "Bearer " + token },
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token },
       });
-      if (res.ok) { fetchAll(); showToast("🗑️ Farmer removed"); }
-    } catch (err) { console.error(err); }
+      if (res.ok) {
+        fetchAll();
+        showToast("🗑️ Farmer removed");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const deleteStaff = async (id) => {
     if (!window.confirm("Remove this staff member?")) return;
     try {
       const res = await fetch(`${API_BASE}/api/users/staff/${id}`, {
-        method: "DELETE", headers: { Authorization: "Bearer " + token },
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + token },
       });
-      if (res.ok) { fetchAll(); showToast("🗑️ Staff removed"); }
-    } catch (err) { console.error(err); }
+      if (res.ok) {
+        fetchAll();
+        showToast("🗑️ Staff removed");
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const revenue = products.reduce((sum, p) => sum + (Number(p.price) || 0), 0);
 
   return (
     <div className="dn-admin-root">
-      {/* TOAST */}
+      {}
       {toast && <div className="dn-admin-toast">{toast}</div>}
 
-      {/* SIDEBAR */}
+      {}
       <aside className="dn-admin-sidebar">
         <div className="dn-sidebar-brand">
           <div className="dn-sidebar-logo">DN</div>
@@ -185,94 +247,189 @@ const AdminDashboard = () => {
           <button className="dn-sidebar-link active" onClick={() => {}}>
             <FaChartLine /> Dashboard
           </button>
-          <button className="dn-sidebar-link" onClick={() => navigate("/admin/orders")}>
+          <button
+            className="dn-sidebar-link"
+            onClick={() => navigate("/admin/orders")}
+          >
             <FaShoppingBag /> Orders
           </button>
-          <button className="dn-sidebar-link" onClick={() => navigate("/admin/orders")}>
+          <button
+            className="dn-sidebar-link"
+            onClick={() => navigate("/admin/orders")}
+          >
             <FaTruck /> Deliveries
           </button>
 
-          <span className="dn-sidebar-section-label" style={{marginTop:20}}>Quick Add</span>
-          <button className="dn-sidebar-link" onClick={() => setActivePanel(activePanel === "product" ? null : "product")}>
+          <span className="dn-sidebar-section-label" style={{ marginTop: 20 }}>
+            Quick Add
+          </span>
+          <button
+            className="dn-sidebar-link"
+            onClick={() =>
+              setActivePanel(activePanel === "product" ? null : "product")
+            }
+          >
             <FaBoxOpen /> Add Product
           </button>
-          <button className="dn-sidebar-link" onClick={() => setActivePanel(activePanel === "staff" ? null : "staff")}>
+          <button
+            className="dn-sidebar-link"
+            onClick={() =>
+              setActivePanel(activePanel === "staff" ? null : "staff")
+            }
+          >
             <FaUsers /> Add Staff
           </button>
-          <button className="dn-sidebar-link" onClick={() => setActivePanel(activePanel === "farmer" ? null : "farmer")}>
+          <button
+            className="dn-sidebar-link"
+            onClick={() =>
+              setActivePanel(activePanel === "farmer" ? null : "farmer")
+            }
+          >
             <FaSeedling /> Add Farmer
           </button>
         </nav>
 
         <div className="dn-sidebar-hq">
-          <div className="dn-sidebar-hq-icon"><FaLeaf /></div>
+          <div className="dn-sidebar-hq-icon">
+            <FaLeaf />
+          </div>
           <div>
-            <span style={{display:"block",fontSize:11,color:"#94a3b8",fontWeight:700}}>HQ</span>
-            <span style={{display:"block",fontSize:12,color:"#e2e8f0",fontWeight:700}}>Motihari, Bihar</span>
+            <span
+              style={{
+                display: "block",
+                fontSize: 11,
+                color: "#94a3b8",
+                fontWeight: 700,
+              }}
+            >
+              HQ
+            </span>
+            <span
+              style={{
+                display: "block",
+                fontSize: 12,
+                color: "#e2e8f0",
+                fontWeight: 700,
+              }}
+            >
+              Motihari, Bihar
+            </span>
           </div>
         </div>
       </aside>
 
-      {/* MAIN CONTENT */}
+      {}
       <main className="dn-admin-main">
-        {/* HEADER */}
+        {}
         <div className="dn-admin-topbar">
           <div>
             <h1 className="dn-admin-heading">Admin Dashboard</h1>
-            <p className="dn-admin-subheading">Manage DairyNest operations, products, farmers & staff</p>
+            <p className="dn-admin-subheading">
+              Manage DairyNest operations, products, farmers & staff
+            </p>
           </div>
-          <button className="dn-admin-orders-btn" onClick={() => navigate("/admin/orders")}>
+          <button
+            className="dn-admin-orders-btn"
+            onClick={() => navigate("/admin/orders")}
+          >
             <FaTruck /> View Orders <FaArrowRight />
           </button>
         </div>
 
-        {/* METRICS GRID */}
+        {}
         <div className="dn-admin-metrics">
-          <div className="dn-metric-card" style={{background:"linear-gradient(135deg,#0b57a4,#0878b8)"}}>
-            <div className="dn-metric-icon-wrap"><FaBoxOpen /></div>
+          <div
+            className="dn-metric-card"
+            style={{ background: "linear-gradient(135deg,#0b57a4,#0878b8)" }}
+          >
+            <div className="dn-metric-icon-wrap">
+              <FaBoxOpen />
+            </div>
             <div className="dn-metric-content">
               <span className="dn-metric-value">{products.length}</span>
               <span className="dn-metric-label">Total Products</span>
             </div>
-            <div className="dn-metric-bg-icon"><FaBoxOpen /></div>
+            <div className="dn-metric-bg-icon">
+              <FaBoxOpen />
+            </div>
           </div>
-          <div className="dn-metric-card" style={{background:"linear-gradient(135deg,#16a34a,#15803d)"}}>
-            <div className="dn-metric-icon-wrap"><FaSeedling /></div>
+          <div
+            className="dn-metric-card"
+            style={{ background: "linear-gradient(135deg,#16a34a,#15803d)" }}
+          >
+            <div className="dn-metric-icon-wrap">
+              <FaSeedling />
+            </div>
             <div className="dn-metric-content">
               <span className="dn-metric-value">{farmers.length}</span>
               <span className="dn-metric-label">Farmer Partners</span>
             </div>
-            <div className="dn-metric-bg-icon"><FaSeedling /></div>
+            <div className="dn-metric-bg-icon">
+              <FaSeedling />
+            </div>
           </div>
-          <div className="dn-metric-card" style={{background:"linear-gradient(135deg,#7c3aed,#6d28d9)"}}>
-            <div className="dn-metric-icon-wrap"><FaUsers /></div>
+          <div
+            className="dn-metric-card"
+            style={{ background: "linear-gradient(135deg,#7c3aed,#6d28d9)" }}
+          >
+            <div className="dn-metric-icon-wrap">
+              <FaUsers />
+            </div>
             <div className="dn-metric-content">
               <span className="dn-metric-value">{staff.length}</span>
               <span className="dn-metric-label">Staff Members</span>
             </div>
-            <div className="dn-metric-bg-icon"><FaUsers /></div>
+            <div className="dn-metric-bg-icon">
+              <FaUsers />
+            </div>
           </div>
-          <div className="dn-metric-card" style={{background:"linear-gradient(135deg,#d97706,#b45309)"}}>
-            <div className="dn-metric-icon-wrap"><FaRupeeSign /></div>
+          <div
+            className="dn-metric-card"
+            style={{ background: "linear-gradient(135deg,#d97706,#b45309)" }}
+          >
+            <div className="dn-metric-icon-wrap">
+              <FaRupeeSign />
+            </div>
             <div className="dn-metric-content">
-              <span className="dn-metric-value">₹{revenue.toLocaleString()}</span>
+              <span className="dn-metric-value">
+                ₹{revenue.toLocaleString()}
+              </span>
               <span className="dn-metric-label">Catalog Value</span>
             </div>
-            <div className="dn-metric-bg-icon"><FaRupeeSign /></div>
+            <div className="dn-metric-bg-icon">
+              <FaRupeeSign />
+            </div>
           </div>
         </div>
 
-        {/* QUICK ADD PANEL */}
+        {}
         {activePanel && (
           <div className="dn-admin-panel-wrap">
             <div className="dn-admin-panel">
               <div className="dn-panel-header">
                 <h3 className="dn-panel-title">
-                  {activePanel === "product" && <><FaBoxOpen /> Add New Product</>}
-                  {activePanel === "staff" && <><FaUsers /> Add Staff Member</>}
-                  {activePanel === "farmer" && <><FaSeedling /> Register Farmer Partner</>}
+                  {activePanel === "product" && (
+                    <>
+                      <FaBoxOpen /> Add New Product
+                    </>
+                  )}
+                  {activePanel === "staff" && (
+                    <>
+                      <FaUsers /> Add Staff Member
+                    </>
+                  )}
+                  {activePanel === "farmer" && (
+                    <>
+                      <FaSeedling /> Register Farmer Partner
+                    </>
+                  )}
                 </h3>
-                <button className="dn-panel-close" onClick={() => setActivePanel(null)}><FaTimes /></button>
+                <button
+                  className="dn-panel-close"
+                  onClick={() => setActivePanel(null)}
+                >
+                  <FaTimes />
+                </button>
               </div>
 
               {activePanel === "product" && (
@@ -280,33 +437,75 @@ const AdminDashboard = () => {
                   <div className="dn-panel-row">
                     <div className="dn-form-group">
                       <label>Product Name</label>
-                      <input placeholder="e.g. Full Cream Milk 500ml" value={productForm.name}
-                        onChange={(e) => setProductForm({ ...productForm, name: e.target.value })} />
+                      <input
+                        placeholder="e.g. Full Cream Milk 500ml"
+                        value={productForm.name}
+                        onChange={(e) =>
+                          setProductForm({
+                            ...productForm,
+                            name: e.target.value,
+                          })
+                        }
+                      />
                     </div>
                   </div>
                   <div className="dn-panel-row three-col">
                     <div className="dn-form-group">
                       <label>Price (₹)</label>
-                      <input placeholder="e.g. 34" value={productForm.price}
-                        onChange={(e) => setProductForm({ ...productForm, price: e.target.value })} />
+                      <input
+                        placeholder="e.g. 34"
+                        value={productForm.price}
+                        onChange={(e) =>
+                          setProductForm({
+                            ...productForm,
+                            price: e.target.value,
+                          })
+                        }
+                      />
                     </div>
                     <div className="dn-form-group">
                       <label>Original Price (₹)</label>
-                      <input placeholder="e.g. 38" value={productForm.originalPrice}
-                        onChange={(e) => setProductForm({ ...productForm, originalPrice: e.target.value })} />
+                      <input
+                        placeholder="e.g. 38"
+                        value={productForm.originalPrice}
+                        onChange={(e) =>
+                          setProductForm({
+                            ...productForm,
+                            originalPrice: e.target.value,
+                          })
+                        }
+                      />
                     </div>
                     <div className="dn-form-group">
                       <label>Discount %</label>
-                      <input placeholder="e.g. 11% OFF" value={productForm.discount}
-                        onChange={(e) => setProductForm({ ...productForm, discount: e.target.value })} />
+                      <input
+                        placeholder="e.g. 11% OFF"
+                        value={productForm.discount}
+                        onChange={(e) =>
+                          setProductForm({
+                            ...productForm,
+                            discount: e.target.value,
+                          })
+                        }
+                      />
                     </div>
                   </div>
                   <div className="dn-form-group">
                     <label>Product Image</label>
                     <label className="dn-file-btn">
-                      <FaImage /> {productForm.image?.name || "Click to upload product image"}
-                      <input type="file" style={{display:"none"}}
-                        onChange={(e) => setProductForm({ ...productForm, image: e.target.files[0] })} />
+                      <FaImage />{" "}
+                      {productForm.image?.name ||
+                        "Click to upload product image"}
+                      <input
+                        type="file"
+                        style={{ display: "none" }}
+                        onChange={(e) =>
+                          setProductForm({
+                            ...productForm,
+                            image: e.target.files[0],
+                          })
+                        }
+                      />
                     </label>
                   </div>
                   <button type="submit" className="dn-panel-submit-btn blue">
@@ -320,18 +519,37 @@ const AdminDashboard = () => {
                   <div className="dn-panel-row three-col">
                     <div className="dn-form-group">
                       <label>Full Name</label>
-                      <input placeholder="Staff member's name" value={staffForm.name}
-                        onChange={(e) => setStaffForm({ ...staffForm, name: e.target.value })} />
+                      <input
+                        placeholder="Staff member's name"
+                        value={staffForm.name}
+                        onChange={(e) =>
+                          setStaffForm({ ...staffForm, name: e.target.value })
+                        }
+                      />
                     </div>
                     <div className="dn-form-group">
                       <label>User ID</label>
-                      <input placeholder="e.g. EMP101" value={staffForm.userId}
-                        onChange={(e) => setStaffForm({ ...staffForm, userId: e.target.value })} />
+                      <input
+                        placeholder="e.g. EMP101"
+                        value={staffForm.userId}
+                        onChange={(e) =>
+                          setStaffForm({ ...staffForm, userId: e.target.value })
+                        }
+                      />
                     </div>
                     <div className="dn-form-group">
                       <label>Password</label>
-                      <input type="password" placeholder="Set password" value={staffForm.password}
-                        onChange={(e) => setStaffForm({ ...staffForm, password: e.target.value })} />
+                      <input
+                        type="password"
+                        placeholder="Set password"
+                        value={staffForm.password}
+                        onChange={(e) =>
+                          setStaffForm({
+                            ...staffForm,
+                            password: e.target.value,
+                          })
+                        }
+                      />
                     </div>
                   </div>
                   <button type="submit" className="dn-panel-submit-btn yellow">
@@ -345,13 +563,26 @@ const AdminDashboard = () => {
                   <div className="dn-panel-row two-col">
                     <div className="dn-form-group">
                       <label>Farmer's Full Name</label>
-                      <input placeholder="e.g. Rajan Kumar" value={farmerForm.name}
-                        onChange={(e) => setFarmerForm({ ...farmerForm, name: e.target.value })} />
+                      <input
+                        placeholder="e.g. Rajan Kumar"
+                        value={farmerForm.name}
+                        onChange={(e) =>
+                          setFarmerForm({ ...farmerForm, name: e.target.value })
+                        }
+                      />
                     </div>
                     <div className="dn-form-group">
                       <label>Village / District</label>
-                      <input placeholder="e.g. Chhatauni, Motihari" value={farmerForm.village}
-                        onChange={(e) => setFarmerForm({ ...farmerForm, village: e.target.value })} />
+                      <input
+                        placeholder="e.g. Chhatauni, Motihari"
+                        value={farmerForm.village}
+                        onChange={(e) =>
+                          setFarmerForm({
+                            ...farmerForm,
+                            village: e.target.value,
+                          })
+                        }
+                      />
                     </div>
                   </div>
                   <button type="submit" className="dn-panel-submit-btn green">
@@ -363,36 +594,58 @@ const AdminDashboard = () => {
           </div>
         )}
 
-        {/* PRODUCTS */}
+        {}
         <div className="dn-admin-section">
           <div className="dn-section-header">
             <div>
-              <h2 className="dn-section-title"><FaBoxOpen /> Dairy Product Catalog</h2>
-              <p className="dn-section-sub">{products.length} products listed in catalog</p>
+              <h2 className="dn-section-title">
+                <FaBoxOpen /> Dairy Product Catalog
+              </h2>
+              <p className="dn-section-sub">
+                {products.length} products listed in catalog
+              </p>
             </div>
-            <button className="dn-add-fab" onClick={() => setActivePanel("product")}>
+            <button
+              className="dn-add-fab"
+              onClick={() => setActivePanel("product")}
+            >
               <FaPlus /> Add Product
             </button>
           </div>
           <div className="dn-products-grid">
             {products.map((p) => {
               const imgSrc = p.image
-                ? (p.image.startsWith("http") ? p.image : getImageUrl(p.image))
+                ? p.image.startsWith("http")
+                  ? p.image
+                  : getImageUrl(p.image)
                 : "https://via.placeholder.com/300x200?text=DairyNest";
               return (
                 <div key={p._id} className="dn-product-card">
                   <div className="dn-product-img-wrap">
                     <img src={imgSrc} alt={p.name} className="dn-product-img" />
-                    {p.discount && <span className="dn-product-badge">{p.discount}% OFF</span>}
+                    {p.discount && (
+                      <span className="dn-product-badge">
+                        {p.discount}% OFF
+                      </span>
+                    )}
                   </div>
                   <div className="dn-product-body">
                     <h3 className="dn-product-name">{p.name}</h3>
                     <div className="dn-product-price-row">
                       <span className="dn-product-price">₹{p.price}</span>
-                      {p.originalPrice && <span className="dn-product-original">₹{p.originalPrice}</span>}
+                      {p.originalPrice && (
+                        <span className="dn-product-original">
+                          ₹{p.originalPrice}
+                        </span>
+                      )}
                     </div>
-                    <div className="dn-product-stock">Stock: {p.stock || 0} units</div>
-                    <button className="dn-delete-btn" onClick={() => deleteProduct(p._id)}>
+                    <div className="dn-product-stock">
+                      Stock: {p.stock || 0} units
+                    </div>
+                    <button
+                      className="dn-delete-btn"
+                      onClick={() => deleteProduct(p._id)}
+                    >
                       <FaTrash /> Remove
                     </button>
                   </div>
@@ -408,57 +661,89 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* FARMER & STAFF in 2-col */}
+        {}
         <div className="dn-people-grid-2col">
-          {/* FARMERS */}
+          {}
           <div className="dn-admin-section">
             <div className="dn-section-header">
               <div>
-                <h2 className="dn-section-title"><FaSeedling /> Farmer Partners</h2>
-                <p className="dn-section-sub">{farmers.length} registered partner farmers</p>
+                <h2 className="dn-section-title">
+                  <FaSeedling /> Farmer Partners
+                </h2>
+                <p className="dn-section-sub">
+                  {farmers.length} registered partner farmers
+                </p>
               </div>
-              <button className="dn-add-fab green" onClick={() => setActivePanel("farmer")}>
+              <button
+                className="dn-add-fab green"
+                onClick={() => setActivePanel("farmer")}
+              >
                 <FaPlus /> Add
               </button>
             </div>
             <div className="dn-people-list">
               {farmers.map((f) => (
                 <div key={f._id} className="dn-people-card">
-                  <div className="dn-people-avatar green"><FaSeedling /></div>
+                  <div className="dn-people-avatar green">
+                    <FaSeedling />
+                  </div>
                   <div className="dn-people-info">
                     <strong>{f.name}</strong>
                     <span>{f.village}</span>
                   </div>
-                  <button className="dn-people-del" onClick={() => deleteFarmer(f._id)}><FaTrash /></button>
+                  <button
+                    className="dn-people-del"
+                    onClick={() => deleteFarmer(f._id)}
+                  >
+                    <FaTrash />
+                  </button>
                 </div>
               ))}
-              {farmers.length === 0 && <div className="dn-people-empty">No farmers yet</div>}
+              {farmers.length === 0 && (
+                <div className="dn-people-empty">No farmers yet</div>
+              )}
             </div>
           </div>
 
-          {/* STAFF */}
+          {}
           <div className="dn-admin-section">
             <div className="dn-section-header">
               <div>
-                <h2 className="dn-section-title"><FaUsers /> Staff Members</h2>
-                <p className="dn-section-sub">{staff.length} active operations team</p>
+                <h2 className="dn-section-title">
+                  <FaUsers /> Staff Members
+                </h2>
+                <p className="dn-section-sub">
+                  {staff.length} active operations team
+                </p>
               </div>
-              <button className="dn-add-fab purple" onClick={() => setActivePanel("staff")}>
+              <button
+                className="dn-add-fab purple"
+                onClick={() => setActivePanel("staff")}
+              >
                 <FaPlus /> Add
               </button>
             </div>
             <div className="dn-people-list">
               {staff.map((s) => (
                 <div key={s._id} className="dn-people-card">
-                  <div className="dn-people-avatar purple"><FaStore /></div>
+                  <div className="dn-people-avatar purple">
+                    <FaStore />
+                  </div>
                   <div className="dn-people-info">
                     <strong>{s.name}</strong>
                     <span>ID: {s.userId}</span>
                   </div>
-                  <button className="dn-people-del" onClick={() => deleteStaff(s._id)}><FaTrash /></button>
+                  <button
+                    className="dn-people-del"
+                    onClick={() => deleteStaff(s._id)}
+                  >
+                    <FaTrash />
+                  </button>
                 </div>
               ))}
-              {staff.length === 0 && <div className="dn-people-empty">No staff yet</div>}
+              {staff.length === 0 && (
+                <div className="dn-people-empty">No staff yet</div>
+              )}
             </div>
           </div>
         </div>

@@ -16,7 +16,11 @@ exports.createStaff = async (req, res) => {
       userId: { $regex: new RegExp(`^${trimmedUserId}$`, "i") },
     });
     if (exists) {
-      return res.status(400).json({ msg: `User ID "${trimmedUserId}" already exists. Please choose a different User ID.` });
+      return res
+        .status(400)
+        .json({
+          msg: `User ID "${trimmedUserId}" already exists. Please choose a different User ID.`,
+        });
     }
 
     const hash = await bcrypt.hash(password, 10);
@@ -88,12 +92,13 @@ const normalizeId = (raw) => {
 const findAccount = async (req) => {
   const tokenId = normalizeId(req.user?.id) || normalizeId(req.user?._id);
   if (tokenId && mongoose.isValidObjectId(tokenId)) {
-    const byId = (await User.findById(tokenId)) || (await Staff.findById(tokenId));
+    const byId =
+      (await User.findById(tokenId)) || (await Staff.findById(tokenId));
     if (byId) return byId;
   }
 
   const email = String(
-    req.user?.email || req.body?.email || req.query?.email || ""
+    req.user?.email || req.body?.email || req.query?.email || "",
   ).trim();
   if (email) {
     const byEmail =
@@ -104,7 +109,8 @@ const findAccount = async (req) => {
 
   const localId = normalizeId(req.body?.userId);
   if (localId && mongoose.isValidObjectId(localId)) {
-    const byLocal = (await User.findById(localId)) || (await Staff.findById(localId));
+    const byLocal =
+      (await User.findById(localId)) || (await Staff.findById(localId));
     if (byLocal) return byLocal;
   }
 
@@ -127,7 +133,9 @@ exports.updateProfile = async (req, res) => {
   try {
     const account = await findAccount(req);
     if (!account) {
-      return res.status(404).json({ msg: "User not found. Please sign out and sign in again." });
+      return res
+        .status(404)
+        .json({ msg: "User not found. Please sign out and sign in again." });
     }
 
     const name = (req.body.name || "").trim();
@@ -137,7 +145,9 @@ exports.updateProfile = async (req, res) => {
 
     const phone = (req.body.phone || "").trim();
     if (phone && !/^\d{10}$/.test(phone)) {
-      return res.status(400).json({ msg: "Enter a valid 10-digit phone number" });
+      return res
+        .status(400)
+        .json({ msg: "Enter a valid 10-digit phone number" });
     }
 
     account.name = name;
@@ -163,7 +173,9 @@ exports.uploadAvatar = async (req, res) => {
 
     const account = await findAccount(req);
     if (!account) {
-      return res.status(404).json({ msg: "User not found. Please sign out and sign in again." });
+      return res
+        .status(404)
+        .json({ msg: "User not found. Please sign out and sign in again." });
     }
 
     account.avatar = `/uploads/avatars/${req.file.filename}`;

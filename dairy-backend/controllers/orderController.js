@@ -1,6 +1,5 @@
 const Order = require("../models/Order");
 
-// Create new order
 exports.createOrder = async (req, res) => {
   try {
     const { shopName, products, shopOwner, address } = req.body;
@@ -42,7 +41,6 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-// Get all orders
 exports.getOrders = async (req, res) => {
   try {
     const orders = await Order.find().sort({ createdAt: -1 });
@@ -55,7 +53,6 @@ exports.getOrders = async (req, res) => {
   }
 };
 
-// Get orders by shop owner
 exports.getOrdersByShop = async (req, res) => {
   try {
     const orders = await Order.find({
@@ -71,17 +68,18 @@ exports.getOrdersByShop = async (req, res) => {
   }
 };
 
-// Update order status
 exports.updateOrder = async (req, res) => {
   try {
     const updated = await Order.findByIdAndUpdate(
       req.params.id,
       { status: req.body.status },
-      { new: true }
+      { new: true },
     );
 
     if (!updated) {
-      return res.status(404).json({ success: false, message: "Order not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found" });
     }
 
     res.json({ success: true, data: updated });
@@ -90,12 +88,13 @@ exports.updateOrder = async (req, res) => {
   }
 };
 
-// Delete order
 exports.deleteOrder = async (req, res) => {
   try {
     const deleted = await Order.findByIdAndDelete(req.params.id);
     if (!deleted) {
-      return res.status(404).json({ success: false, message: "Order not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Order not found" });
     }
 
     res.json({ success: true, message: "Order deleted successfully" });

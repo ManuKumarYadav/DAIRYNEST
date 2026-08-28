@@ -55,27 +55,35 @@ const AdminOrders = () => {
     }
   };
 
-  useEffect(() => { fetchOrders(); }, [fetchOrders]);
+  useEffect(() => {
+    fetchOrders();
+  }, [fetchOrders]);
 
-  const counts = useMemo(() => ({
-    total: orders.length,
-    pending: orders.filter((o) => o.status === "Pending").length,
-    paid: orders.filter((o) => o.status === "Paid").length,
-    delivered: orders.filter((o) => o.status === "Delivered").length,
-    cancelled: orders.filter((o) => o.status === "Cancelled").length,
-    revenue: orders.filter((o) => o.status !== "Cancelled").reduce((s, o) => s + (o.totalAmount || 0), 0),
-  }), [orders]);
+  const counts = useMemo(
+    () => ({
+      total: orders.length,
+      pending: orders.filter((o) => o.status === "Pending").length,
+      paid: orders.filter((o) => o.status === "Paid").length,
+      delivered: orders.filter((o) => o.status === "Delivered").length,
+      cancelled: orders.filter((o) => o.status === "Cancelled").length,
+      revenue: orders
+        .filter((o) => o.status !== "Cancelled")
+        .reduce((s, o) => s + (o.totalAmount || 0), 0),
+    }),
+    [orders],
+  );
 
   const filtered = useMemo(() => {
     let list = [...orders];
     if (filter !== "All") list = list.filter((o) => o.status === filter);
     if (search.trim()) {
       const q = search.toLowerCase();
-      list = list.filter((o) =>
-        o._id?.toLowerCase().includes(q) ||
-        o.productName?.toLowerCase().includes(q) ||
-        o.shopName?.toLowerCase().includes(q) ||
-        o.address?.name?.toLowerCase().includes(q)
+      list = list.filter(
+        (o) =>
+          o._id?.toLowerCase().includes(q) ||
+          o.productName?.toLowerCase().includes(q) ||
+          o.shopName?.toLowerCase().includes(q) ||
+          o.address?.name?.toLowerCase().includes(q),
       );
     }
     return list;
@@ -85,60 +93,94 @@ const AdminOrders = () => {
 
   return (
     <div className="dn-orders-root">
-      {/* HEADER */}
+      {}
       <div className="dn-orders-topbar">
         <div className="dn-orders-topbar-left">
-          <button className="dn-orders-back-btn" onClick={() => navigate("/admin")}>
+          <button
+            className="dn-orders-back-btn"
+            onClick={() => navigate("/admin")}
+          >
             <FaArrowLeft /> Dashboard
           </button>
           <div>
             <h1 className="dn-orders-heading">Orders Dashboard</h1>
-            <p className="dn-orders-subheading">{orders.length} total orders across all channels</p>
+            <p className="dn-orders-subheading">
+              {orders.length} total orders across all channels
+            </p>
           </div>
         </div>
         <div className="dn-orders-topbar-right">
-          <button className="dn-orders-refresh-btn" onClick={fetchOrders} disabled={loading}>
+          <button
+            className="dn-orders-refresh-btn"
+            onClick={fetchOrders}
+            disabled={loading}
+          >
             <FaSync className={loading ? "spinning" : ""} /> Refresh
           </button>
         </div>
       </div>
 
-      {/* METRICS */}
+      {}
       <div className="dn-orders-metrics">
-        <div className="dn-ord-metric" style={{background:"linear-gradient(135deg,#0b57a4,#0878b8)"}}>
-          <div className="dn-ord-metric-icon"><FaShoppingBag /></div>
+        <div
+          className="dn-ord-metric"
+          style={{ background: "linear-gradient(135deg,#0b57a4,#0878b8)" }}
+        >
+          <div className="dn-ord-metric-icon">
+            <FaShoppingBag />
+          </div>
           <div className="dn-ord-metric-body">
             <span className="dn-ord-metric-val">{counts.total}</span>
             <span className="dn-ord-metric-lbl">Total Orders</span>
           </div>
           <FaShoppingBag className="dn-ord-metric-bg" />
         </div>
-        <div className="dn-ord-metric" style={{background:"linear-gradient(135deg,#d97706,#b45309)"}}>
-          <div className="dn-ord-metric-icon"><FaClock /></div>
+        <div
+          className="dn-ord-metric"
+          style={{ background: "linear-gradient(135deg,#d97706,#b45309)" }}
+        >
+          <div className="dn-ord-metric-icon">
+            <FaClock />
+          </div>
           <div className="dn-ord-metric-body">
             <span className="dn-ord-metric-val">{counts.pending}</span>
             <span className="dn-ord-metric-lbl">Pending</span>
           </div>
           <FaClock className="dn-ord-metric-bg" />
         </div>
-        <div className="dn-ord-metric" style={{background:"linear-gradient(135deg,#7c3aed,#6d28d9)"}}>
-          <div className="dn-ord-metric-icon"><FaReceipt /></div>
+        <div
+          className="dn-ord-metric"
+          style={{ background: "linear-gradient(135deg,#7c3aed,#6d28d9)" }}
+        >
+          <div className="dn-ord-metric-icon">
+            <FaReceipt />
+          </div>
           <div className="dn-ord-metric-body">
             <span className="dn-ord-metric-val">{counts.paid}</span>
             <span className="dn-ord-metric-lbl">Paid</span>
           </div>
           <FaReceipt className="dn-ord-metric-bg" />
         </div>
-        <div className="dn-ord-metric" style={{background:"linear-gradient(135deg,#16a34a,#15803d)"}}>
-          <div className="dn-ord-metric-icon"><FaTruck /></div>
+        <div
+          className="dn-ord-metric"
+          style={{ background: "linear-gradient(135deg,#16a34a,#15803d)" }}
+        >
+          <div className="dn-ord-metric-icon">
+            <FaTruck />
+          </div>
           <div className="dn-ord-metric-body">
             <span className="dn-ord-metric-val">{counts.delivered}</span>
             <span className="dn-ord-metric-lbl">Delivered</span>
           </div>
           <FaTruck className="dn-ord-metric-bg" />
         </div>
-        <div className="dn-ord-metric" style={{background:"linear-gradient(135deg,#dc2626,#b91c1c)"}}>
-          <div className="dn-ord-metric-icon"><FaTimesCircle /></div>
+        <div
+          className="dn-ord-metric"
+          style={{ background: "linear-gradient(135deg,#dc2626,#b91c1c)" }}
+        >
+          <div className="dn-ord-metric-icon">
+            <FaTimesCircle />
+          </div>
           <div className="dn-ord-metric-body">
             <span className="dn-ord-metric-val">{counts.cancelled}</span>
             <span className="dn-ord-metric-lbl">Cancelled</span>
@@ -147,7 +189,7 @@ const AdminOrders = () => {
         </div>
       </div>
 
-      {/* FILTER & SEARCH BAR */}
+      {}
       <div className="dn-orders-toolbar">
         <div className="dn-status-tabs">
           {statusTabs.map((tab) => (
@@ -158,10 +200,15 @@ const AdminOrders = () => {
             >
               {tab}
               <span className="dn-tab-count">
-                {tab === "All" ? orders.length :
-                  tab === "Pending" ? counts.pending :
-                  tab === "Paid" ? counts.paid :
-                  tab === "Delivered" ? counts.delivered : counts.cancelled}
+                {tab === "All"
+                  ? orders.length
+                  : tab === "Pending"
+                    ? counts.pending
+                    : tab === "Paid"
+                      ? counts.paid
+                      : tab === "Delivered"
+                        ? counts.delivered
+                        : counts.cancelled}
               </span>
             </button>
           ))}
@@ -177,7 +224,7 @@ const AdminOrders = () => {
         </div>
       </div>
 
-      {/* ORDERS LIST */}
+      {}
       {loading ? (
         <div className="dn-orders-state">
           <div className="dn-orders-spinner" />
@@ -188,7 +235,11 @@ const AdminOrders = () => {
         <div className="dn-orders-state">
           <FaBoxOpen className="dn-orders-state-icon" />
           <h3>No Orders Found</h3>
-          <p>{search ? "Try adjusting your search query" : "Orders will appear here once customers place them."}</p>
+          <p>
+            {search
+              ? "Try adjusting your search query"
+              : "Orders will appear here once customers place them."}
+          </p>
         </div>
       ) : (
         <div className="dn-orders-grid">
@@ -197,17 +248,27 @@ const AdminOrders = () => {
               key={order._id}
               className={`dn-order-card ${order.status === "Cancelled" ? "cancelled" : order.status === "Delivered" ? "delivered" : ""}`}
             >
-              {/* Card top accent */}
-              <div className={`dn-order-accent ${order.status === "Cancelled" ? "red" : order.status === "Delivered" ? "green" : order.status === "Paid" ? "purple" : "blue"}`} />
+              {}
+              <div
+                className={`dn-order-accent ${order.status === "Cancelled" ? "red" : order.status === "Delivered" ? "green" : order.status === "Paid" ? "purple" : "blue"}`}
+              />
 
-              {/* Header row */}
+              {}
               <div className="dn-order-header">
                 <div className="dn-order-header-left">
-                  <span className="dn-order-id">#{order._id?.slice(-8).toUpperCase()}</span>
-                  <div className="dn-order-product-name">{order.productName || "Dairy Product"}</div>
-                  <div className="dn-order-shop"><FaBoxOpen /> {order.shopName || "DairyNest Shop"}</div>
+                  <span className="dn-order-id">
+                    #{order._id?.slice(-8).toUpperCase()}
+                  </span>
+                  <div className="dn-order-product-name">
+                    {order.productName || "Dairy Product"}
+                  </div>
+                  <div className="dn-order-shop">
+                    <FaBoxOpen /> {order.shopName || "DairyNest Shop"}
+                  </div>
                 </div>
-                <span className={`dn-order-status-badge ${(order.status || "Pending").toLowerCase()}`}>
+                <span
+                  className={`dn-order-status-badge ${(order.status || "Pending").toLowerCase()}`}
+                >
                   {order.status === "Delivered" && <FaCheckCircle />}
                   {order.status === "Cancelled" && <FaTimesCircle />}
                   {order.status === "Paid" && <FaReceipt />}
@@ -216,7 +277,7 @@ const AdminOrders = () => {
                 </span>
               </div>
 
-              {/* Order info chips */}
+              {}
               <div className="dn-order-info-chips">
                 <div className="dn-info-chip">
                   <span className="chip-label">Qty</span>
@@ -224,7 +285,9 @@ const AdminOrders = () => {
                 </div>
                 <div className="dn-info-chip">
                   <span className="chip-label">Amount</span>
-                  <span className="chip-val">₹{order.totalAmount || order.amount || "—"}</span>
+                  <span className="chip-val">
+                    ₹{order.totalAmount || order.amount || "—"}
+                  </span>
                 </div>
                 <div className="dn-info-chip">
                   <span className="chip-label">Slot</span>
@@ -233,12 +296,17 @@ const AdminOrders = () => {
                 <div className="dn-info-chip">
                   <span className="chip-label">Date</span>
                   <span className="chip-val">
-                    {order.createdAt ? new Date(order.createdAt).toLocaleDateString("en-IN", {day:"2-digit",month:"short"}) : "—"}
+                    {order.createdAt
+                      ? new Date(order.createdAt).toLocaleDateString("en-IN", {
+                          day: "2-digit",
+                          month: "short",
+                        })
+                      : "—"}
                   </span>
                 </div>
               </div>
 
-              {/* Progress bar */}
+              {}
               {order.status !== "Cancelled" ? (
                 <div className="dn-order-progress">
                   {["Pending", "Paid", "Delivered"].map((step, idx) => {
@@ -247,11 +315,19 @@ const AdminOrders = () => {
                     const isActive = stepOrder[step] <= cur;
                     return (
                       <React.Fragment key={step}>
-                        <div className={`dn-progress-step ${isActive ? "active" : ""}`}>
-                          <div className="dn-progress-dot">{isActive ? "✓" : idx + 1}</div>
+                        <div
+                          className={`dn-progress-step ${isActive ? "active" : ""}`}
+                        >
+                          <div className="dn-progress-dot">
+                            {isActive ? "✓" : idx + 1}
+                          </div>
                           <span>{step}</span>
                         </div>
-                        {idx < 2 && <div className={`dn-progress-line ${stepOrder[step] < cur ? "active" : ""}`} />}
+                        {idx < 2 && (
+                          <div
+                            className={`dn-progress-line ${stepOrder[step] < cur ? "active" : ""}`}
+                          />
+                        )}
                       </React.Fragment>
                     );
                   })}
@@ -262,25 +338,34 @@ const AdminOrders = () => {
                 </div>
               )}
 
-              {/* Delivery address */}
+              {}
               {order.address && (
                 <div className="dn-order-address">
                   <div className="dn-address-label">📦 Delivery Details</div>
-                  <div className="dn-address-row"><FaUser /> <span>{order.address.name}</span></div>
+                  <div className="dn-address-row">
+                    <FaUser /> <span>{order.address.name}</span>
+                  </div>
                   <div className="dn-address-row">
                     <FaMapMarkerAlt />
                     <span>
-                      {[order.address.street, order.address.city, order.address.pincode]
-                        .filter(Boolean).join(", ")}
+                      {[
+                        order.address.street,
+                        order.address.city,
+                        order.address.pincode,
+                      ]
+                        .filter(Boolean)
+                        .join(", ")}
                     </span>
                   </div>
                   {order.address.phone && (
-                    <div className="dn-address-row"><FaPhoneAlt /> <span>{order.address.phone}</span></div>
+                    <div className="dn-address-row">
+                      <FaPhoneAlt /> <span>{order.address.phone}</span>
+                    </div>
                   )}
                 </div>
               )}
 
-              {/* Action buttons */}
+              {}
               <div className="dn-order-actions">
                 {order.status === "Pending" && (
                   <button
@@ -288,7 +373,11 @@ const AdminOrders = () => {
                     onClick={() => updateStatus(order._id, "Paid")}
                     disabled={updating === order._id}
                   >
-                    {updating === order._id ? <span className="btn-spinner" /> : <FaReceipt />}
+                    {updating === order._id ? (
+                      <span className="btn-spinner" />
+                    ) : (
+                      <FaReceipt />
+                    )}
                     Mark as Paid
                   </button>
                 )}
@@ -298,19 +387,24 @@ const AdminOrders = () => {
                     onClick={() => updateStatus(order._id, "Delivered")}
                     disabled={updating === order._id}
                   >
-                    {updating === order._id ? <span className="btn-spinner" /> : <FaTruck />}
+                    {updating === order._id ? (
+                      <span className="btn-spinner" />
+                    ) : (
+                      <FaTruck />
+                    )}
                     Mark Delivered
                   </button>
                 )}
-                {order.status !== "Cancelled" && order.status !== "Delivered" && (
-                  <button
-                    className="dn-action-btn red"
-                    onClick={() => updateStatus(order._id, "Cancelled")}
-                    disabled={updating === order._id}
-                  >
-                    <FaTimesCircle /> Cancel Order
-                  </button>
-                )}
+                {order.status !== "Cancelled" &&
+                  order.status !== "Delivered" && (
+                    <button
+                      className="dn-action-btn red"
+                      onClick={() => updateStatus(order._id, "Cancelled")}
+                      disabled={updating === order._id}
+                    >
+                      <FaTimesCircle /> Cancel Order
+                    </button>
+                  )}
               </div>
             </div>
           ))}

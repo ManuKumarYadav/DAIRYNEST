@@ -1,6 +1,5 @@
 const Product = require("../models/Product");
 
-// Get all products
 exports.getProducts = async (req, res) => {
   try {
     const products = await Product.find().sort({ createdAt: -1 });
@@ -10,16 +9,19 @@ exports.getProducts = async (req, res) => {
   }
 };
 
-// Add product
 exports.addProduct = async (req, res) => {
   try {
     const { name, price, originalPrice, discount, stock } = req.body;
 
     if (!name || !price) {
-      return res.status(400).json({ message: "Product name and price are required" });
+      return res
+        .status(400)
+        .json({ message: "Product name and price are required" });
     }
 
-    const image = req.file ? (req.file.path || `/uploads/${req.file.filename}`) : "";
+    const image = req.file
+      ? req.file.path || `/uploads/${req.file.filename}`
+      : "";
 
     const product = new Product({
       name: name.trim(),
@@ -38,7 +40,6 @@ exports.addProduct = async (req, res) => {
   }
 };
 
-// Delete product
 exports.deleteProduct = async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.id);

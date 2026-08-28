@@ -12,7 +12,10 @@ const createAdmin = async () => {
       await User.create({
         name: "Admin",
         email: process.env.ADMIN_EMAIL || "admin@gmail.com",
-        password: await bcrypt.hash(process.env.ADMIN_PASSWORD || "admin123", 10),
+        password: await bcrypt.hash(
+          process.env.ADMIN_PASSWORD || "admin123",
+          10,
+        ),
         role: "admin",
       });
 
@@ -36,7 +39,8 @@ const seedDefaultProducts = async () => {
           originalPrice: 38,
           discount: 11,
           stock: 120,
-          image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80",
+          image:
+            "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80",
         },
         {
           name: "DairyNest Taaza Toned Fresh Milk (1L)",
@@ -44,7 +48,8 @@ const seedDefaultProducts = async () => {
           originalPrice: 62,
           discount: 10,
           stock: 150,
-          image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=600&q=80",
+          image:
+            "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=600&q=80",
         },
         {
           name: "DairyNest Pure Desi Cow Ghee (1L)",
@@ -52,7 +57,8 @@ const seedDefaultProducts = async () => {
           originalPrice: 699,
           discount: 14,
           stock: 80,
-          image: "https://images.unsplash.com/photo-1589927986089-35812388d1f4?auto=format&fit=crop&w=600&q=80",
+          image:
+            "https://images.unsplash.com/photo-1589927986089-35812388d1f4?auto=format&fit=crop&w=600&q=80",
         },
         {
           name: "DairyNest Fresh Malai Paneer (200g)",
@@ -60,7 +66,8 @@ const seedDefaultProducts = async () => {
           originalPrice: 110,
           discount: 14,
           stock: 95,
-          image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80",
+          image:
+            "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=600&q=80",
         },
         {
           name: "DairyNest Creamy Table Butter (100g)",
@@ -68,7 +75,8 @@ const seedDefaultProducts = async () => {
           originalPrice: 60,
           discount: 7,
           stock: 110,
-          image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=600&q=80",
+          image:
+            "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=600&q=80",
         },
         {
           name: "DairyNest Thick Probiotic Dahi (400g)",
@@ -76,7 +84,8 @@ const seedDefaultProducts = async () => {
           originalPrice: 40,
           discount: 12,
           stock: 75,
-          image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80",
+          image:
+            "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80",
         },
         {
           name: "DairyNest Alphonso Mango Lassi (200ml)",
@@ -84,7 +93,8 @@ const seedDefaultProducts = async () => {
           originalPrice: 35,
           discount: 14,
           stock: 100,
-          image: "https://images.unsplash.com/photo-1570696516188-ade861b84a49?auto=format&fit=crop&w=600&q=80",
+          image:
+            "https://images.unsplash.com/photo-1570696516188-ade861b84a49?auto=format&fit=crop&w=600&q=80",
         },
         {
           name: "DairyNest Mawa Gulab Jamun (500g)",
@@ -92,12 +102,15 @@ const seedDefaultProducts = async () => {
           originalPrice: 260,
           discount: 15,
           stock: 50,
-          image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80",
+          image:
+            "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80",
         },
       ];
 
       await Product.insertMany(defaultProducts);
-      console.log("✅ Seeded default DairyNest products into database successfully");
+      console.log(
+        "✅ Seeded default DairyNest products into database successfully",
+      );
     } else {
       console.log(`Database already has ${count} products.`);
     }

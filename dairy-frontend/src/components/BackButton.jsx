@@ -1,13 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-/**
- * Reusable Back Button — drops into any page with one line:
- *   <BackButton to="/address" label="Back to Address" />
- * 
- * When 'to' is provided, renders a native React Router <Link> for 100% reliable navigation.
- * Otherwise, renders a button with navigate(-1).
- */
 const BackButton = ({ to, label = "Back", style = {} }) => {
   const navigate = useNavigate();
 
@@ -29,12 +22,7 @@ const BackButton = ({ to, label = "Back", style = {} }) => {
 
   if (to) {
     return (
-      <Link
-        to={to}
-        className="dn-back-btn"
-        style={style}
-        aria-label={label}
-      >
+      <Link to={to} className="dn-back-btn" style={style} aria-label={label}>
         {arrowIcon}
         <span>{label}</span>
       </Link>

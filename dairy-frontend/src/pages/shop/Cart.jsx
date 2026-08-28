@@ -50,7 +50,8 @@ const Cart = () => {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const getImage = (item) => {
-    if (!item || !item.image) return "https://via.placeholder.com/220?text=DairyNest";
+    if (!item || !item.image)
+      return "https://via.placeholder.com/220?text=DairyNest";
     return getImageUrl(item.image);
   };
 
@@ -58,7 +59,9 @@ const Cart = () => {
     try {
       const user = JSON.parse(localStorage.getItem("user"));
       if (!user) {
-        alert("Please login or create an account to proceed with your DairyNest order.");
+        alert(
+          "Please login or create an account to proceed with your DairyNest order.",
+        );
         sessionStorage.setItem("openAuth", "true");
         navigate("/");
         return;
@@ -71,7 +74,13 @@ const Cart = () => {
 
   return (
     <main className="dn-cart-page" style={styles.page}>
-      <div style={{ maxWidth: "1220px", margin: "0 auto", padding: "0 clamp(12px, 4vw, 42px)" }}>
+      <div
+        style={{
+          maxWidth: "1220px",
+          margin: "0 auto",
+          padding: "0 clamp(12px, 4vw, 42px)",
+        }}
+      >
         <BackButton to="/" label="Continue Shopping" />
       </div>
       <section className="dn-cart-container">
@@ -89,9 +98,15 @@ const Cart = () => {
 
           {cart.length === 0 ? (
             <div style={styles.emptyCard}>
-              <FaShoppingCart style={{ fontSize: 48, color: "#0b57a4", marginBottom: 16 }} />
-              <h2 style={{ fontSize: 24, fontWeight: 900, marginBottom: 8 }}>Your Cart is Empty</h2>
-              <p style={{ color: "#53667f", marginBottom: 20 }}>Add premium dairy products to continue shopping.</p>
+              <FaShoppingCart
+                style={{ fontSize: 48, color: "#0b57a4", marginBottom: 16 }}
+              />
+              <h2 style={{ fontSize: 24, fontWeight: 900, marginBottom: 8 }}>
+                Your Cart is Empty
+              </h2>
+              <p style={{ color: "#53667f", marginBottom: 20 }}>
+                Add premium dairy products to continue shopping.
+              </p>
               <button style={styles.shopBtn} onClick={() => navigate("/shop")}>
                 Continue Shopping
               </button>

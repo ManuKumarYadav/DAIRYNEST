@@ -145,11 +145,10 @@ const ShopDashboard = ({ setCart }) => {
               </button>
               <button
                 className="dn-btn-outline"
-                onClick={() =>
-                  document
-                    .getElementById("dn-products")
-                    .scrollIntoView({ behavior: "smooth" })
-                }
+                onClick={() => {
+                  const el = document.getElementById("dn-products");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
               >
                 Browse Products <FaArrowRight />
               </button>
@@ -205,6 +204,7 @@ const ShopDashboard = ({ setCart }) => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+
           {search && (
             <button className="dn-search-clear" onClick={() => setSearch("")}>
               ✕
@@ -845,6 +845,7 @@ const ProductCard = ({
           alt={product.name}
           className="dn-card-img"
         />
+
         {product.discount > 0 && (
           <span className="dn-card-discount">{product.discount}% OFF</span>
         )}

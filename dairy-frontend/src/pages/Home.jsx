@@ -27,13 +27,11 @@ import Footer from "../components/Footer";
 const Home = () => {
   const navigate = useNavigate();
 
-  // Search & Filter State
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [toastMessage, setToastMessage] = useState("");
   const [dbProducts, setDbProducts] = useState([]);
 
-  // Auth Form State
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -41,7 +39,7 @@ const Home = () => {
   const [role, setRole] = useState("shop");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  // Fetch live products from MongoDB
+
   useEffect(() => {
     const fetchDbProducts = async () => {
       try {
@@ -90,7 +88,8 @@ const Home = () => {
       discount: "11% OFF",
       rating: 4.9,
       reviews: 1420,
-      image: "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=400&q=80",
       badge: "Best Seller",
       badgeColor: "#d97706",
     },
@@ -105,7 +104,8 @@ const Home = () => {
       discount: "10% OFF",
       rating: 4.8,
       reviews: 980,
-      image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&w=400&q=80",
       badge: "Daily Essential",
       badgeColor: "#2563eb",
     },
@@ -120,7 +120,8 @@ const Home = () => {
       discount: "14% OFF",
       rating: 5.0,
       reviews: 2150,
-      image: "https://images.unsplash.com/photo-1589927986089-35812388d1f4?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1589927986089-35812388d1f4?auto=format&fit=crop&w=400&q=80",
       badge: "100% Pure Vedic",
       badgeColor: "#ca8a04",
     },
@@ -135,7 +136,8 @@ const Home = () => {
       discount: "14% OFF",
       rating: 4.9,
       reviews: 1840,
-      image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=400&q=80",
       badge: "High Protein",
       badgeColor: "#16a34a",
     },
@@ -150,7 +152,8 @@ const Home = () => {
       discount: "7% OFF",
       rating: 4.9,
       reviews: 3100,
-      image: "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?auto=format&fit=crop&w=400&q=80",
       badge: "Chef's Choice",
       badgeColor: "#dc2626",
     },
@@ -165,7 +168,8 @@ const Home = () => {
       discount: "12% OFF",
       rating: 4.8,
       reviews: 750,
-      image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=400&q=80",
       badge: "Gut Friendly",
       badgeColor: "#0284c7",
     },
@@ -180,7 +184,8 @@ const Home = () => {
       discount: "14% OFF",
       rating: 4.9,
       reviews: 1290,
-      image: "https://images.unsplash.com/photo-1570696516188-ade861b84a49?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1570696516188-ade861b84a49?auto=format&fit=crop&w=400&q=80",
       badge: "Refreshing",
       badgeColor: "#ea580c",
     },
@@ -195,7 +200,8 @@ const Home = () => {
       discount: "15% OFF",
       rating: 5.0,
       reviews: 890,
-      image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80",
+      image:
+        "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80",
       badge: "Festive Favorite",
       badgeColor: "#9333ea",
     },
@@ -229,18 +235,19 @@ const Home = () => {
             id: p._id || `db-${idx}`,
             name: p.name,
             category: cat,
-            desc: p.desc || `Fresh and pure 100% farm-sourced DairyNest ${p.name}.`,
+            desc:
+              p.desc || `Fresh and pure 100% farm-sourced DairyNest ${p.name}.`,
             weight: p.name.includes("500ml")
               ? "500 ml"
               : p.name.includes("1L") || p.name.includes("1 Litre")
-              ? "1 Litre"
-              : p.name.includes("200g")
-              ? "200 g"
-              : p.name.includes("100g")
-              ? "100 g"
-              : p.name.includes("400g")
-              ? "400 g"
-              : "Standard Pack",
+                ? "1 Litre"
+                : p.name.includes("200g")
+                  ? "200 g"
+                  : p.name.includes("100g")
+                    ? "100 g"
+                    : p.name.includes("400g")
+                      ? "400 g"
+                      : "Standard Pack",
             price: Number(p.price) || 0,
             originalPrice:
               Number(p.originalPrice) || Math.round(Number(p.price) * 1.15),
@@ -252,20 +259,20 @@ const Home = () => {
               cat === "milk"
                 ? "Daily Essential"
                 : cat === "ghee"
-                ? "100% Pure Vedic"
-                : cat === "paneer"
-                ? "High Protein"
-                : "Farm Fresh",
+                  ? "100% Pure Vedic"
+                  : cat === "paneer"
+                    ? "High Protein"
+                    : "Farm Fresh",
             badgeColor:
               cat === "milk"
                 ? "#0b57a4"
                 : cat === "ghee"
-                ? "#ca8a04"
-                : cat === "paneer"
-                ? "#16a34a"
-                : cat === "butter"
-                ? "#dc2626"
-                : "#0284c7",
+                  ? "#ca8a04"
+                  : cat === "paneer"
+                    ? "#16a34a"
+                    : cat === "butter"
+                      ? "#dc2626"
+                      : "#0284c7",
           };
         })
       : productsList;
@@ -283,7 +290,7 @@ const Home = () => {
     try {
       const currentCart = JSON.parse(localStorage.getItem("cart")) || [];
       const existingIndex = currentCart.findIndex(
-        (c) => (c.name || c.productName) === product.name
+        (c) => (c.name || c.productName) === product.name,
       );
 
       let updatedCart;
@@ -356,7 +363,7 @@ const Home = () => {
       setMessage(
         err.response?.data?.msg ||
           err.response?.data?.message ||
-          "Login failed. Please check your email and password."
+          "Login failed. Please check your email and password.",
       );
     } finally {
       setLoading(false);
@@ -375,12 +382,14 @@ const Home = () => {
         password,
         role,
       });
-      setMessage("Account created successfully! Please login with your details.");
+      setMessage(
+        "Account created successfully! Please login with your details.",
+      );
       setIsLogin(true);
     } catch (err) {
       setMessage(
         err.response?.data?.message ||
-          "Registration failed. Please verify your details."
+          "Registration failed. Please verify your details.",
       );
     } finally {
       setLoading(false);
@@ -389,7 +398,7 @@ const Home = () => {
 
   return (
     <div className="dairynest-home-root">
-      {/* FLOATING TOAST */}
+      {}
       {toastMessage && (
         <div className="dairynest-toast">
           <span>{toastMessage}</span>
@@ -399,13 +408,15 @@ const Home = () => {
         </div>
       )}
 
-      {/* 1. HERO SECTION - ULTRA MODERN E-COMMERCE */}
+      {}
       <section className="dairynest-hero">
         <div className="hero-container">
           <div className="hero-text-col">
             <div className="hero-live-pill">
               <span className="live-pulse"></span>
-              <span>⚡ Live Dispatch: Morning Delivery 05:00 AM - 08:30 AM Active</span>
+              <span>
+                ⚡ Live Dispatch: Morning Delivery 05:00 AM - 08:30 AM Active
+              </span>
             </div>
 
             <h1 className="hero-main-title">
@@ -414,10 +425,12 @@ const Home = () => {
             </h1>
 
             <p className="hero-subtitle">
-              Sourced directly from 50,000+ village farmers with zero preservatives. Lab-tested daily for 100% purity and delivered to your doorstep before sunrise.
+              Sourced directly from 50,000+ village farmers with zero
+              preservatives. Lab-tested daily for 100% purity and delivered to
+              your doorstep before sunrise.
             </p>
 
-            {/* SEARCH BAR */}
+            {}
             <div className="hero-search-wrapper">
               <FaSearch className="search-icon" />
               <input
@@ -426,17 +439,20 @@ const Home = () => {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+
               <button
                 className="search-action-btn"
                 onClick={() => {
-                  document.getElementById("shop-products")?.scrollIntoView({ behavior: "smooth" });
+                  document
+                    .getElementById("shop-products")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
                 Search
               </button>
             </div>
 
-            {/* QUICK TRUST PILLS */}
+            {}
             <div className="hero-trust-badges">
               <div className="trust-item">
                 <FaLeaf className="trust-icon green" />
@@ -456,16 +472,20 @@ const Home = () => {
               <button
                 className="btn-primary-hero"
                 onClick={() => {
-                  document.getElementById("shop-products")?.scrollIntoView({ behavior: "smooth" });
+                  document
+                    .getElementById("shop-products")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 }}
               >
-                <FaShoppingBag style={{ marginRight: "8px" }} /> Explore All Products
+                <FaShoppingBag style={{ marginRight: "8px" }} /> Explore All
+                Products
               </button>
               <button
                 className="btn-secondary-hero"
                 onClick={() => openAuthModal(false, "shop")}
               >
-                <FaStore style={{ marginRight: "8px" }} /> Register Shop / Parlor
+                <FaStore style={{ marginRight: "8px" }} /> Register Shop /
+                Parlor
               </button>
             </div>
           </div>
@@ -477,6 +497,7 @@ const Home = () => {
                 alt="DairyNest Fresh Dairy Spread"
                 className="hero-main-img"
               />
+
               <div className="hero-float-badge top-right">
                 <div className="veg-badge-box">
                   <div className="veg-badge-dot"></div>
@@ -495,7 +516,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 2. E-COMMERCE VALUE BAR */}
+      {}
       <section className="dairynest-value-bar">
         <div className="section-container">
           <div className="value-grid">
@@ -503,14 +524,18 @@ const Home = () => {
               <div className="val-icon-box">🥛</div>
               <div>
                 <h4>Direct From Farmers</h4>
-                <p>Fair pricing for 50,000+ rural families with no middlemen.</p>
+                <p>
+                  Fair pricing for 50,000+ rural families with no middlemen.
+                </p>
               </div>
             </div>
             <div className="value-item">
               <div className="val-icon-box">❄️</div>
               <div>
                 <h4>4°C Cold-Chain</h4>
-                <p>Instant chilling preserves natural enzymes and creamy taste.</p>
+                <p>
+                  Instant chilling preserves natural enzymes and creamy taste.
+                </p>
               </div>
             </div>
             <div className="value-item">
@@ -531,17 +556,18 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 3. INTERACTIVE PRODUCT STORE (REAL E-COMMERCE) */}
+      {}
       <section id="shop-products" className="dairynest-products-section">
         <div className="section-container">
           <div className="section-header-center">
             <span className="section-eyebrow">OUR FRESH SELECTION</span>
             <h2 className="section-title">Shop DairyNest Pure Products</h2>
             <p className="section-desc">
-              Select from our wide range of farm-fresh milk, golden bilona ghee, malai paneer, and nutritious dairy goods.
+              Select from our wide range of farm-fresh milk, golden bilona ghee,
+              malai paneer, and nutritious dairy goods.
             </p>
 
-            {/* CATEGORY SELECTOR PILLS */}
+            {}
             <div className="category-pills-row">
               {categories.map((cat) => (
                 <button
@@ -556,12 +582,15 @@ const Home = () => {
             </div>
           </div>
 
-          {/* PRODUCT CARDS GRID */}
+          {}
           <div className="products-ecommerce-grid">
             {filteredProducts.map((product) => (
               <div key={product.id} className="ecom-product-card">
                 <div className="card-top-badges">
-                  <span className="ecom-tag" style={{ background: product.badgeColor }}>
+                  <span
+                    className="ecom-tag"
+                    style={{ background: product.badgeColor }}
+                  >
                     {product.badge}
                   </span>
                   <div className="veg-badge-box">
@@ -577,7 +606,8 @@ const Home = () => {
                   <div className="product-meta-row">
                     <span className="product-weight">{product.weight}</span>
                     <div className="product-rating">
-                      <FaStar className="star" /> {product.rating} ({product.reviews})
+                      <FaStar className="star" /> {product.rating} (
+                      {product.reviews})
                     </div>
                   </div>
 
@@ -587,7 +617,9 @@ const Home = () => {
                   <div className="product-pricing-action">
                     <div className="price-block">
                       <span className="current-price">₹{product.price}</span>
-                      <span className="original-price">₹{product.originalPrice}</span>
+                      <span className="original-price">
+                        ₹{product.originalPrice}
+                      </span>
                       <span className="discount-tag">{product.discount}</span>
                     </div>
 
@@ -608,7 +640,10 @@ const Home = () => {
             <div className="no-products-box">
               <FaBoxOpen className="empty-box-icon" />
               <h3>No matching DairyNest items found</h3>
-              <p>Try searching for another dairy item like milk, ghee, paneer, or butter.</p>
+              <p>
+                Try searching for another dairy item like milk, ghee, paneer, or
+                butter.
+              </p>
               <button
                 className="btn-primary-hero"
                 onClick={() => {
@@ -623,17 +658,26 @@ const Home = () => {
 
           <div className="view-full-shop-banner">
             <div className="banner-content">
-              <h3>Looking for wholesale bulk deliveries or restaurant packs?</h3>
-              <p>DairyNest offers dedicated bulk discounts for milk parlors, hotels, and retail sweet makers.</p>
+              <h3>
+                Looking for wholesale bulk deliveries or restaurant packs?
+              </h3>
+              <p>
+                DairyNest offers dedicated bulk discounts for milk parlors,
+                hotels, and retail sweet makers.
+              </p>
             </div>
-            <button className="btn-banner-shop" onClick={() => navigate("/shop")}>
-              Go to Full Partner Shop <FaChevronRight style={{ marginLeft: "6px" }} />
+            <button
+              className="btn-banner-shop"
+              onClick={() => navigate("/shop")}
+            >
+              Go to Full Partner Shop{" "}
+              <FaChevronRight style={{ marginLeft: "6px" }} />
             </button>
           </div>
         </div>
       </section>
 
-      {/* 4. SUBSCRIPTION / FLASH PROMO BANNER */}
+      {}
       <section className="dairynest-subscription-banner">
         <div className="section-container">
           <div className="subscription-card-wrapper">
@@ -641,7 +685,10 @@ const Home = () => {
               <span className="sub-pill">📅 NEVER RUN OUT OF MILK</span>
               <h2>Start Your DairyNest Daily Morning Subscription</h2>
               <p>
-                Get farm-fresh cow or full-cream milk delivered at your doorstep every morning by 07:00 AM. Customize your quantities, pause anytime, and enjoy <strong>15% OFF on your first 30 days</strong>.
+                Get farm-fresh cow or full-cream milk delivered at your doorstep
+                every morning by 07:00 AM. Customize your quantities, pause
+                anytime, and enjoy{" "}
+                <strong>15% OFF on your first 30 days</strong>.
               </p>
 
               <div className="sub-features-row">
@@ -663,7 +710,8 @@ const Home = () => {
                 className="btn-sub-action"
                 onClick={() => openAuthModal(true, "shop")}
               >
-                Subscribe Now & Save 15% <FaArrowRight style={{ marginLeft: "8px" }} />
+                Subscribe Now & Save 15%{" "}
+                <FaArrowRight style={{ marginLeft: "8px" }} />
               </button>
             </div>
 
@@ -677,12 +725,14 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="svc-days-grid">
-                  {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d, i) => (
-                    <div key={i} className="day-box active">
-                      <span>{d}</span>
-                      <strong>1L</strong>
-                    </div>
-                  ))}
+                  {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+                    (d, i) => (
+                      <div key={i} className="day-box active">
+                        <span>{d}</span>
+                        <strong>1L</strong>
+                      </div>
+                    ),
+                  )}
                 </div>
                 <div className="svc-delivery-stat">
                   <FaClock /> Estimated Delivery: Tomorrow by 06:30 AM
@@ -693,14 +743,15 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 5. WHY DAIRYNEST (PURITY & COLD-CHAIN STORY) */}
+      {}
       <section id="why-dairynest" className="dairynest-why-section">
         <div className="section-container">
           <div className="section-header-center">
             <span className="section-eyebrow">OUR PROMISE OF PURITY</span>
             <h2 className="section-title">Why Thousands Choose DairyNest</h2>
             <p className="section-desc">
-              Every drop of milk undergoes strict quality protocols to preserve the natural goodness, taste, and nutrition.
+              Every drop of milk undergoes strict quality protocols to preserve
+              the natural goodness, taste, and nutrition.
             </p>
           </div>
 
@@ -709,34 +760,46 @@ const Home = () => {
               <div className="why-num">01</div>
               <div className="why-icon">🌿</div>
               <h3>Grass-Fed Cows & Buffalos</h3>
-              <p>Cattle are cared for with natural mineral fodder, free from synthetic hormonal injections and harmful antibiotics.</p>
+              <p>
+                Cattle are cared for with natural mineral fodder, free from
+                synthetic hormonal injections and harmful antibiotics.
+              </p>
             </div>
 
             <div className="why-card">
               <div className="why-num">02</div>
               <div className="why-icon">🔬</div>
               <h3>Automated Ultrasonic Testing</h3>
-              <p>Every batch is checked for FAT%, SNF%, water adulteration, and microbial count before processing.</p>
+              <p>
+                Every batch is checked for FAT%, SNF%, water adulteration, and
+                microbial count before processing.
+              </p>
             </div>
 
             <div className="why-card">
               <div className="why-num">03</div>
               <div className="why-icon">❄️</div>
               <h3>Continuous 4°C Cold Chain</h3>
-              <p>Chilled immediately post-milking and transported in refrigerated tankers to keep enzymes naturally intact.</p>
+              <p>
+                Chilled immediately post-milking and transported in refrigerated
+                tankers to keep enzymes naturally intact.
+              </p>
             </div>
 
             <div className="why-card">
               <div className="why-num">04</div>
               <div className="why-icon">🤝</div>
               <h3>100% Fair Farmer Support</h3>
-              <p>Direct bank payments straight to village farmers, empowering local rural economies transparently.</p>
+              <p>
+                Direct bank payments straight to village farmers, empowering
+                local rural economies transparently.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 6. OUR CO-OPERATIVE FARMERS (WHITE REVOLUTION STORY) */}
+      {}
       <section id="farmers-story" className="dairynest-farmers-section">
         <div className="section-container">
           <div className="farmers-story-grid">
@@ -746,6 +809,7 @@ const Home = () => {
                 alt="DairyNest Co-operative Farmers"
                 className="farmers-banner-img"
               />
+
               <div className="farmers-tag-overlay">
                 <strong>50,000+ Associated Village Farmers</strong>
                 <span>Building a stronger, self-reliant dairy community.</span>
@@ -753,13 +817,21 @@ const Home = () => {
             </div>
 
             <div className="farmers-text-col">
-              <span className="section-eyebrow">THE DAIRYNEST CO-OPERATIVE</span>
-              <h2 className="section-title text-left">Empowering India's Dairy Roots</h2>
+              <span className="section-eyebrow">
+                THE DAIRYNEST CO-OPERATIVE
+              </span>
+              <h2 className="section-title text-left">
+                Empowering India's Dairy Roots
+              </h2>
               <p className="farmers-para">
-                DairyNest was founded on the belief that dairy farmers deserve complete transparency and consumers deserve untampered pure nutrition.
+                DairyNest was founded on the belief that dairy farmers deserve
+                complete transparency and consumers deserve untampered pure
+                nutrition.
               </p>
               <p className="farmers-para">
-                By deploying digital FAT testing booths and instant digital accounts, DairyNest eliminates middlemen exploitation and ensures genuine freshness from farm to table.
+                By deploying digital FAT testing booths and instant digital
+                accounts, DairyNest eliminates middlemen exploitation and
+                ensures genuine freshness from farm to table.
               </p>
 
               <div className="farmers-stats-row">
@@ -788,7 +860,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 7. CUSTOMER REVIEWS */}
+      {}
       <section className="dairynest-reviews-section">
         <div className="section-container">
           <div className="section-header-center">
@@ -804,7 +876,9 @@ const Home = () => {
                 ))}
               </div>
               <p className="review-text">
-                "The malai on DairyNest Gold milk is unbelievable! We started our daily subscription 3 months ago, and our morning tea has never tasted better. Always at our doorstep by 6:15 AM."
+                "The malai on DairyNest Gold milk is unbelievable! We started
+                our daily subscription 3 months ago, and our morning tea has
+                never tasted better. Always at our doorstep by 6:15 AM."
               </p>
               <div className="reviewer-info">
                 <div className="reviewer-avatar">RK</div>
@@ -822,7 +896,9 @@ const Home = () => {
                 ))}
               </div>
               <p className="review-text">
-                "I run a sweet and snack shop in Gujarat. DairyNest Malai Paneer and Pure Cow Ghee have elevated our mithai quality. Quick wholesale dispatch and consistent purity."
+                "I run a sweet and snack shop in Gujarat. DairyNest Malai Paneer
+                and Pure Cow Ghee have elevated our mithai quality. Quick
+                wholesale dispatch and consistent purity."
               </p>
               <div className="reviewer-info">
                 <div className="reviewer-avatar">PS</div>
@@ -840,7 +916,9 @@ const Home = () => {
                 ))}
               </div>
               <p className="review-text">
-                "Finding 100% natural, chemical-free milk in the city seemed impossible until DairyNest. Their bilona cow ghee has that authentic traditional aroma my grandmother used to make."
+                "Finding 100% natural, chemical-free milk in the city seemed
+                impossible until DairyNest. Their bilona cow ghee has that
+                authentic traditional aroma my grandmother used to make."
               </p>
               <div className="reviewer-info">
                 <div className="reviewer-avatar">AM</div>
@@ -854,7 +932,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 8. AUTHENTICATION & PARTNER PORTAL SECTION */}
+      {}
       <section id="auth-section" className="dairynest-auth-section">
         <div className="section-container">
           <div className="auth-box-layout">
@@ -864,7 +942,9 @@ const Home = () => {
               </span>
               <h2>Access Your DairyNest Workspace</h2>
               <p>
-                Log in to manage your shop orders, update daily milk intake logs, or administer regional deliveries across the DairyNest ecosystem.
+                Log in to manage your shop orders, update daily milk intake
+                logs, or administer regional deliveries across the DairyNest
+                ecosystem.
               </p>
 
               <div className="auth-role-selectors">
@@ -875,7 +955,9 @@ const Home = () => {
                   <FaStore className="role-icon" />
                   <div>
                     <strong>Shop Owner / Customer</strong>
-                    <small>Order milk, butter, paneer & track live dispatch</small>
+                    <small>
+                      Order milk, butter, paneer & track live dispatch
+                    </small>
                   </div>
                 </div>
 
@@ -897,7 +979,9 @@ const Home = () => {
                   <FaShieldAlt className="role-icon" />
                   <div>
                     <strong>DairyNest Admin</strong>
-                    <small>Oversee inventories, staff accounts & analytics</small>
+                    <small>
+                      Oversee inventories, staff accounts & analytics
+                    </small>
                   </div>
                 </div>
               </div>
@@ -929,7 +1013,9 @@ const Home = () => {
                 {message && (
                   <div
                     className={`auth-alert-banner ${
-                      message.toLowerCase().includes("success") ? "success" : "error"
+                      message.toLowerCase().includes("success")
+                        ? "success"
+                        : "error"
                     }`}
                   >
                     {message}
@@ -989,7 +1075,9 @@ const Home = () => {
                         onChange={(e) => setRole(e.target.value)}
                         className="role-dropdown"
                       >
-                        <option value="shop">Shop Owner / Retail Customer</option>
+                        <option value="shop">
+                          Shop Owner / Retail Customer
+                        </option>
                         <option value="staff">Dairy Plant Staff</option>
                         <option value="admin">System Administrator</option>
                       </select>
@@ -1004,8 +1092,8 @@ const Home = () => {
                     {loading
                       ? "Authenticating..."
                       : isLogin
-                      ? `Sign In as ${role.toUpperCase()}`
-                      : "Create DairyNest Account"}
+                        ? `Sign In as ${role.toUpperCase()}`
+                        : "Create DairyNest Account"}
                   </button>
                 </form>
 
@@ -1030,10 +1118,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* 9. REAL E-COMMERCE FOOTER */}
+      {}
       <Footer />
 
-      {/* MODERN E-COMMERCE STYLING */}
+      {}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap');
 

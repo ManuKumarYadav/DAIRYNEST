@@ -25,20 +25,17 @@ const Navbar = ({ cart = [] }) => {
   });
   const userMenuRef = useRef(null);
 
-  // Scroll detection
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false);
     setUserMenuOpen(false);
   }, [location.pathname]);
 
-  // Close user dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
       if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
@@ -105,63 +102,82 @@ const Navbar = ({ cart = [] }) => {
   const handleOpenAuth = () => {
     if (location.pathname === "/") {
       window.dispatchEvent(new Event("open-auth"));
-      document.getElementById("auth-section")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      document
+        .getElementById("auth-section")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
     navigate("/");
     setTimeout(() => {
       window.dispatchEvent(new Event("open-auth"));
-      document.getElementById("auth-section")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      document
+        .getElementById("auth-section")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
     }, 150);
   };
 
   const isActive = (path) => location.pathname === path;
 
-  // Role-based dashboard link
-  const dashboardPath =
-    !user
-      ? null
-      : user.role === "admin"
+  const dashboardPath = !user
+    ? null
+    : user.role === "admin"
       ? "/admin"
       : user.role === "staff"
-      ? "/staff"
-      : "/dashboard";
+        ? "/staff"
+        : "/dashboard";
 
   return (
     <>
       <header className={`dn-navbar${scrolled ? " scrolled" : ""}`}>
         <div className="dn-nav-wrapper">
-
-          {/* ── LOGO ── */}
+          {}
           <button
             className={`dn-nav-brand${logoSpinning ? " refreshing" : ""}`}
             onClick={handleLogoClick}
             aria-label="DairyNest Home"
             title="Refresh & go to Home"
           >
-            <div className={`dn-brand-icon${logoSpinning ? " refreshing" : ""}`}>DN</div>
+            <div
+              className={`dn-brand-icon${logoSpinning ? " refreshing" : ""}`}
+            >
+              DN
+            </div>
             <div className="dn-brand-text">
               <span className="dn-brand-name">DairyNest</span>
               <span className="dn-brand-sub">Pure Dairy Platform</span>
             </div>
           </button>
 
-          {/* ── CENTER LINKS (desktop) ── */}
+          {}
           <nav className="dn-nav-links" aria-label="Main navigation">
-            <button className={`dn-nav-link${isActive("/") ? " active" : ""}`} onClick={() => handleNavigate("/")}>
+            <button
+              className={`dn-nav-link${isActive("/") ? " active" : ""}`}
+              onClick={() => handleNavigate("/")}
+            >
               Home
             </button>
-            <button className={`dn-nav-link${isActive("/shop") ? " active" : ""}`} onClick={() => handleNavigate("/shop")}>
+            <button
+              className={`dn-nav-link${isActive("/shop") ? " active" : ""}`}
+              onClick={() => handleNavigate("/shop")}
+            >
               Shop
             </button>
             <button
               className="dn-nav-link"
               onClick={() => {
                 if (location.pathname === "/") {
-                  document.getElementById("why-dairynest")?.scrollIntoView({ behavior: "smooth" });
+                  document
+                    .getElementById("why-dairynest")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 } else {
                   navigate("/");
-                  setTimeout(() => document.getElementById("why-dairynest")?.scrollIntoView({ behavior: "smooth" }), 150);
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById("why-dairynest")
+                        ?.scrollIntoView({ behavior: "smooth" }),
+                    150,
+                  );
                 }
               }}
             >
@@ -171,10 +187,18 @@ const Navbar = ({ cart = [] }) => {
               className="dn-nav-link"
               onClick={() => {
                 if (location.pathname === "/") {
-                  document.getElementById("farmers-story")?.scrollIntoView({ behavior: "smooth" });
+                  document
+                    .getElementById("farmers-story")
+                    ?.scrollIntoView({ behavior: "smooth" });
                 } else {
                   navigate("/");
-                  setTimeout(() => document.getElementById("farmers-story")?.scrollIntoView({ behavior: "smooth" }), 150);
+                  setTimeout(
+                    () =>
+                      document
+                        .getElementById("farmers-story")
+                        ?.scrollIntoView({ behavior: "smooth" }),
+                    150,
+                  );
                 }
               }}
             >
@@ -182,13 +206,20 @@ const Navbar = ({ cart = [] }) => {
             </button>
           </nav>
 
-          {/* ── RIGHT ACTIONS ── */}
+          {}
           <div className="dn-nav-right">
-            {/* Cart */}
-            <button className="dn-cart-btn" onClick={() => handleNavigate("/cart")} title="View Cart" aria-label="Shopping cart">
+            {}
+            <button
+              className="dn-cart-btn"
+              onClick={() => handleNavigate("/cart")}
+              title="View Cart"
+              aria-label="Shopping cart"
+            >
               <FaShoppingCart />
               <span className="dn-cart-label">Cart</span>
-              {cart.length > 0 && <span className="dn-cart-badge">{cart.length}</span>}
+              {cart.length > 0 && (
+                <span className="dn-cart-badge">{cart.length}</span>
+              )}
             </button>
 
             {user ? (
@@ -205,11 +236,15 @@ const Navbar = ({ cart = [] }) => {
                   <span className="dn-avatar">
                     {user.avatar ? (
                       <img src={getImageUrl(user.avatar)} alt="" />
+                    ) : user.name ? (
+                      user.name.charAt(0).toUpperCase()
                     ) : (
-                      user.name ? user.name.charAt(0).toUpperCase() : "U"
+                      "U"
                     )}
                   </span>
-                  <span className="dn-user-name">{user.name?.split(" ")[0] || "User"}</span>
+                  <span className="dn-user-name">
+                    {user.name?.split(" ")[0] || "User"}
+                  </span>
                 </button>
 
                 {userMenuOpen && (
@@ -218,8 +253,10 @@ const Navbar = ({ cart = [] }) => {
                       <span className="dn-dropdown-avatar">
                         {user.avatar ? (
                           <img src={getImageUrl(user.avatar)} alt="" />
+                        ) : user.name ? (
+                          user.name.charAt(0).toUpperCase()
                         ) : (
-                          user.name ? user.name.charAt(0).toUpperCase() : "U"
+                          "U"
                         )}
                       </span>
                       <div className="dn-dropdown-meta">
@@ -227,16 +264,28 @@ const Navbar = ({ cart = [] }) => {
                         <span>{user.email || user.userId || ""}</span>
                       </div>
                     </div>
-                    <button className="dn-dropdown-item" onClick={() => handleNavigate(dashboardPath)} role="menuitem">
+                    <button
+                      className="dn-dropdown-item"
+                      onClick={() => handleNavigate(dashboardPath)}
+                      role="menuitem"
+                    >
                       <FaUser />
                       My Dashboard
                     </button>
                     {user.role === "shop" && (
-                      <button className="dn-dropdown-item" onClick={() => handleNavigate("/orders")} role="menuitem">
+                      <button
+                        className="dn-dropdown-item"
+                        onClick={() => handleNavigate("/orders")}
+                        role="menuitem"
+                      >
                         My Orders
                       </button>
                     )}
-                    <button className="dn-dropdown-item danger" onClick={handleLogout} role="menuitem">
+                    <button
+                      className="dn-dropdown-item danger"
+                      onClick={handleLogout}
+                      role="menuitem"
+                    >
                       <FaSignOutAlt />
                       Sign Out
                     </button>
@@ -264,34 +313,58 @@ const Navbar = ({ cart = [] }) => {
           </div>
         </div>
 
-        {/* ── MOBILE DRAWER ── */}
-        <div className={`dn-mobile-drawer${menuOpen ? " open" : ""}`} aria-hidden={!menuOpen}>
-          <button className={`dn-mob-link${isActive("/") ? " active" : ""}`} onClick={() => handleNavigate("/")}>
+        {}
+        <div
+          className={`dn-mobile-drawer${menuOpen ? " open" : ""}`}
+          aria-hidden={!menuOpen}
+        >
+          <button
+            className={`dn-mob-link${isActive("/") ? " active" : ""}`}
+            onClick={() => handleNavigate("/")}
+          >
             🏠 Home
           </button>
-          <button className={`dn-mob-link${isActive("/shop") ? " active" : ""}`} onClick={() => handleNavigate("/shop")}>
+          <button
+            className={`dn-mob-link${isActive("/shop") ? " active" : ""}`}
+            onClick={() => handleNavigate("/shop")}
+          >
             🛍️ Shop Products
           </button>
-          <button className="dn-mob-link" onClick={() => handleNavigate("/cart")}>
+          <button
+            className="dn-mob-link"
+            onClick={() => handleNavigate("/cart")}
+          >
             🛒 Cart ({cart.length})
           </button>
           {user && (
-            <button className="dn-mob-link" onClick={() => handleNavigate(dashboardPath)}>
+            <button
+              className="dn-mob-link"
+              onClick={() => handleNavigate(dashboardPath)}
+            >
               👤 My Dashboard
             </button>
           )}
           {user && user.role === "shop" && (
-            <button className="dn-mob-link" onClick={() => handleNavigate("/orders")}>
+            <button
+              className="dn-mob-link"
+              onClick={() => handleNavigate("/orders")}
+            >
               📦 My Orders
             </button>
           )}
           {user && user.role === "admin" && (
-            <button className="dn-mob-link" onClick={() => handleNavigate("/admin")}>
+            <button
+              className="dn-mob-link"
+              onClick={() => handleNavigate("/admin")}
+            >
               ⚙️ Admin Panel
             </button>
           )}
           {user && user.role === "staff" && (
-            <button className="dn-mob-link" onClick={() => handleNavigate("/staff")}>
+            <button
+              className="dn-mob-link"
+              onClick={() => handleNavigate("/staff")}
+            >
               🏭 Staff Portal
             </button>
           )}

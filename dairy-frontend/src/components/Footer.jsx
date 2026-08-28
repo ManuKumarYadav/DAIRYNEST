@@ -20,7 +20,7 @@ import {
 } from "react-icons/fa";
 
 const Footer = () => {
-  const [activeModal, setActiveModal] = useState(null); // 'terms' | 'privacy' | 'company' | 'refund' | 'fssai'
+  const [activeModal, setActiveModal] = useState(null);
 
   const closeModal = () => setActiveModal(null);
 
@@ -28,9 +28,9 @@ const Footer = () => {
     <>
       <footer className="dairynest-footer">
         <div className="section-container">
-          {/* TOP GRID */}
+          {}
           <div className="footer-top-grid">
-            {/* Column 1: Brand & Farmer Bio */}
+            {}
             <div className="footer-brand-col">
               <div className="footer-brand-header">
                 <div className="brand-badge-icon">DN</div>
@@ -40,42 +40,74 @@ const Footer = () => {
                 </div>
               </div>
               <p className="footer-bio">
-                DairyNest Technologies Private Limited connects 50,000+ village farmers with modern urban households, delivering 100% unadulterated farm-fresh milk, bilona ghee, and artisan dairy products directly to your doorstep.
+                DairyNest Technologies Private Limited connects 50,000+ village
+                farmers with modern urban households, delivering 100%
+                unadulterated farm-fresh milk, bilona ghee, and artisan dairy
+                products directly to your doorstep.
               </p>
               <div className="footer-social-links">
-                <a href="#social" aria-label="Facebook"><FaFacebookF /></a>
-                <a href="#social" aria-label="Twitter"><FaTwitter /></a>
-                <a href="#social" aria-label="Instagram"><FaInstagram /></a>
-                <a href="#social" aria-label="YouTube"><FaYoutube /></a>
-                <a href="#social" aria-label="WhatsApp"><FaWhatsapp /></a>
+                <a href="#social" aria-label="Facebook">
+                  <FaFacebookF />
+                </a>
+                <a href="#social" aria-label="Twitter">
+                  <FaTwitter />
+                </a>
+                <a href="#social" aria-label="Instagram">
+                  <FaInstagram />
+                </a>
+                <a href="#social" aria-label="YouTube">
+                  <FaYoutube />
+                </a>
+                <a href="#social" aria-label="WhatsApp">
+                  <FaWhatsapp />
+                </a>
               </div>
 
-              {/* Trust Badges */}
+              {}
               <div className="footer-trust-chips">
-                <span className="trust-chip"><FaAward /> ISO 22000 Certified</span>
-                <span className="trust-chip"><FaLock /> 256-Bit SSL Secured</span>
+                <span className="trust-chip">
+                  <FaAward /> ISO 22000 Certified
+                </span>
+                <span className="trust-chip">
+                  <FaLock /> 256-Bit SSL Secured
+                </span>
               </div>
             </div>
 
-            {/* Column 2: Popular Products */}
+            {}
             <div className="footer-links-col">
               <h4>Popular Dairy</h4>
               <ul>
-                <li><a href="#shop-products">DairyNest Gold Full Cream</a></li>
-                <li><a href="#shop-products">DairyNest Taaza Toned Milk</a></li>
-                <li><a href="#shop-products">A2 Desi Cow Bilona Ghee</a></li>
-                <li><a href="#shop-products">Fresh Organic Malai Paneer</a></li>
-                <li><a href="#shop-products">Farm Fresh Creamy Butter</a></li>
-                <li><a href="#shop-products">Probiotic Artisanal Dahi</a></li>
+                <li>
+                  <a href="#shop-products">DairyNest Gold Full Cream</a>
+                </li>
+                <li>
+                  <a href="#shop-products">DairyNest Taaza Toned Milk</a>
+                </li>
+                <li>
+                  <a href="#shop-products">A2 Desi Cow Bilona Ghee</a>
+                </li>
+                <li>
+                  <a href="#shop-products">Fresh Organic Malai Paneer</a>
+                </li>
+                <li>
+                  <a href="#shop-products">Farm Fresh Creamy Butter</a>
+                </li>
+                <li>
+                  <a href="#shop-products">Probiotic Artisanal Dahi</a>
+                </li>
               </ul>
             </div>
 
-            {/* Column 3: Important Legal & Company Tags */}
+            {}
             <div className="footer-links-col">
               <h4>Company & Legal</h4>
               <ul className="footer-action-links">
                 <li>
-                  <button type="button" onClick={() => setActiveModal("company")}>
+                  <button
+                    type="button"
+                    onClick={() => setActiveModal("company")}
+                  >
                     <FaBuilding className="link-icon" /> Company Details & CIN
                   </button>
                 </li>
@@ -85,29 +117,38 @@ const Footer = () => {
                   </button>
                 </li>
                 <li>
-                  <button type="button" onClick={() => setActiveModal("privacy")}>
+                  <button
+                    type="button"
+                    onClick={() => setActiveModal("privacy")}
+                  >
                     <FaShieldAlt className="link-icon" /> Privacy & Data Policy
                   </button>
                 </li>
                 <li>
-                  <button type="button" onClick={() => setActiveModal("refund")}>
+                  <button
+                    type="button"
+                    onClick={() => setActiveModal("refund")}
+                  >
                     <FaUndoAlt className="link-icon" /> Refund & Return Policy
                   </button>
                 </li>
                 <li>
                   <button type="button" onClick={() => setActiveModal("fssai")}>
-                    <FaCertificate className="link-icon" /> FSSAI Food Safety Lic.
+                    <FaCertificate className="link-icon" /> FSSAI Food Safety
+                    Lic.
                   </button>
                 </li>
               </ul>
             </div>
 
-            {/* Column 4: Registered Office & Helpdesk */}
+            {}
             <div className="footer-links-col">
               <h4>Headquarters</h4>
               <div className="contact-item">
                 <FaBuilding className="contact-icon" />
-                <span><strong>DairyNest Technologies Pvt. Ltd.</strong></span>
+                <span>
+                  <strong>DairyNest Technologies Pvt. Ltd.</strong>
+                </span>
               </div>
               <div className="contact-item">
                 <FaMapMarkerAlt className="contact-icon" />
@@ -122,16 +163,22 @@ const Footer = () => {
                 <span>support@dairynest.com</span>
               </div>
 
-              {/* FSSAI Quick Badge */}
-              <div className="fssai-box" onClick={() => setActiveModal("fssai")} title="Click to view FSSAI certificate">
+              {}
+              <div
+                className="fssai-box"
+                onClick={() => setActiveModal("fssai")}
+                title="Click to view FSSAI certificate"
+              >
                 <span className="fssai-text">Central FSSAI Lic. No.</span>
                 <strong>10014021001234</strong>
-                <span className="fssai-view-tag">Verified &bull; View Details</span>
+                <span className="fssai-view-tag">
+                  Verified &bull; View Details
+                </span>
               </div>
             </div>
           </div>
 
-          {/* CORPORATE SUMMARY STRIP */}
+          {}
           <div className="footer-corp-strip">
             <div className="corp-item">
               <span className="corp-label">CIN:</span>
@@ -154,48 +201,77 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* BOTTOM COPYRIGHT & POLICY LINKS */}
+          {}
           <div className="footer-bottom-row">
-            <p>© {new Date().getFullYear()} DairyNest Technologies Private Limited. All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} DairyNest Technologies Private
+              Limited. All rights reserved.
+            </p>
             <div className="footer-policy-links">
-              <button type="button" onClick={() => setActiveModal("privacy")}>Privacy Policy</button>
+              <button type="button" onClick={() => setActiveModal("privacy")}>
+                Privacy Policy
+              </button>
               <span className="dot-sep">&bull;</span>
-              <button type="button" onClick={() => setActiveModal("terms")}>Terms & Conditions</button>
+              <button type="button" onClick={() => setActiveModal("terms")}>
+                Terms & Conditions
+              </button>
               <span className="dot-sep">&bull;</span>
-              <button type="button" onClick={() => setActiveModal("refund")}>Refund Policy</button>
+              <button type="button" onClick={() => setActiveModal("refund")}>
+                Refund Policy
+              </button>
               <span className="dot-sep">&bull;</span>
-              <button type="button" onClick={() => setActiveModal("company")}>Corporate Details</button>
+              <button type="button" onClick={() => setActiveModal("company")}>
+                Corporate Details
+              </button>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* DETAILS MODAL POPUP */}
+      {}
       {activeModal && (
         <div className="dn-modal-backdrop" onClick={closeModal}>
           <div className="dn-modal-card" onClick={(e) => e.stopPropagation()}>
             <div className="dn-modal-header">
               <div className="dn-modal-title-row">
-                {activeModal === "company" && <FaBuilding className="dn-modal-icon" />}
-                {activeModal === "terms" && <FaFileContract className="dn-modal-icon" />}
-                {activeModal === "privacy" && <FaShieldAlt className="dn-modal-icon" />}
-                {activeModal === "refund" && <FaUndoAlt className="dn-modal-icon" />}
-                {activeModal === "fssai" && <FaCertificate className="dn-modal-icon" />}
+                {activeModal === "company" && (
+                  <FaBuilding className="dn-modal-icon" />
+                )}
+                {activeModal === "terms" && (
+                  <FaFileContract className="dn-modal-icon" />
+                )}
+                {activeModal === "privacy" && (
+                  <FaShieldAlt className="dn-modal-icon" />
+                )}
+                {activeModal === "refund" && (
+                  <FaUndoAlt className="dn-modal-icon" />
+                )}
+                {activeModal === "fssai" && (
+                  <FaCertificate className="dn-modal-icon" />
+                )}
                 <h3>
                   {activeModal === "company" && "Company & Corporate Details"}
-                  {activeModal === "terms" && "Terms of Service & Usage Conditions"}
-                  {activeModal === "privacy" && "Privacy & Data Protection Policy"}
-                  {activeModal === "refund" && "Cancellation, Return & Refund Policy"}
-                  {activeModal === "fssai" && "FSSAI Food Safety & Purity Standards"}
+                  {activeModal === "terms" &&
+                    "Terms of Service & Usage Conditions"}
+                  {activeModal === "privacy" &&
+                    "Privacy & Data Protection Policy"}
+                  {activeModal === "refund" &&
+                    "Cancellation, Return & Refund Policy"}
+                  {activeModal === "fssai" &&
+                    "FSSAI Food Safety & Purity Standards"}
                 </h3>
               </div>
-              <button className="dn-modal-close-btn" onClick={closeModal} aria-label="Close dialog">
+              <button
+                className="dn-modal-close-btn"
+                onClick={closeModal}
+                aria-label="Close dialog"
+              >
                 <FaTimes />
               </button>
             </div>
 
             <div className="dn-modal-body">
-              {/* COMPANY DETAILS */}
+              {}
               {activeModal === "company" && (
                 <div className="dn-legal-content">
                   <div className="dn-info-grid">
@@ -219,155 +295,244 @@ const Footer = () => {
 
                   <h4>Corporate Headquarters</h4>
                   <p>
-                    DairyNest Technologies Private Limited<br />
+                    DairyNest Technologies Private Limited
+                    <br />
                     Motihari, East Champaran, Bihar, India — 845437
                   </p>
 
                   <h4>Processing Plants & Milk Collection Hubs</h4>
                   <ul>
-                    <li><strong>Bihar HQ & Collection Hub:</strong> Motihari, East Champaran, Bihar — 845437</li>
-                    <li><strong>Western Processing Plant:</strong> GIDC Naroda Phase IV, Ahmedabad, Gujarat — 382330</li>
-                    <li><strong>South Distribution Hub:</strong> Whitefield Main Road, Bengaluru, Karnataka - 560066</li>
+                    <li>
+                      <strong>Bihar HQ & Collection Hub:</strong> Motihari, East
+                      Champaran, Bihar — 845437
+                    </li>
+                    <li>
+                      <strong>Western Processing Plant:</strong> GIDC Naroda
+                      Phase IV, Ahmedabad, Gujarat — 382330
+                    </li>
+                    <li>
+                      <strong>South Distribution Hub:</strong> Whitefield Main
+                      Road, Bengaluru, Karnataka - 560066
+                    </li>
                   </ul>
 
                   <h4>Management & Farmer Welfare Committee</h4>
                   <p>
-                    DairyNest operates on an ethical co-operative direct-payout model ensuring zero middleman commissions, automated FAT% milk testing at chilling centers, and direct next-day bank transfers to over 50,000 dairy farmers across rural India.
+                    DairyNest operates on an ethical co-operative direct-payout
+                    model ensuring zero middleman commissions, automated FAT%
+                    milk testing at chilling centers, and direct next-day bank
+                    transfers to over 50,000 dairy farmers across rural India.
                   </p>
 
                   <h4>Official Grievance Officer</h4>
                   <p>
-                    <strong>Name:</strong> Rajeshwar Verma<br />
-                    <strong>Email:</strong> grievance@dairynest.com | <strong>Contact:</strong> 1800-258-3333 (Ext. 4)
+                    <strong>Name:</strong> Rajeshwar Verma
+                    <br />
+                    <strong>Email:</strong> grievance@dairynest.com |{" "}
+                    <strong>Contact:</strong> 1800-258-3333 (Ext. 4)
                   </p>
                 </div>
               )}
 
-              {/* TERMS & CONDITIONS */}
+              {}
               {activeModal === "terms" && (
                 <div className="dn-legal-content">
                   <h4>1. Introduction & Acceptance of Terms</h4>
                   <p>
-                    By downloading, accessing, or placing an order through the DairyNest platform (web portal or mobile application), you agree to be bound by these Terms and Conditions. DairyNest provides farm-fresh milk, bilona ghee, paneer, and certified dairy commodities.
+                    By downloading, accessing, or placing an order through the
+                    DairyNest platform (web portal or mobile application), you
+                    agree to be bound by these Terms and Conditions. DairyNest
+                    provides farm-fresh milk, bilona ghee, paneer, and certified
+                    dairy commodities.
                   </p>
 
                   <h4>2. Delivery Schedule & Cold-Chain Protocol</h4>
                   <ul>
-                    <li><strong>Morning Fresh Slot:</strong> 6:00 AM to 8:00 AM daily.</li>
-                    <li><strong>Evening Fresh Slot:</strong> 5:00 PM to 8:00 PM.</li>
-                    <li>All dairy products are transported in certified insulated vehicles at or below 4°C to preserve enzymatic freshness and zero-preservative integrity.</li>
+                    <li>
+                      <strong>Morning Fresh Slot:</strong> 6:00 AM to 8:00 AM
+                      daily.
+                    </li>
+                    <li>
+                      <strong>Evening Fresh Slot:</strong> 5:00 PM to 8:00 PM.
+                    </li>
+                    <li>
+                      All dairy products are transported in certified insulated
+                      vehicles at or below 4°C to preserve enzymatic freshness
+                      and zero-preservative integrity.
+                    </li>
                   </ul>
 
                   <h4>3. Pricing, Billing & Payment</h4>
                   <p>
-                    All prices are quoted in Indian Rupees (INR) and are inclusive of applicable GST. Payments are securely processed via Razorpay gateway supporting UPI, Credit/Debit Cards, Net Banking, and Wallet accounts. DairyNest does not store your sensitive card or banking credentials.
+                    All prices are quoted in Indian Rupees (INR) and are
+                    inclusive of applicable GST. Payments are securely processed
+                    via Razorpay gateway supporting UPI, Credit/Debit Cards, Net
+                    Banking, and Wallet accounts. DairyNest does not store your
+                    sensitive card or banking credentials.
                   </p>
 
                   <h4>4. Subscription & Pause Delivery</h4>
                   <p>
-                    Daily milk subscriptions may be modified or paused up to 8:00 PM on the evening prior to the scheduled morning delivery without any penalty or deduction.
+                    Daily milk subscriptions may be modified or paused up to
+                    8:00 PM on the evening prior to the scheduled morning
+                    delivery without any penalty or deduction.
                   </p>
 
                   <h4>5. Customer Conduct & Doorstep Delivery</h4>
                   <p>
-                    Customers are requested to provide accurate doorstep address landmarks and maintain clean doorstep delivery bags or insulated boxes for safe handover.
+                    Customers are requested to provide accurate doorstep address
+                    landmarks and maintain clean doorstep delivery bags or
+                    insulated boxes for safe handover.
                   </p>
                 </div>
               )}
 
-              {/* PRIVACY POLICY */}
+              {}
               {activeModal === "privacy" && (
                 <div className="dn-legal-content">
                   <h4>1. Information Collection & Usage</h4>
                   <p>
-                    DairyNest collects recipient name, verified mobile number, doorstep delivery coordinates (GPS latitude/longitude), and delivery notes solely for routing farm-fresh dairy parcels to your doorstep.
+                    DairyNest collects recipient name, verified mobile number,
+                    doorstep delivery coordinates (GPS latitude/longitude), and
+                    delivery notes solely for routing farm-fresh dairy parcels
+                    to your doorstep.
                   </p>
 
                   <h4>2. Zero Third-Party Sale Commitment</h4>
                   <p>
-                    We strictly do NOT sell, rent, or trade your personal information, address records, or phone numbers to third-party telemarketers or external advertisers.
+                    We strictly do NOT sell, rent, or trade your personal
+                    information, address records, or phone numbers to
+                    third-party telemarketers or external advertisers.
                   </p>
 
                   <h4>3. Payment & Transaction Security</h4>
                   <p>
-                    All online payments are end-to-end encrypted via PCI-DSS compliant Razorpay infrastructure with 256-Bit SSL protection.
+                    All online payments are end-to-end encrypted via PCI-DSS
+                    compliant Razorpay infrastructure with 256-Bit SSL
+                    protection.
                   </p>
 
                   <h4>4. Location Permissions (GPS)</h4>
                   <p>
-                    Geolocation data is accessed exclusively when you click *"Use Current Location"* on the interactive address map to automatically pinpoint your delivery doorstep for accurate milk delivery routing.
+                    Geolocation data is accessed exclusively when you click
+                    *"Use Current Location"* on the interactive address map to
+                    automatically pinpoint your delivery doorstep for accurate
+                    milk delivery routing.
                   </p>
 
                   <h4>5. Account Data & Deletion</h4>
                   <p>
-                    You retain the right to review, update, or request complete deletion of your account profile and saved address books at any time by contacting privacy@dairynest.com.
+                    You retain the right to review, update, or request complete
+                    deletion of your account profile and saved address books at
+                    any time by contacting privacy@dairynest.com.
                   </p>
                 </div>
               )}
 
-              {/* REFUND POLICY */}
+              {}
               {activeModal === "refund" && (
                 <div className="dn-legal-content">
                   <h4>1. 100% Purity & Freshness Guarantee</h4>
                   <p>
-                    If any milk packet, paneer, or curd delivered by DairyNest fails quality expectations (e.g. curdling upon boiling, leakage in transit, or delivery temperature variance), you are entitled to a full 100% instant refund or free replacement.
+                    If any milk packet, paneer, or curd delivered by DairyNest
+                    fails quality expectations (e.g. curdling upon boiling,
+                    leakage in transit, or delivery temperature variance), you
+                    are entitled to a full 100% instant refund or free
+                    replacement.
                   </p>
 
                   <h4>2. Reporting Timeline</h4>
                   <p>
                     Due to the perishable nature of raw milk and fresh dairy:
                     <ul>
-                      <li>Morning slot issues must be reported before 12:00 PM on the date of delivery.</li>
-                      <li>Evening slot issues must be reported within 4 hours of delivery.</li>
+                      <li>
+                        Morning slot issues must be reported before 12:00 PM on
+                        the date of delivery.
+                      </li>
+                      <li>
+                        Evening slot issues must be reported within 4 hours of
+                        delivery.
+                      </li>
                     </ul>
                   </p>
 
                   <h4>3. Instant Refund Processing</h4>
                   <p>
-                    Refunds for approved claims are credited back to the original payment source (UPI / Bank Account) within 24 to 48 business hours.
+                    Refunds for approved claims are credited back to the
+                    original payment source (UPI / Bank Account) within 24 to 48
+                    business hours.
                   </p>
 
                   <h4>4. Cancellation Policy</h4>
                   <p>
-                    Orders can be canceled anytime before order dispatch without any cancellation fee directly from the Order Dashboard.
+                    Orders can be canceled anytime before order dispatch without
+                    any cancellation fee directly from the Order Dashboard.
                   </p>
                 </div>
               )}
 
-              {/* FSSAI & QUALITY CERTIFICATIONS */}
+              {}
               {activeModal === "fssai" && (
                 <div className="dn-legal-content">
                   <div className="dn-fssai-highlight">
-                    <span className="fssai-big-tag">Food Safety and Standards Authority of India</span>
+                    <span className="fssai-big-tag">
+                      Food Safety and Standards Authority of India
+                    </span>
                     <h2>Central License No: 10014021001234</h2>
-                    <p>Issued under Food Safety and Standards Act, 2006 (Government of India)</p>
+                    <p>
+                      Issued under Food Safety and Standards Act, 2006
+                      (Government of India)
+                    </p>
                   </div>
 
                   <h4>Certified Quality Parameters</h4>
                   <ul>
-                    <li><FaCheckCircle className="check-icon" /> <strong>Zero Synthetic Adulterants:</strong> No urea, starch, detergent, or maltodextrin.</li>
-                    <li><FaCheckCircle className="check-icon" /> <strong>Zero Hormonal Injections:</strong> Free from synthetic oxytocin or growth hormones.</li>
-                    <li><FaCheckCircle className="check-icon" /> <strong>Automated Testing:</strong> Dual ultrasonic FAT & SNF digital verification at village intake centers.</li>
-                    <li><FaCheckCircle className="check-icon" /> <strong>Cold-Chain Monitored:</strong> Chilled below 4°C within 45 minutes of milking.</li>
+                    <li>
+                      <FaCheckCircle className="check-icon" />{" "}
+                      <strong>Zero Synthetic Adulterants:</strong> No urea,
+                      starch, detergent, or maltodextrin.
+                    </li>
+                    <li>
+                      <FaCheckCircle className="check-icon" />{" "}
+                      <strong>Zero Hormonal Injections:</strong> Free from
+                      synthetic oxytocin or growth hormones.
+                    </li>
+                    <li>
+                      <FaCheckCircle className="check-icon" />{" "}
+                      <strong>Automated Testing:</strong> Dual ultrasonic FAT &
+                      SNF digital verification at village intake centers.
+                    </li>
+                    <li>
+                      <FaCheckCircle className="check-icon" />{" "}
+                      <strong>Cold-Chain Monitored:</strong> Chilled below 4°C
+                      within 45 minutes of milking.
+                    </li>
                   </ul>
 
                   <h4>Accredited Testing Labs</h4>
                   <p>
-                    Our daily samples are routinely cross-verified by NABL-accredited national dairy testing laboratories to ensure compliant microbiological and nutritional values.
+                    Our daily samples are routinely cross-verified by
+                    NABL-accredited national dairy testing laboratories to
+                    ensure compliant microbiological and nutritional values.
                   </p>
                 </div>
               )}
             </div>
 
             <div className="dn-modal-footer">
-              <span className="dn-modal-disclaimer">Official Disclosure &bull; DairyNest Technologies Private Limited</span>
-              <button className="dn-modal-done-btn" onClick={closeModal}>Close Details</button>
+              <span className="dn-modal-disclaimer">
+                Official Disclosure &bull; DairyNest Technologies Private
+                Limited
+              </span>
+              <button className="dn-modal-done-btn" onClick={closeModal}>
+                Close Details
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* FOOTER & MODAL STYLING */}
+      {}
       <style>{`
         /* ======== FOOTER ======== */
         .dairynest-footer {

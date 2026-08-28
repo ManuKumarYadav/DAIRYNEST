@@ -22,7 +22,7 @@ router.post(
       next();
     });
   },
-  uploadAvatar
+  uploadAvatar,
 );
 
 router.post("/staff", auth(["admin"]), createStaff);
