@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 
 const API = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
@@ -54,10 +54,13 @@ const StaffDashboard = () => {
     setTimeout(() => setToast(null), 3500);
   };
 
-  const hdr = {
-    Authorization: "Bearer " + token,
-    "Content-Type": "application/json",
-  };
+  const hdr = useMemo(
+    () => ({
+      Authorization: "Bearer " + token,
+      "Content-Type": "application/json",
+    }),
+    [token],
+  );
 
   const fetchAll = useCallback(async () => {
     try {
@@ -81,7 +84,7 @@ const StaffDashboard = () => {
     } catch (e) {
       console.error(e);
     }
-  }, []);
+  }, [hdr]);
   useEffect(() => {
     fetchAll();
   }, [fetchAll]);

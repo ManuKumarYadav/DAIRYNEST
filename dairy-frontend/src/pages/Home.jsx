@@ -8,12 +8,8 @@ import {
   FaChevronRight,
   FaClock,
   FaEnvelope,
-  FaFacebookF,
-  FaInstagram,
   FaLeaf,
   FaLock,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
   FaPlus,
   FaSearch,
   FaShieldAlt,
@@ -21,11 +17,8 @@ import {
   FaStar,
   FaStore,
   FaTruck,
-  FaTwitter,
   FaUser,
   FaUserCheck,
-  FaWhatsapp,
-  FaYoutube,
 } from "react-icons/fa";
 import API from "../api/axios";
 import { API_BASE_URL, getImageUrl } from "../api/config";
@@ -39,7 +32,6 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [toastMessage, setToastMessage] = useState("");
   const [dbProducts, setDbProducts] = useState([]);
-  const [loadingProducts, setLoadingProducts] = useState(true); // eslint-disable-line no-unused-vars
 
   // Auth Form State
   const [isLogin, setIsLogin] = useState(true);
@@ -49,12 +41,10 @@ const Home = () => {
   const [role, setRole] = useState("shop");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
   // Fetch live products from MongoDB
   useEffect(() => {
     const fetchDbProducts = async () => {
       try {
-        setLoadingProducts(true);
         const res = await fetch(`${API_BASE_URL}/api/products`);
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
@@ -62,8 +52,6 @@ const Home = () => {
         }
       } catch (err) {
         console.error("Fetch DB products error:", err);
-      } finally {
-        setLoadingProducts(false);
       }
     };
     fetchDbProducts();

@@ -13,10 +13,7 @@ import {
   FaUser,
   FaArrowLeft,
   FaSearch,
-  FaFilter,
   FaSync,
-  FaRupeeSign,
-  FaChartLine,
 } from "react-icons/fa";
 import { API_BASE_URL } from "../../api/config";
 

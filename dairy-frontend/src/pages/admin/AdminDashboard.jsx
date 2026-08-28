@@ -14,7 +14,6 @@ import {
   FaPlus,
   FaLeaf,
   FaShoppingBag,
-  FaBolt,
   FaArrowRight,
   FaTimes,
 } from "react-icons/fa";
