@@ -210,71 +210,71 @@ const Home = () => {
   const displayProducts =
     dbProducts.length > 0
       ? dbProducts.map((p, idx) => {
-          const nameLower = (p.name || "").toLowerCase();
-          let cat = "milk";
-          if (nameLower.includes("ghee")) cat = "ghee";
-          else if (nameLower.includes("paneer") || nameLower.includes("cheese"))
-            cat = "paneer";
-          else if (nameLower.includes("butter")) cat = "butter";
-          else if (nameLower.includes("dahi") || nameLower.includes("curd"))
-            cat = "curd";
-          else if (
-            nameLower.includes("lassi") ||
-            nameLower.includes("drink") ||
-            nameLower.includes("shake")
-          )
-            cat = "beverages";
-          else if (
-            nameLower.includes("jamun") ||
-            nameLower.includes("sweet") ||
-            nameLower.includes("mithai")
-          )
-            cat = "sweets";
+        const nameLower = (p.name || "").toLowerCase();
+        let cat = "milk";
+        if (nameLower.includes("ghee")) cat = "ghee";
+        else if (nameLower.includes("paneer") || nameLower.includes("cheese"))
+          cat = "paneer";
+        else if (nameLower.includes("butter")) cat = "butter";
+        else if (nameLower.includes("dahi") || nameLower.includes("curd"))
+          cat = "curd";
+        else if (
+          nameLower.includes("lassi") ||
+          nameLower.includes("drink") ||
+          nameLower.includes("shake")
+        )
+          cat = "beverages";
+        else if (
+          nameLower.includes("jamun") ||
+          nameLower.includes("sweet") ||
+          nameLower.includes("mithai")
+        )
+          cat = "sweets";
 
-          return {
-            id: p._id || `db-${idx}`,
-            name: p.name,
-            category: cat,
-            desc:
-              p.desc || `Fresh and pure 100% farm-sourced DairyNest ${p.name}.`,
-            weight: p.name.includes("500ml")
-              ? "500 ml"
-              : p.name.includes("1L") || p.name.includes("1 Litre")
-                ? "1 Litre"
-                : p.name.includes("200g")
-                  ? "200 g"
-                  : p.name.includes("100g")
-                    ? "100 g"
-                    : p.name.includes("400g")
-                      ? "400 g"
-                      : "Standard Pack",
-            price: Number(p.price) || 0,
-            originalPrice:
-              Number(p.originalPrice) || Math.round(Number(p.price) * 1.15),
-            discount: p.discount ? `${p.discount}% OFF` : "Best Price",
-            rating: Number((4.8 + (idx % 3) * 0.1).toFixed(1)),
-            reviews: 800 + idx * 140,
-            image: getImageUrl(p.image),
-            badge:
-              cat === "milk"
-                ? "Daily Essential"
-                : cat === "ghee"
-                  ? "100% Pure Vedic"
-                  : cat === "paneer"
-                    ? "High Protein"
-                    : "Farm Fresh",
-            badgeColor:
-              cat === "milk"
-                ? "#0b57a4"
-                : cat === "ghee"
-                  ? "#ca8a04"
-                  : cat === "paneer"
-                    ? "#16a34a"
-                    : cat === "butter"
-                      ? "#dc2626"
-                      : "#0284c7",
-          };
-        })
+        return {
+          id: p._id || `db-${idx}`,
+          name: p.name,
+          category: cat,
+          desc:
+            p.desc || `Fresh and pure 100% farm-sourced DairyNest ${p.name}.`,
+          weight: p.name.includes("500ml")
+            ? "500 ml"
+            : p.name.includes("1L") || p.name.includes("1 Litre")
+              ? "1 Litre"
+              : p.name.includes("200g")
+                ? "200 g"
+                : p.name.includes("100g")
+                  ? "100 g"
+                  : p.name.includes("400g")
+                    ? "400 g"
+                    : "Standard Pack",
+          price: Number(p.price) || 0,
+          originalPrice:
+            Number(p.originalPrice) || Math.round(Number(p.price) * 1.15),
+          discount: p.discount ? `${p.discount}% OFF` : "Best Price",
+          rating: Number((4.8 + (idx % 3) * 0.1).toFixed(1)),
+          reviews: 800 + idx * 140,
+          image: getImageUrl(p.image),
+          badge:
+            cat === "milk"
+              ? "Daily Essential"
+              : cat === "ghee"
+                ? "100% Pure Vedic"
+                : cat === "paneer"
+                  ? "High Protein"
+                  : "Farm Fresh",
+          badgeColor:
+            cat === "milk"
+              ? "#0b57a4"
+              : cat === "ghee"
+                ? "#ca8a04"
+                : cat === "paneer"
+                  ? "#16a34a"
+                  : cat === "butter"
+                    ? "#dc2626"
+                    : "#0284c7",
+        };
+      })
       : productsList;
 
   const filteredProducts = displayProducts.filter((item) => {
@@ -362,8 +362,8 @@ const Home = () => {
     } catch (err) {
       setMessage(
         err.response?.data?.msg ||
-          err.response?.data?.message ||
-          "Login failed. Please check your email and password.",
+        err.response?.data?.message ||
+        "Login failed. Please check your email and password.",
       );
     } finally {
       setLoading(false);
@@ -389,7 +389,7 @@ const Home = () => {
     } catch (err) {
       setMessage(
         err.response?.data?.message ||
-          "Registration failed. Please verify your details.",
+        "Registration failed. Please verify your details.",
       );
     } finally {
       setLoading(false);
@@ -398,7 +398,7 @@ const Home = () => {
 
   return (
     <div className="dairynest-home-root">
-      {}
+      { }
       {toastMessage && (
         <div className="dairynest-toast">
           <span>{toastMessage}</span>
@@ -408,7 +408,7 @@ const Home = () => {
         </div>
       )}
 
-      {}
+      { }
       <section className="dairynest-hero">
         <div className="hero-container">
           <div className="hero-text-col">
@@ -430,7 +430,7 @@ const Home = () => {
               your doorstep before sunrise.
             </p>
 
-            {}
+            { }
             <div className="hero-search-wrapper">
               <FaSearch className="search-icon" />
               <input
@@ -452,7 +452,7 @@ const Home = () => {
               </button>
             </div>
 
-            {}
+            { }
             <div className="hero-trust-badges">
               <div className="trust-item">
                 <FaLeaf className="trust-icon green" />
@@ -516,7 +516,7 @@ const Home = () => {
         </div>
       </section>
 
-      {}
+      { }
       <section className="dairynest-value-bar">
         <div className="section-container">
           <div className="value-grid">
@@ -556,7 +556,7 @@ const Home = () => {
         </div>
       </section>
 
-      {}
+      { }
       <section id="shop-products" className="dairynest-products-section">
         <div className="section-container">
           <div className="section-header-center">
@@ -567,7 +567,7 @@ const Home = () => {
               malai paneer, and nutritious dairy goods.
             </p>
 
-            {}
+            { }
             <div className="category-pills-row">
               {categories.map((cat) => (
                 <button
@@ -582,7 +582,7 @@ const Home = () => {
             </div>
           </div>
 
-          {}
+          { }
           <div className="products-ecommerce-grid">
             {filteredProducts.map((product) => (
               <div key={product.id} className="ecom-product-card">
@@ -677,7 +677,7 @@ const Home = () => {
         </div>
       </section>
 
-      {}
+      { }
       <section className="dairynest-subscription-banner">
         <div className="section-container">
           <div className="subscription-card-wrapper">
@@ -743,7 +743,7 @@ const Home = () => {
         </div>
       </section>
 
-      {}
+      { }
       <section id="why-dairynest" className="dairynest-why-section">
         <div className="section-container">
           <div className="section-header-center">
@@ -799,7 +799,7 @@ const Home = () => {
         </div>
       </section>
 
-      {}
+      { }
       <section id="farmers-story" className="dairynest-farmers-section">
         <div className="section-container">
           <div className="farmers-story-grid">
@@ -860,7 +860,7 @@ const Home = () => {
         </div>
       </section>
 
-      {}
+      { }
       <section className="dairynest-reviews-section">
         <div className="section-container">
           <div className="section-header-center">
@@ -932,7 +932,7 @@ const Home = () => {
         </div>
       </section>
 
-      {}
+      { }
       <section id="auth-section" className="dairynest-auth-section">
         <div className="section-container">
           <div className="auth-box-layout">
@@ -1012,11 +1012,10 @@ const Home = () => {
 
                 {message && (
                   <div
-                    className={`auth-alert-banner ${
-                      message.toLowerCase().includes("success")
+                    className={`auth-alert-banner ${message.toLowerCase().includes("success")
                         ? "success"
                         : "error"
-                    }`}
+                      }`}
                   >
                     {message}
                   </div>
@@ -1118,10 +1117,10 @@ const Home = () => {
         </div>
       </section>
 
-      {}
+      { }
       <Footer />
 
-      {}
+      { }
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap');
 
@@ -2490,25 +2489,114 @@ const Home = () => {
         }
 
         /* RESPONSIVE BREAKPOINTS */
+
+        /* Tablet landscape */
         @media (max-width: 1024px) {
-          .hero-container { grid-template-columns: 1fr; }
+          .hero-container {
+            grid-template-columns: 1fr;
+            gap: 32px;
+            text-align: center;
+          }
+          .hero-subtitle, .hero-search-wrapper { max-width: 100%; }
+          .hero-trust-badges, .hero-action-buttons { justify-content: center; }
+          .hero-visual-col { max-width: 560px; margin: 0 auto; }
           .subscription-card-wrapper { grid-template-columns: 1fr; }
           .farmers-story-grid { grid-template-columns: 1fr; }
           .auth-box-layout { grid-template-columns: 1fr; }
           .why-grid { grid-template-columns: repeat(2, 1fr); }
           .value-grid { grid-template-columns: repeat(2, 1fr); }
           .footer-top-grid { grid-template-columns: repeat(2, 1fr); }
-          .reviews-grid { grid-template-columns: 1fr; }
+          .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+          .farmers-tag-overlay { position: static; margin-top: 16px; max-width: 100%; }
         }
 
+        /* Tablet portrait / large mobile */
+        @media (max-width: 768px) {
+          .section-container { padding: 0 16px; }
+          .dairynest-hero { padding: 48px 0 56px; }
+          .hero-container { padding: 0 16px; }
+          .hero-main-title { font-size: clamp(30px, 8vw, 44px); }
+          .hero-live-pill {
+            font-size: 11px;
+            padding: 6px 12px;
+            white-space: normal;
+            text-align: center;
+            width: 100%;
+            justify-content: center;
+          }
+          .hero-search-wrapper { padding: 5px 6px 5px 14px; }
+          .hero-search-wrapper input { font-size: 13px; }
+          .search-action-btn { padding: 10px 16px; font-size: 13px; }
+          .products-ecommerce-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+          .reviews-grid { grid-template-columns: 1fr; }
+          .why-grid { grid-template-columns: repeat(2, 1fr); }
+          .view-full-shop-banner { padding: 24px 22px; flex-direction: column; align-items: flex-start; }
+          .subscription-card-wrapper { padding: 32px 24px; }
+          .dairynest-products-section, .dairynest-subscription-banner,
+          .dairynest-why-section, .dairynest-farmers-section,
+          .dairynest-reviews-section, .dairynest-auth-section { padding: 56px 0; }
+        }
+
+        /* Mobile phones */
         @media (max-width: 640px) {
+          .section-container { padding: 0 14px; }
+          .dairynest-home-root { padding-top: 64px; }
+          .dairynest-hero { padding: 36px 0 48px; }
+          .hero-container { padding: 0 14px; gap: 28px; }
+          .hero-main-title { font-size: clamp(28px, 7.5vw, 38px); line-height: 1.1; }
+          .hero-subtitle { font-size: 14px; }
+          .hero-live-pill { font-size: 11px; padding: 6px 12px; }
+          .hero-search-wrapper { border-radius: 12px; margin-bottom: 20px; }
+          .search-action-btn { padding: 9px 14px; font-size: 12px; border-radius: 8px; }
+          .hero-trust-badges { gap: 12px; }
+          .trust-item { font-size: 12px; }
+          .hero-action-buttons { flex-direction: column; align-items: stretch; gap: 12px; }
+          .btn-primary-hero, .btn-secondary-hero { width: 100%; justify-content: center; font-size: 14px; padding: 13px 20px; }
           .why-grid { grid-template-columns: 1fr; }
           .value-grid { grid-template-columns: 1fr; }
           .footer-top-grid { grid-template-columns: 1fr; }
-          .hero-action-buttons { flex-direction: column; align-items: stretch; }
-          .view-full-shop-banner { flex-direction: column; align-items: flex-start; }
-          .subscription-card-wrapper { padding: 28px 20px; }
-          .auth-white-card { padding: 24px; }
+          .reviews-grid { grid-template-columns: 1fr; }
+          .products-ecommerce-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+          .product-info-wrap { padding: 14px; }
+          .product-title { font-size: 15px; }
+          .current-price { font-size: 17px; }
+          .add-cart-btn { padding: 7px 12px; font-size: 12px; }
+          .category-pills-row { gap: 8px; }
+          .cat-pill { padding: 8px 14px; font-size: 12px; }
+          .subscription-card-wrapper { padding: 24px 16px; border-radius: 20px; }
+          .sub-visual-card { padding: 20px; }
+          .svc-days-grid { gap: 4px; }
+          .day-box { padding: 6px 2px; }
+          .auth-white-card { padding: 22px 18px; border-radius: 18px; }
+          .auth-box-layout { gap: 28px; }
+          .auth-role-selectors { gap: 10px; }
+          .role-select-box { padding: 12px 14px; }
+          .view-full-shop-banner { padding: 22px 18px; border-radius: 16px; }
+          .farmers-stats-row { flex-wrap: wrap; gap: 18px; }
+          .dairynest-products-section, .dairynest-subscription-banner,
+          .dairynest-why-section, .dairynest-farmers-section,
+          .dairynest-reviews-section, .dairynest-auth-section { padding: 40px 0; }
+          .section-title { font-size: clamp(22px, 6vw, 30px); }
+          .why-card { padding: 22px 18px; }
+          .review-card { padding: 22px; }
+          .dairynest-toast { bottom: 12px; right: 12px; left: 12px; font-size: 13px; border-radius: 12px; }
+        }
+
+        /* Small phones */
+        @media (max-width: 420px) {
+          .hero-main-title { font-size: clamp(24px, 7vw, 32px); }
+          .hero-live-pill { font-size: 10px; padding: 5px 10px; }
+          .products-ecommerce-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .product-image-wrap { height: 140px; }
+          .cat-pill { padding: 7px 10px; font-size: 11px; }
+          .cat-icon { display: none; }
+          .farmers-stats-row { flex-direction: column; gap: 14px; }
+          .auth-white-card { padding: 18px 14px; }
+          .svc-days-grid { grid-template-columns: repeat(4, 1fr); }
+          .day-box:last-child:nth-child(odd) { grid-column: span 2; }
+          .btn-sub-action { font-size: 13px; padding: 12px 20px; }
+          .footer-bottom-row { flex-direction: column; text-align: center; }
+          .footer-policy-links { justify-content: center; flex-wrap: wrap; gap: 12px; }
         }
       `}</style>
     </div>
